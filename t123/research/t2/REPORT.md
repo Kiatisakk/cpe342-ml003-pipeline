@@ -67,6 +67,8 @@ It is also higher than the over-optimistic 0.7557.
 | E08 | e08_blend.py | geo-mean / nested LR stack of the E14 + EM-NB variants | 0.7561 / 0.7560 | 0.6075 / 0.5996 | discarded | no gain over E14 g2+EM alone |
 | E15 | e15_specialists.py | class specialists: binary LightGBM "class k vs rest" (raw features + honest NB log-posteriors). Rules: hier0 (class-0 specialist first, then NB among 1–3), swap0, OvR argmax, OvR+NB | NB 0.7550 · hier0 0.7537 · swap0 0.7544 · OvR 0.7539 · OvR+NB 0.7551 (3 seeds, nested) | — | discarded | specialists' one-vs-rest AUC equals NB's (0.931 / 0.923 / 0.924 / 0.940): a dedicated class-0 model learns nothing NB lacks |
 | E16 | e16_weight_blend.py | **nested weight blending** of 6 feature-only members (E14 g2±EM, EM-NB base, GAM, GAM-nc, LGBM). Weights fitted on the other 4 folds: linear pool by log-loss, log-linear pool by log-loss, log-linear by macro-F1, equal geo-mean (± nested bias) | best single 0.7562 ± 0.0002 · lin_ll 0.7563 ± 0.0001 · geo_ll 0.7562 · geo_f1 0.7558 · equal 0.7557 | 0.5991 vs 0.5992 | tie, optional file | log-loss weights are stable (≈ 0.88 E14 + 0.11 GAM-nc, sd 0.02–0.05). F1-fitted weights are unstable (sd 0.2) and worse. Fold sd unchanged (0.0023), worst fold 0.7498 vs 0.7493. Test agreement 99.7%. Saved as `t2_blend_test.csv` / `blend_test_proba.npy` |
+| E17a | e17_tune_nb.py | **nested Optuna** (30 TPE trials per outer fold, objective = inner 4-fold log-loss) of the final model's global params: α_cont, α_disc, σ multiplier, EM iterations, ε mode | default 0.7562 (0.7560 / 0.7564 / 0.7561) → tuned **0.7562** (0.7563 / 0.7564 / 0.7560) | 0.5992 → 0.5992 | tie, defaults kept | inner LL gain only ≈ 0.0001. α_disc is consistently picked ≈ 0.1 (vs 1), sm_mult ≈ 1, ε learned by EM. The defaults are already optimal |
+| E17b | e17_tune_lgbm.py | nested Optuna LightGBM (25 trials per outer fold on an inner 80/20 split, log-loss) | 0.7524 (s42) vs untuned 0.7509 | 0.6170 vs 0.6173 | discarded | +0.0015 for LGBM itself, still 0.004 below NB. GBMs cannot beat the Bayes-optimal NB here |
 | — | (inline) | can the 3% label flips be predicted? (every column, id mod m, id/row position, neighbour labels) | — | — | discarded | no: flip rate is flat everywhere, a flipped label matches neighbour labels only at chance (0.24), flips are uniform over other classes (χ² p 0.44–0.84) |
 
 ## 2. player_id leak and label noise (important for the team)
@@ -120,3 +122,13 @@ reaches AUC 0.4992 (chance). NB's p(block class) alone gives AUC 0.506. The flip
 classes by NB is 0.344 / 0.333 / 0.323 (uniform). The flips are generated independently of everything in the data,
 so the CV ceiling is 0.968. The only unknown is whether Kaggle's *test* labels also carry the flips. If they are clean,
 the block rule already scores ≈ 1.0 there.
+
+## 8. Train (in-sample) vs CV
+| model | train F1 | CV F1 |
+|---|---|---|
+| NB uniform | 0.7582 | 0.7550 |
+| NB per-feature Optuna | 0.7578 | 0.7557 (nested 0.7544) |
+| final (E14 g2 + EM) | 0.7578 | 0.7562 |
+| LightGBM | 0.7925 | 0.7507 |
+| player_id block rule | 0.9678 | 0.9677 |
+NB barely overfits (gap 0.002–0.003). LightGBM overfits by about 0.04.

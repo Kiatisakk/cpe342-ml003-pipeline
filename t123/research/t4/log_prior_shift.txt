@@ -1,0 +1,70 @@
+train prior [0.394, 0.1397, 0.1774, 0.1879, 0.1011] | test argmax share [0.1516, 0.2597, 0.1517, 0.2591, 0.178] | OOF mF1 0.98886
+OOF NLL (cross-fitted): {'none': np.float64(0.15268), 'ts': np.float64(0.04999), 'bcts': np.float64(0.04345)} | T: {'none': np.float64(1.0), 'ts': np.float64(0.495), 'bcts': np.float64(0.58)}
+  EM_none          [0.0272 0.3111 0.1327 0.2745 0.2544]
+  BBSE_hard_none   [0.1491 0.2602 0.1516 0.2604 0.1787]
+  BBSE_soft_none   [0.1541 0.2518 0.1523 0.2656 0.1762]
+  EM_ts            [0.1349 0.2682 0.1454 0.2626 0.1888]
+  BBSE_hard_ts     [0.1491 0.2602 0.1516 0.2604 0.1787]
+  BBSE_soft_ts     [0.1497 0.258  0.1514 0.2618 0.179 ]
+  EM_bcts          [0.1545 0.2558 0.146  0.2727 0.1711]
+  BBSE_hard_bcts   [0.1647 0.2494 0.1522 0.2663 0.1674]
+  BBSE_soft_bcts   [0.165  0.2462 0.1526 0.2688 0.1674]
+
+[cal=ts | label_shift] reps=300 raw 0.98862+-0.00185  EM prior L1 err 0.016  (28s)
+   cal_argmax {'mean': 0.98862, 'delta_vs_raw': 0.0, 'sd': 0.0, 'P(delta>0)': 0.0, 'P(delta<0)': 0.0}
+   bias       {'mean': 0.98836, 'delta_vs_raw': -0.00025, 'sd': 0.00025, 'P(delta>0)': 0.15, 'P(delta<0)': 0.85}
+   EM         {'mean': 0.9887, 'delta_vs_raw': 8e-05, 'sd': 0.00026, 'P(delta>0)': 0.577, 'P(delta<0)': 0.423}
+   EM+bias    {'mean': 0.98848, 'delta_vs_raw': -0.00014, 'sd': 0.00026, 'P(delta>0)': 0.29, 'P(delta<0)': 0.71}
+   BBSE_hard  {'mean': 0.98872, 'delta_vs_raw': 0.0001, 'sd': 0.00028, 'P(delta>0)': 0.597, 'P(delta<0)': 0.403}
+   BBSE_soft  {'mean': 0.98872, 'delta_vs_raw': 0.0001, 'sd': 0.00028, 'P(delta>0)': 0.597, 'P(delta<0)': 0.403}
+   oracle     {'mean': 0.98871, 'delta_vs_raw': 0.0001, 'sd': 0.00027, 'P(delta>0)': 0.597, 'P(delta<0)': 0.403}
+
+[cal=ts | label_shift+conf] reps=300 raw 0.96424+-0.00576  EM prior L1 err 0.0162  (51s)
+   cal_argmax {'mean': 0.96424, 'delta_vs_raw': 0.0, 'sd': 0.0, 'P(delta>0)': 0.0, 'P(delta<0)': 0.0}
+   bias       {'mean': 0.96312, 'delta_vs_raw': -0.00112, 'sd': 0.00085, 'P(delta>0)': 0.09, 'P(delta<0)': 0.91}
+   EM         {'mean': 0.9641, 'delta_vs_raw': -0.00014, 'sd': 0.0007, 'P(delta>0)': 0.44, 'P(delta<0)': 0.56}
+   EM+bias    {'mean': 0.96297, 'delta_vs_raw': -0.00127, 'sd': 0.0006, 'P(delta>0)': 0.01, 'P(delta<0)': 0.99}
+   BBSE_hard  {'mean': 0.96411, 'delta_vs_raw': -0.00013, 'sd': 0.00071, 'P(delta>0)': 0.447, 'P(delta<0)': 0.553}
+   BBSE_soft  {'mean': 0.96411, 'delta_vs_raw': -0.00013, 'sd': 0.00071, 'P(delta>0)': 0.447, 'P(delta<0)': 0.553}
+   oracle     {'mean': 0.96409, 'delta_vs_raw': -0.00015, 'sd': 0.0007, 'P(delta>0)': 0.44, 'P(delta<0)': 0.56}
+
+[cal=ts | no_shift] reps=300 raw 0.98889+-0.00148  EM prior L1 err 0.0121  (72s)
+   cal_argmax {'mean': 0.98889, 'delta_vs_raw': 0.0, 'sd': 0.0, 'P(delta>0)': 0.0, 'P(delta<0)': 0.0}
+   bias       {'mean': 0.98903, 'delta_vs_raw': 0.00014, 'sd': 0.00033, 'P(delta>0)': 0.687, 'P(delta<0)': 0.313}
+   EM         {'mean': 0.98884, 'delta_vs_raw': -5e-05, 'sd': 0.00011, 'P(delta>0)': 0.257, 'P(delta<0)': 0.55}
+   EM+bias    {'mean': 0.9891, 'delta_vs_raw': 0.00021, 'sd': 0.00034, 'P(delta>0)': 0.743, 'P(delta<0)': 0.257}
+   BBSE_hard  {'mean': 0.98888, 'delta_vs_raw': -1e-05, 'sd': 0.0001, 'P(delta>0)': 0.31, 'P(delta<0)': 0.297}
+   BBSE_soft  {'mean': 0.98888, 'delta_vs_raw': -1e-05, 'sd': 0.0001, 'P(delta>0)': 0.303, 'P(delta<0)': 0.283}
+   oracle     {'mean': 0.98889, 'delta_vs_raw': -0.0, 'sd': 8e-05, 'P(delta>0)': 0.28, 'P(delta<0)': 0.217}
+
+[cal=bcts | label_shift] reps=300 raw 0.98853+-0.00189  EM prior L1 err 0.0047  (101s)
+   cal_argmax {'mean': 0.98741, 'delta_vs_raw': -0.00112, 'sd': 0.00068, 'P(delta>0)': 0.023, 'P(delta<0)': 0.977}
+   bias       {'mean': 0.98721, 'delta_vs_raw': -0.00132, 'sd': 0.00101, 'P(delta>0)': 0.02, 'P(delta<0)': 0.98}
+   EM         {'mean': 0.98851, 'delta_vs_raw': -2e-05, 'sd': 0.00022, 'P(delta>0)': 0.473, 'P(delta<0)': 0.527}
+   EM+bias    {'mean': 0.98828, 'delta_vs_raw': -0.00025, 'sd': 0.00058, 'P(delta>0)': 0.483, 'P(delta<0)': 0.517}
+   BBSE_hard  {'mean': 0.9885, 'delta_vs_raw': -2e-05, 'sd': 0.00022, 'P(delta>0)': 0.473, 'P(delta<0)': 0.527}
+   BBSE_soft  {'mean': 0.98851, 'delta_vs_raw': -2e-05, 'sd': 0.00022, 'P(delta>0)': 0.477, 'P(delta<0)': 0.523}
+   oracle     {'mean': 0.98851, 'delta_vs_raw': -2e-05, 'sd': 0.00022, 'P(delta>0)': 0.483, 'P(delta<0)': 0.517}
+
+[cal=bcts | label_shift+conf] reps=300 raw 0.96438+-0.00583  EM prior L1 err 0.0214  (123s)
+   cal_argmax {'mean': 0.96047, 'delta_vs_raw': -0.00391, 'sd': 0.00178, 'P(delta>0)': 0.0, 'P(delta<0)': 1.0}
+   bias       {'mean': 0.95972, 'delta_vs_raw': -0.00466, 'sd': 0.00342, 'P(delta>0)': 0.0, 'P(delta<0)': 1.0}
+   EM         {'mean': 0.96383, 'delta_vs_raw': -0.00055, 'sd': 0.00044, 'P(delta>0)': 0.123, 'P(delta<0)': 0.877}
+   EM+bias    {'mean': 0.96292, 'delta_vs_raw': -0.00145, 'sd': 0.00246, 'P(delta>0)': 0.5, 'P(delta<0)': 0.5}
+   BBSE_hard  {'mean': 0.96381, 'delta_vs_raw': -0.00056, 'sd': 0.00045, 'P(delta>0)': 0.12, 'P(delta<0)': 0.88}
+   BBSE_soft  {'mean': 0.96377, 'delta_vs_raw': -0.00061, 'sd': 0.00045, 'P(delta>0)': 0.107, 'P(delta<0)': 0.893}
+   oracle     {'mean': 0.96396, 'delta_vs_raw': -0.00042, 'sd': 0.00044, 'P(delta>0)': 0.2, 'P(delta<0)': 0.8}
+
+[cal=bcts | no_shift] reps=300 raw 0.98888+-0.00141  EM prior L1 err 0.0033  (145s)
+   cal_argmax {'mean': 0.98876, 'delta_vs_raw': -0.00012, 'sd': 0.00044, 'P(delta>0)': 0.413, 'P(delta<0)': 0.587}
+   bias       {'mean': 0.98864, 'delta_vs_raw': -0.00024, 'sd': 0.00038, 'P(delta>0)': 0.287, 'P(delta<0)': 0.713}
+   EM         {'mean': 0.98875, 'delta_vs_raw': -0.00013, 'sd': 0.00043, 'P(delta>0)': 0.413, 'P(delta<0)': 0.587}
+   EM+bias    {'mean': 0.98865, 'delta_vs_raw': -0.00023, 'sd': 0.00037, 'P(delta>0)': 0.283, 'P(delta<0)': 0.717}
+   BBSE_hard  {'mean': 0.98875, 'delta_vs_raw': -0.00013, 'sd': 0.00043, 'P(delta>0)': 0.413, 'P(delta<0)': 0.587}
+   BBSE_soft  {'mean': 0.98875, 'delta_vs_raw': -0.00013, 'sd': 0.00043, 'P(delta>0)': 0.413, 'P(delta<0)': 0.587}
+   oracle     {'mean': 0.98876, 'delta_vs_raw': -0.00013, 'sd': 0.00044, 'P(delta>0)': 0.42, 'P(delta<0)': 0.58}
+
+nested 5-fold bias on OOF: {'raw_argmax': 0.98886, 'ts_argmax': 0.98886, 'ts+bias': 0.98877, 'bcts_argmax': 0.98868, 'bcts+bias': 0.98856}
+test [ts] {'EM_prior': [0.1349, 0.2682, 0.1454, 0.2626, 0.1888], 'share_after_EM': [0.143, 0.2677, 0.1452, 0.261, 0.183], 'changed_by_calibration_only': 0, 'changed_by_cal+EM_vs_raw': 464, 'change_matrix_rows_raw_cols_new': [[3702, 78, 24, 29, 91], [0, 6723, 0, 0, 0], [0, 101, 3736, 72, 18], [0, 29, 0, 6657, 22], [0, 0, 0, 0, 4607]]}
+test [bcts] {'EM_prior': [0.1545, 0.2558, 0.146, 0.2727, 0.1711], 'share_after_EM': [0.1563, 0.2581, 0.1459, 0.2697, 0.17], 'changed_by_calibration_only': 766, 'changed_by_cal+EM_vs_raw': 471, 'change_matrix_rows_raw_cols_new': [[3921, 0, 0, 3, 0], [39, 6620, 0, 64, 0], [28, 17, 3769, 113, 0], [0, 0, 0, 6708, 0], [58, 46, 9, 94, 4400]]}
+wrote t123/research/t4/results_prior_shift.json

@@ -3,7 +3,8 @@ kaggle.json
 *.env
 .env*
 # not needed for T1-T3 research
-cpe342-kaggle-main/04_image_classification/
+cpe342-kaggle-main/04_image_classification/train/
+cpe342-kaggle-main/04_image_classification/test/
 task4/preds/
 masking/probes/
 masking/tmlp_work/

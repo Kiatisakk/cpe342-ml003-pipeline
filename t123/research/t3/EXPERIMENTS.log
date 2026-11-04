@@ -15,3 +15,4 @@ E12 | CatBoost MultiQuantile (11 alphas) d8 lr .06, offset log prev + extra feat
 E13 | whale specialist (XGB-q on seg-3 payers, offset) geometric-mixed with E07 by p_whale | 0.79148 | 0.79154 +- 0.0081 | discard | -0.0026: specialist has less data, general model already shares structure
 E14 | E07 with lr 0.02 | 0.79402 | 0.79407 +- 0.0075 | discard | same as lr .05, 2.5x slower
 E15 | E07 with depth 5 | 0.79424 | 0.79429 +- 0.0076 | neutral | +0.0002 vs d7 (noise); slightly shallower is fine
+E16 | E07 with depth 9, mcw 10 | 0.79321 | 0.79325 +- 0.0076 | discard | deeper is worse; d5 >= d7 > d9

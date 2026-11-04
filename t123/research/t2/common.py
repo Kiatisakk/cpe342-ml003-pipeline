@@ -19,7 +19,7 @@ SEEDS = (42, 7, 123)
 
 tr = pd.read_csv(f'{ROOT}/train.csv')
 te = pd.read_csv(f'{ROOT}/test.csv')
-y = tr.segment.astype(int).values
+y = tr.segment.astype(int).values.copy()
 N, NT = len(tr), len(te)
 
 NOISE = ['random_metric_1', 'random_metric_2', 'random_metric_3', 'account_age_days', 'responds_to_discounts',

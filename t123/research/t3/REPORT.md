@@ -60,6 +60,13 @@ Files: `best_oof.csv` (y, pred; train row order) and `t3_best_test.csv` (id ANS0
 * Analyses: rows with missing prev_month are not worse (err ratio 0.252 vs 0.258) → no imputation gain; whale log-residuals of the
   final model vary ≤ 0.04 across deciles of every feature → no marginal feature signal left. 6 consecutive ideas without gain → stopped.
 
+## Round 3: post-processing (`postproc.py`, all nested: tuned on 4 folds, applied to the 5th)
+Seven calibrations on top of the final model — global / per-segment p-shift + scale, global / per-segment shift of the chosen
+quantile level, per-prediction-bin MAE-optimal scale (weighted median of y/pred), segment x bin scale, zeroing small predictions —
+all land within ±0.00001 of the raw 0.79529 (paired sd 0.00002-0.00005). The tuned parameters sit at the identity
+(shift ~0, kappa ~1.00, bin scales 0.99-1.01). The hurdle-median rule already gives the MAE-optimal per-row prediction, so
+post-processing has nothing left to correct; the final files are unchanged.
+
 ## Every experiment
 | id | experiment | OOF NMAE | fold mean ± sd | decision | note |
 |---|---|---|---|---|---|
@@ -112,9 +119,16 @@ Files: `best_oof.csv` (y, pred; train row order) and `t3_best_test.csv` (id ANS0
 | R2-07 | bag 5 = final 3 CB d4 seeds + l2-10 + lr-.03 | 0.79528 | 0.79532 +- 0.0076 | neutral | = final (0.79529): CB bag saturated |
 | R2-08 | from-scratch MLP (3x256, SiLU, BN) 11-quantile pinball on offset target, 2 seeds, 3-seed p | 0.78430 | 0.78436 +- 0.0080 | discard | nested LAD with final bag gives NN weight 0.000 in all folds (0.79528) |
 | R2-09 | ROBUSTNESS: new fold split (FOLD_SEED=7): v4-equivalent XGB (no offset) vs final-recipe CB d4 (1 seed each, same p) | 0.79183 -> 0.79531 | paired +0.00348 +- 0.00045 (5/5 folds) | confirms | original folds same pair: +0.00344 |
+| R3-A | post-proc (nested) on final: global (p-shift, kappa) | 0.79530 | paired +0.00001 +- 0.00005 | discard | params ~ (0.02, 1.00) |
+| R3-B | post-proc (nested): per-segment (p-shift, kappa) | 0.79529 | paired +0.00000 +- 0.00005 | discard | |
+| R3-C | post-proc (nested): global quantile-level offset delta + kappa | 0.79527 | paired -0.00001 +- 0.00002 | discard | |
+| R3-D | post-proc (nested): per-segment delta + kappa | 0.79527 | paired -0.00001 +- 0.00003 | discard | |
+| R3-E | post-proc (nested): per prediction-decile MAE-optimal scale (weighted median y/pred) | 0.79530 | paired +0.00001 +- 0.00005 | discard | scales 0.99-1.01 |
+| R3-F | post-proc (nested): segment x 5 pred-bins scale | 0.79528 | paired -0.00001 +- 0.00004 | discard | |
+| R3-G | post-proc (nested): zero out preds below c (c in 0..800) | 0.79529 | paired 0 | discard | picks c = 0 |
 
 ## Scripts
 `common.py` (data, folds, metric, hurdle median), `exp_lgb_hurdle.py` (LGB clf + per-alpha quantiles), `exp_xgbq.py` (XGB multi-quantile, offsets,
 weights, whale subset, seed bag), `exp_cbq.py` (CatBoost MultiQuantile), `exp_direct.py` (direct log-link MAE), `calib_nested.py`, `mix_whale.py`, `exp_nnq.py` (from-scratch NN),
-`avg_q.py` (bagging + hurdle), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
+`avg_q.py` (bagging + hurdle), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
 OOF/test arrays are written to `oof/` (git-ignored, regenerate with the scripts); data cache in `cache/` (git-ignored).

@@ -126,3 +126,18 @@ Round 2: error analysis showed the error is concentrated in rows missing reports
 
 Not done: monotone constraints. They are unlikely to help, because the class signal is zone-shaped rather than monotone.
 Possible next steps: combine the compact feature set with augmentation; more bags or seeds for the test prediction (variance only).
+
+## How far is 0.79 F2-macro? (round 4, `exp18_ceiling.py`, `out/exp18.log`)
+- **AUC needed.** Push the final OOF score towards the labels by a controlled amount and read off the score.
+  - 0.79 F2-macro needs overall AUC ≈ 0.900 (now 0.8948).
+  - Inside the 60k-row "core" (the 34% of rows in class-exclusive zones are already 100% correct), that means AUC ≈ 0.786 instead of 0.773, i.e. about 6% fewer mis-ordered core pairs.
+- **Learning curve.** Train LGB on fe_v2 with 10–100% of each fold's training rows, 3 seeds:
+  - F2m: 0.7625 → 0.7725 → 0.7767 → 0.7787 → 0.7796 → 0.7811
+  - power-law fit: asymptote **0.7833** F2m and **AUC 0.8939** with unlimited data
+  - The final ensemble (0.7828 / 0.8948) is already at that asymptote, so more data, capacity or tuning cannot reach 0.79.
+- **Hidden-identity search.** Predict each of the 31 columns from all the others (log-linear and LGB, held-out R²).
+  - Only the known `lps = level·r/age` identity shows up: age R² 0.79, lps R² 0.73.
+  - Every other column has R² ≤ 0.5: friends 0.50 via the age segments, the rest < 0.3, and the noise columns ≈ 0.
+  - No second hidden formula is left to exploit.
+- **Conclusion.** With an honest CV, about 0.783 F2-macro is the information ceiling of these features. 0.79 would need information the data does not contain, or test-set leakage, which the course rules forbid.
+- **The plausible route to a higher *leaderboard* T1 number is the metric definition, not the model.** If the LB scores F2 of the positive class, the same model already gives 0.839 nested, and the right file is `t1_best_test_binaryF2.csv`. The leave-one-task-out probe in CLAUDE.md §5 can tell which definition is used.

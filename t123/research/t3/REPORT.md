@@ -88,6 +88,15 @@ For robustness without tuning, `robust_oof.csv` / `t3_robust_test.csv` hold a **
 test predictions correlate 0.99997 with the final file (mean |diff| 0.6 %). Both files are equally valid; the robust one depends less on a
 single algorithm/config.
 
+## Round 6: hyper-parameter tuning (Optuna, `tune_cb.py`) and train-set scores
+* Optuna TPE, 31 trials, search over depth / l2 / random_strength / bagging_temperature / rsm / border_count / grow_policy.
+  Trials were scored on folds 0-1 only; folds 2-4 were held out. Best on folds 0-1: 0.78719 vs 0.78700 for the current params.
+* Full 5-fold OOF of the two best configs (1 seed each): 0.79509 and 0.79515 vs 0.79512 for the current params.
+  On the held-out folds 2-4 they are −0.00013 and −0.00004 → the tuning gain was fitting noise of the tuning folds; current params kept.
+* In-sample (train) score — model fitted on all train rows and evaluated on the same rows: 0.80356 (current) / 0.80299 (Optuna).
+  The train/OOF gap (~0.008) is a mild overfit, and even on the data it was trained on the model reaches only ~0.80, which again
+  shows that the target noise, not the model, limits the score.
+
 ## Every experiment
 | id | experiment | OOF NMAE | fold mean ± sd | decision | note |
 |---|---|---|---|---|---|
@@ -156,9 +165,13 @@ single algorithm/config.
 | R5-02 | nested greedy forward selection (Caruana, 40 steps) on predictions | 0.79524 | 0.79529 +- 0.0077 | discard | paired -0.00004 +- 0.00009; ~0.67 cb_d4 + small xgb/cb_d3 shares |
 | R5-03 | nested greedy selection on log-quantiles (blend before hurdle rule) | 0.79523 | 0.79528 +- 0.0077 | discard | paired -0.00006 +- 0.00008 |
 | R5-04 | UNTUNED family-equal blend: CB d4 x3, CB d3, CB d6 x3, XGB d5 x3 (each family 1/4, geo-mean quantiles) | 0.79526 | 0.79531 +- 0.0076 | alternative file | paired vs final -0.00003 +- 0.00015 (noise); worst fold 0.78336 vs 0.78328; test corr 0.99997 -> robust_oof.csv / t3_robust_test.csv |
+| R6-01 | Optuna TPE (31 trials, median pruner) CatBoost offset-q: depth, l2, random_strength, bagging_temp, rsm, border, grow_policy; scored on folds 0-1 only | best 0.78719 (folds 0-1) vs current params 0.78700 | - | info | top configs all depth 3-4 SymmetricTree; Depthwise / depth >=5 worse |
+| R6-02 | Optuna trial 20 (d3, l2 5.7, rs .05, bt .27, rsm .75, border 128): full 5-fold OOF, 1 seed | 0.79509 | 0.79514 +- 0.0074 | discard | vs current d4 1 seed: folds 0-1 +0.00013, HELD-OUT folds 2-4 -0.00013 -> tuning gain does not transfer |
+| R6-03 | Optuna trial 29 (d3, l2 8.7, rs .22, bt .33, rsm .91): full OOF, 1 seed | 0.79515 | 0.79520 +- 0.0074 | discard | folds 0-1 +0.00015, HELD-OUT folds 2-4 -0.00004 (noise) |
+| R6-04 | IN-SAMPLE train score (fit on all train, predict same rows; optimistic) | final d4 0.80356 / optuna d3 0.80299 | - | info | vs OOF 0.7951: gap ~0.008 = mild overfit; even in-sample the model only reaches ~0.80 -> target noise dominates |
 
 ## Scripts
 `common.py` (data, folds, metric, hurdle median), `exp_lgb_hurdle.py` (LGB clf + per-alpha quantiles), `exp_xgbq.py` (XGB multi-quantile, offsets,
 weights, whale subset, seed bag), `exp_cbq.py` (CatBoost MultiQuantile), `exp_direct.py` (direct log-link MAE), `calib_nested.py`, `mix_whale.py`, `exp_nnq.py` (from-scratch NN),
-`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `blend_nested.py` (nested weight blending), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
+`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `blend_nested.py` (nested weight blending), `tune_cb.py` (Optuna), `insample.py`, `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
 OOF/test arrays are written to `oof/` (git-ignored, regenerate with the scripts); data cache in `cache/` (git-ignored).

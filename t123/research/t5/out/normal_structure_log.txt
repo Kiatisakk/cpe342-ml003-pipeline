@@ -1,0 +1,5 @@
+1. 4-feature scan, 14950 combinations on 23834 normal rows
+   real top z = 6.27 ['activity_level', 'friend_adds', 'reaction_time_mean', 'account_age_days'] (74 rows vs 36.3 expected)
+   shuffled-null top z over 6 reps: [5.81, 6.11, 5.97, 5.48, 6.62, 5.77]  -> real is inside the null range
+   calibration (normal + 244 new-type rows): top z = 9.90 ['accuracy_std', 'kda_std', 'location_changes', 'performance_stability']
+2. t-SNE written to figs/fig3_tsne.png

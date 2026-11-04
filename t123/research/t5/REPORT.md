@@ -158,3 +158,15 @@ Overlap with the union: **1,811/1,811 reproduced, 0 extra**, plus 244 new rows =
 * Global real-vs-shuffled classifier: too weak (R2.1).
 * Isolation Forest / TMLP / TMAE extensions: unstructured tails.
 * Gaussian-EM cuts p10/p50/p90 are superseded by the exact box.
+
+## Round 3 — structure inside the rows still called normal (`t5_normal_structure.py`, `out/normal_structure_log.txt`)
+* **4-feature scan:** all 14,950 combinations of 4 of the 28 means/statics, 5⁴ rank cells, on the 23,834 normal rows. Real top z = **6.27** (activity × friend_adds × reaction_time × account_age; every pair inside it is z ≤ 2.4). Six independent column-shuffle nulls give 5.48–6.62, so the real top is **inside the null range**. Calibration: putting the 244 new-type rows back gives z = **9.9**, so a type of that size would be found.
+* **GMM (BIC) and HDBSCAN on all 28 dims:** real and shuffled data behave the same.
+  * HDBSCAN's only extra cluster (3,877 rows) is the friend_removes = 0 clipping spike.
+  * Neither method isolates the 244 new-type rows in calibration (they come out at 1% share), so full-dimensional clustering is too weak here.
+* **t-SNE** (`figs/fig3_tsne.png`, 56 features):
+  * bot, takeover, selling and VPN are separate islands.
+  * The new type shows as a dense patch at the blob edge.
+  * lowact, lowcomm and lowstab dissolve into the blob.
+
+  So a smooth normal blob is **not** proof that no clusters remain. The low-dimensional scans are, and all of them are at null level.

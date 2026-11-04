@@ -33,6 +33,9 @@ if a.extra:
 def offset(Z, lin=None):
     if a.offset == "none": return np.zeros(len(Z))
     lp = Z["log_prev_month_spending"].values
+    if a.offset == "hist":
+        lh = Z["log_historical_spending"].values; o = np.where(np.isnan(lh), Z["log_prev_month_spending"].values + 1.05, lh - 1.05)
+        return np.where(np.isnan(o), 6.5, o)
     if a.offset == "prev":
         fb = Z["log_historical_spending"].values - 1.05     # median log(prev/hist) ~ -1.05 (fallback only)
         o = np.where(np.isnan(lp), fb, lp); return np.where(np.isnan(o), 6.5, o)

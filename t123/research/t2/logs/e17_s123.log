@@ -1,0 +1,1 @@
+seed 123 fold 0: inner LL default 0.59903 best 0.59895 | outer F1 default 0.7558 tuned 0.7561 | {'alpha_cont': 1.6573403528209967, 'alpha_disc': 0.19424794209883262, 'sm_mult': 0.8842307159404702, 'em_iters': 30, 'eps_mode': 'fixed'}

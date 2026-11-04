@@ -59,3 +59,4 @@ R4-01 | analysis: leakage checks (player_id / row order vs zero AUC 0.497/0.499,
 R4-02 | analysis: error decomposition of final | E/Y 0.2574 | - | info | zeros predicted >0: 0.085 (33%), payers amount: 0.166 (65%), payers predicted 0: 0.007; 0.80 needs E/Y 0.250 (-2.9% error)
 R4-03 | LEARNING CURVE amount model (CB d4 1 seed, 3-seed p) on 25/50/75/100% of each training fold | 0.79341 / 0.79445 / 0.79501 / 0.79512 | - | info | gain per doubling +0.0010 -> +0.0007 (x0.6) -> extrapolated limit ~0.796-0.797 even with unlimited data
 R4-04 | LEARNING CURVE classifier (LGB) on 25/50/75/100% | AUC 0.7819 / 0.7830 / 0.7836 / 0.7838 | - | info | flat: limit ~0.785
+R4-05 | classifier CatBoost d6 / d4, XGB d5 (vs LGB 3-seed AUC 0.78409) | AUC 0.78446 / 0.78443 / 0.78413 | - | discard | final with CB-d6 p: 0.79531, with 4-model p mix: 0.79531 (+0.00002 = noise)

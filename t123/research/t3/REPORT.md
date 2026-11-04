@@ -67,6 +67,18 @@ all land within ±0.00001 of the raw 0.79529 (paired sd 0.00002-0.00005). The tu
 (shift ~0, kappa ~1.00, bin scales 0.99-1.01). The hurdle-median rule already gives the MAE-optimal per-row prediction, so
 post-processing has nothing left to correct; the final files are unchanged.
 
+## Round 4: can T3 reach 0.80? (ceiling analysis)
+* 0.80 needs the error ratio Σ|e|/Σy to fall from 0.2574 to 0.2500 (−2.9 % of all error).
+* Error decomposition of the final model: amount error on predicted payers 0.166 (65 %), zero-spenders predicted > 0
+  0.085 (33 %), payers predicted 0 0.007.
+* No leakage to exploit: player_id / row order carry no signal (AUC 0.50), no duplicate rows, "odd decimals" in y are float artefacts.
+* **Learning curves** (same folds, training fold subsampled): amount model 25/50/75/100 % → 0.79341 / 0.79445 / 0.79501 / 0.79512;
+  each doubling gives ~0.6x the previous gain, so even unlimited data from the same distribution extrapolates to only **~0.796–0.797**.
+  Classifier AUC 0.7819 / 0.7830 / 0.7836 / 0.7838 → flat (~0.785).
+* Stronger classifiers (CatBoost d4/d6, XGB) raise AUC by 0.0004 and the score by 0.00002.
+* Conclusion: with these features the T3 OOF ceiling is ≈ 0.796–0.797; 0.80 is not reachable by modelling or post-processing.
+  The final recipe (0.79529) is within ~0.0015 of that ceiling. Final files unchanged.
+
 ## Every experiment
 | id | experiment | OOF NMAE | fold mean ± sd | decision | note |
 |---|---|---|---|---|---|
@@ -126,9 +138,14 @@ post-processing has nothing left to correct; the final files are unchanged.
 | R3-E | post-proc (nested): per prediction-decile MAE-optimal scale (weighted median y/pred) | 0.79530 | paired +0.00001 +- 0.00005 | discard | scales 0.99-1.01 |
 | R3-F | post-proc (nested): segment x 5 pred-bins scale | 0.79528 | paired -0.00001 +- 0.00004 | discard | |
 | R3-G | post-proc (nested): zero out preds below c (c in 0..800) | 0.79529 | paired 0 | discard | picks c = 0 |
+| R4-01 | analysis: leakage checks (player_id / row order vs zero AUC 0.497/0.499, no train-test or train dup rows; odd decimals = float artefact) | - | - | no run | nothing to exploit |
+| R4-02 | analysis: error decomposition of final | E/Y 0.2574 | - | info | zeros predicted >0: 0.085 (33%), payers amount: 0.166 (65%), payers predicted 0: 0.007; 0.80 needs E/Y 0.250 (-2.9% error) |
+| R4-03 | LEARNING CURVE amount model (CB d4 1 seed, 3-seed p) on 25/50/75/100% of each training fold | 0.79341 / 0.79445 / 0.79501 / 0.79512 | - | info | gain per doubling +0.0010 -> +0.0007 (x0.6) -> extrapolated limit ~0.796-0.797 even with unlimited data |
+| R4-04 | LEARNING CURVE classifier (LGB) on 25/50/75/100% | AUC 0.7819 / 0.7830 / 0.7836 / 0.7838 | - | info | flat: limit ~0.785 |
+| R4-05 | classifier CatBoost d6 / d4, XGB d5 (vs LGB 3-seed AUC 0.78409) | AUC 0.78446 / 0.78443 / 0.78413 | - | discard | final with CB-d6 p: 0.79531, with 4-model p mix: 0.79531 (+0.00002 = noise) |
 
 ## Scripts
 `common.py` (data, folds, metric, hurdle median), `exp_lgb_hurdle.py` (LGB clf + per-alpha quantiles), `exp_xgbq.py` (XGB multi-quantile, offsets,
 weights, whale subset, seed bag), `exp_cbq.py` (CatBoost MultiQuantile), `exp_direct.py` (direct log-link MAE), `calib_nested.py`, `mix_whale.py`, `exp_nnq.py` (from-scratch NN),
-`avg_q.py` (bagging + hurdle), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
+`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
 OOF/test arrays are written to `oof/` (git-ignored, regenerate with the scripts); data cache in `cache/` (git-ignored).

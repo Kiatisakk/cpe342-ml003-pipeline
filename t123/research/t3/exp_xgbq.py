@@ -53,6 +53,18 @@ for k, (tr, va) in enumerate(F):
             S = np.column_stack([(Z["segment"].values == s) for s in range(4)]).astype(float)
             return np.column_stack([M, S, M * S[:, [3]]])
         lr_ = LinearRegression().fit(design(Xp), lt); lin = lambda Z: lr_.predict(design(Z))
+    if a.offset == "linfull":  # per-segment ridge on all features (median-filled, + missing flags), train-fold payers only
+        from sklearn.linear_model import Ridge
+        cols = list(Xp.columns); med = Xp[cols].median(); mu_, sd_ = None, None
+        def dz(Z):
+            M = Z[cols].fillna(med).values; return np.column_stack([M, Z[cols].isna().values[:, :32].astype(float)])
+        Mp = dz(Xp); mu_, sd_ = Mp.mean(0), Mp.std(0) + 1e-9
+        segs = Xp["segment"].values.astype(int); RM = {}
+        for s in range(4): RM[s] = Ridge(1.0).fit((Mp[segs == s] - mu_) / sd_, lt[segs == s])
+        def lin(Z):
+            M = (dz(Z) - mu_) / sd_; sg = Z["segment"].values.astype(int); o = np.zeros(len(Z))
+            for s in range(4): o[sg == s] = RM[s].predict(M[sg == s])
+            return o
     oa = offset(Xp, lin); r = lt - oa
     w = np.exp(oa * a.wscale) if a.wscale else np.ones(len(r)); w = w / w.mean()
     i, j = train_test_split(np.arange(len(r)), test_size=0.1, random_state=a.seed)

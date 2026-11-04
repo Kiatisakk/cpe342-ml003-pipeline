@@ -65,6 +65,7 @@ It is also higher than the over-optimistic 0.7557.
 | E14 | e14_llselect.py <s> g2 1 | **g2 + label-noise EM-NB** | **0.7562 ± 0.0002** (nested bias 0.7560) | **0.5993** | **KEPT (final feature-only)** | honest +0.0012 vs uniform baseline, +0.0018 vs nested Optuna |
 | E14 | e14_llselect.py 42 g3 1 | grid further out, bins {128,256,512} × σ {6..24} | 0.7557 (s42 vs 0.7560 for g2) | — | discarded | over-smoothing |
 | E08 | e08_blend.py | geo-mean / nested LR stack of the E14 + EM-NB variants | 0.7561 / 0.7560 | 0.6075 / 0.5996 | discarded | no gain over E14 g2+EM alone |
+| E15 | e15_specialists.py | class specialists: binary LightGBM "class k vs rest" (raw features + honest NB log-posteriors). Rules: hier0 (class-0 specialist first, then NB among 1–3), swap0, OvR argmax, OvR+NB | NB 0.7550 · hier0 0.7537 · swap0 0.7544 · OvR 0.7539 · OvR+NB 0.7551 (3 seeds, nested) | — | discarded | specialists' one-vs-rest AUC equals NB's (0.931 / 0.923 / 0.924 / 0.940): a dedicated class-0 model learns nothing NB lacks |
 | — | (inline) | can the 3% label flips be predicted? (every column, id mod m, id/row position, neighbour labels) | — | — | discarded | no: flip rate is flat everywhere, a flipped label matches neighbour labels only at chance (0.24), flips are uniform over other classes (χ² p 0.44–0.84) |
 
 ## 2. player_id leak and label noise (important for the team)
@@ -104,3 +105,10 @@ The stop rule fired: more than 6 consecutive ideas (E01, E02, E04×3, E05×2, E0
 ## 5. Round 2 ("research more")
 Added E11–E14 and the flip / parametric / T3 / sharp-edge checks. Kept: E14 g2 + EM (+0.0012 honest).
 The feature-only track is now within ≈ 0.001–0.002 of its learning-curve ceiling. The ID track is at its ceiling (flips are random).
+
+## 6. Decision: use the leak for T2 (user request)
+* The submission T2 = `t2_idleak_test.csv` (player_id block rule). CV macro-F1 0.9677, the ceiling: P(label | id block) is
+  0.97 / 0.01 / 0.01 / 0.01, so argmax is macro-F1-optimal and nothing (features included) can fix the random 3% flips.
+* `swap_t2.py <sub_v6.csv> <sub_v7.csv>` puts it into an existing 5-task file (checks ids / row count). It changes about 21% of T2 rows vs `t2_nb.csv`.
+* Expected public-LB change ≈ w_T2 × (0.968 − 0.756) ≈ +0.05 if w_T2 ≈ 0.25.
+* Disclose in the report that T2 uses the player_id ordering (a data-generation artefact). No test rows are used for training.

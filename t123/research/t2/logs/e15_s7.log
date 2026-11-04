@@ -1,0 +1,15 @@
+seed 7 fold 0: NB 0.7567  OvR 0.7560
+seed 7 fold 1: NB 0.7588  OvR 0.7585
+seed 7 fold 2: NB 0.7539  OvR 0.7528
+seed 7 fold 3: NB 0.7537  OvR 0.7512
+seed 7 fold 4: NB 0.7550  OvR 0.7561
+class 0: AUC one-vs-rest  NB 0.9314  specialist 0.9311
+class 1: AUC one-vs-rest  NB 0.9230  specialist 0.9229
+class 2: AUC one-vs-rest  NB 0.9241  specialist 0.9243
+class 3: AUC one-vs-rest  NB 0.9401  specialist 0.9404
+nb             macro-F1 0.7556
+nb+bias        macro-F1 0.7554
+hier0          macro-F1 0.7537
+swap0+bias     macro-F1 0.7545
+ovr+bias       macro-F1 0.7542
+ovr+nb+bias    macro-F1 0.7554

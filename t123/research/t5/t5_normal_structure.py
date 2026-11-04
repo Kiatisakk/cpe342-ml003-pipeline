@@ -6,7 +6,8 @@ Usage (from repo root, after t5_pipeline.py and t5_box_analysis.py):
    the normal rows vs 6 column-shuffled nulls (same marginals, no dependence); calibration with the new
    type put back.
 2. t-SNE map (figs/fig3_tsne.png): 6,000 normal rows + every flagged row; left = real, right = the same
-   normal rows column-shuffled (what "no structure" looks like). Every injected type should be an island.
+   normal rows column-shuffled. Only types that differ in many features become islands; 2-3-feature types
+   (incl. the new one) do not, so a smooth blob is NOT evidence of no clusters - the low-dimensional scans are.
 Log: out/normal_structure_log.txt
 """
 import itertools, numpy as np, pandas as pd, matplotlib, warnings
@@ -30,7 +31,8 @@ def scan(D, B=5):
         cnt = np.bincount(idx, minlength=B ** 4); e = v.sum() / B ** 4
         out.append(((cnt.max() - e) / np.sqrt(e), [D.columns[i] for i in c], int(cnt.max()), round(e, 1)))
     return sorted(out, key=lambda t: -t[0])
-shuf = lambda D, s: pd.DataFrame({c: np.random.default_rng(s).permutation(D[c].values) for c in D.columns})
+def shuf(D, s):   # independent permutation of every column (breaks dependence, keeps marginals)
+    g = np.random.default_rng(s); return pd.DataFrame({c: g.permutation(D[c].values) for c in D.columns})
 Fn = F[norm].reset_index(drop=True)
 real = scan(Fn); nulls = [scan(shuf(Fn, s))[0][0] for s in range(1, 7)]
 say(f"1. 4-feature scan, {len(real)} combinations on {len(Fn)} normal rows")
@@ -82,7 +84,7 @@ ax.set_title("Null: the same 6,000 normal rows, each column shuffled", loc="left
 for a in axs: a.set_xticks([]); a.set_yticks([]); [s.set_visible(False) for s in a.spines.values()]
 h = [plt.Line2D([], [], marker="o", ls="", ms=6, mfc=c, mec=c, label=l) for c, l in [(NORMAL, "normal (final set = 0)"), (BLUE, "type in current union"), (ORANGE, "NEW type")]]
 fig.legend(handles=h, loc="upper center", ncol=3, frameon=False, bbox_to_anchor=(.5, .955))
-fig.suptitle("t-SNE of 4-period means + period-4 changes: each injected type is an island; the normal rows form one blob, like the shuffled null",
+fig.suptitle("t-SNE (56 features): bots and the 3 shock types form islands, but types defined by only 2-3 features (lowact, lowcomm, lowstab, NEW) dissolve into the blob",
              x=.01, ha="left", y=.995, fontsize=12, weight="bold")
 fig.tight_layout(rect=(0, 0, 1, .93)); fig.savefig("t123/research/t5/figs/fig3_tsne.png", dpi=160)
 say("2. t-SNE written to figs/fig3_tsne.png")

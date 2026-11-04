@@ -1,0 +1,8 @@
+{"name": "baseline_blend(xgb+lgb+cat, repo)", "auc": 0.89248, "f2m": 0.78026, "f2m_nested": 0.77987, "f2b": 0.83834, "f2b_nested": 0.83819, "pos_rate_m": 0.405, "pos_rate_b": 0.635}
+{"name": "baseline_xgb(repo)", "auc": 0.89137, "f2m": 0.77896, "f2m_nested": 0.77804, "f2b": 0.83774, "f2b_nested": 0.83723, "pos_rate_m": 0.4025, "pos_rate_b": 0.635}
+{"name": "baseline_lgb(repo)", "auc": 0.89193, "f2m": 0.77936, "f2m_nested": 0.77841, "f2b": 0.83747, "f2b_nested": 0.83748, "pos_rate_m": 0.3975, "pos_rate_b": 0.6323}
+{"name": "baseline_cat(repo)", "auc": 0.89124, "f2m": 0.77898, "f2m_nested": 0.77788, "f2b": 0.83726, "f2b_nested": 0.83695, "pos_rate_m": 0.4125, "pos_rate_b": 0.6404}
+{"name": "exp01 lgb raw15", "auc": 0.89166, "f2m": 0.77959, "f2m_nested": 0.77903, "f2b": 0.83687, "f2b_nested": 0.83664, "pos_rate_m": 0.42, "pos_rate_b": 0.6296, "nfeat": 15, "iters": [241, 170, 296, 516, 386], "time": "0.3m"}
+{"name": "exp01 lgb raw31", "auc": 0.89129, "f2m": 0.78011, "f2m_nested": 0.77998, "f2b": 0.83709, "f2b_nested": 0.83701, "pos_rate_m": 0.3875, "pos_rate_b": 0.6323, "nfeat": 31, "iters": [157, 177, 175, 151, 191], "time": "0.3m"}
+{"name": "exp01 lgb fe_base", "auc": 0.89248, "f2m": 0.78072, "f2m_nested": 0.78045, "f2b": 0.83785, "f2b_nested": 0.83737, "pos_rate_m": 0.3975, "pos_rate_b": 0.6296, "nfeat": 44, "iters": [180, 144, 180, 215, 177], "time": "0.5m"}
+{"name": "exp01 lgb fe_base+noise16", "auc": 0.89201, "f2m": 0.78002, "f2m_nested": 0.77933, "f2b": 0.83771, "f2b_nested": 0.83756, "pos_rate_m": 0.4325, "pos_rate_b": 0.6323, "nfeat": 60, "iters": [191, 131, 192, 177, 114], "time": "0.4m"}

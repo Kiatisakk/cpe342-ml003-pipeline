@@ -1,0 +1,6 @@
+fold 0 95s it 819
+fold 1 185s it 799
+fold 2 285s it 920
+fold 3 377s it 854
+fold 4 471s it 866
+RESULT xq_extra: OOF 0.79405 fold mean 0.79410 sd 0.00766 | iters [819, 799, 920, 854, 866]

@@ -6,3 +6,4 @@ E03 | LightGBM hurdle: binary clf + 11 per-alpha quantile regs on log y (lr .03,
 E04 | nested per-segment (p-shift, kappa) calibration on E03 | 0.79002 | 0.79007 +- 0.0076 | discard | all segments pick shift 0 / kappa 1 -> already calibrated
 E05 | XGB multi-quantile log y (lr .05 d7), LGB clf p | 0.79162 | 0.79167 +- 0.0077 | ref | reproduces v4 D_q (0.79169) in this harness
 E06 | E05 + offset target log y - log prev_month (fallback log hist - 1.05) | 0.79391 | 0.79396 +- 0.0076 | KEEP | +0.0023 vs E05; trees model residual multiplier, fewer iters
+E07 | E06 + 4 log-ratio feats (lprev-lhist, l_atv*freq, l_hist/tx, l_hist/age) | 0.79405 | 0.79410 +- 0.0077 | neutral | +0.00014 = noise; kept as default feature set

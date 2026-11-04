@@ -4,12 +4,14 @@ kaggle.json
 .env*
 # not needed for T1-T3 research
 cpe342-kaggle-main/04_image_classification/
-cpe342-kaggle-main/05_anomaly_detection/
-task4/
-masking/
+task4/preds/
+masking/probes/
+masking/tmlp_work/
 submissions/**/*.csv
+!submissions/probes_t5/t5_groups.csv
 t123/work/
 **/catboost_info/
 __pycache__/
 *.pyc
 .claude/
+research_in/

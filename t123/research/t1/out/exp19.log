@@ -1,0 +1,7 @@
+seed 42 {'a_L_only': 0.78022, 'b1_pseudo_hard': 0.77973, 'b2_pseudo_soft': 0.78118, 'c_true_labels': 0.78041}
+seed 7 {'a_L_only': 0.78018, 'b1_pseudo_hard': 0.77996, 'b2_pseudo_soft': 0.77891, 'c_true_labels': 0.78109}
+seed 2024 {'a_L_only': 0.7799, 'b1_pseudo_hard': 0.78036, 'b2_pseudo_soft': 0.77924, 'c_true_labels': 0.78174}
+{"name": "exp19 a_L_only", "f2m_nested": 0.7801, "f2m_nested_sd": 0.00017, "auc": 0.8926, "paired_gain_vs_L_only": 0.0}
+{"name": "exp19 b1_pseudo_hard", "f2m_nested": 0.78002, "f2m_nested_sd": 0.00032, "auc": 0.89273, "paired_gain_vs_L_only": -8e-05}
+{"name": "exp19 b2_pseudo_soft", "f2m_nested": 0.77978, "f2m_nested_sd": 0.00123, "auc": 0.89262, "paired_gain_vs_L_only": -0.00032}
+{"name": "exp19 c_true_labels", "f2m_nested": 0.78108, "f2m_nested_sd": 0.00067, "auc": 0.89315, "paired_gain_vs_L_only": 0.00098}

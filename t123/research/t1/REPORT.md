@@ -141,3 +141,22 @@ Possible next steps: combine the compact feature set with augmentation; more bag
   - No second hidden formula is left to exploit.
 - **Conclusion.** With an honest CV, about 0.783 F2-macro is the information ceiling of these features. 0.79 would need information the data does not contain, or test-set leakage, which the course rules forbid.
 - **The plausible route to a higher *leaderboard* T1 number is the metric definition, not the model.** If the LB scores F2 of the positive class, the same model already gives 0.839 nested, and the right file is `t1_best_test_binaryF2.csv`. The leave-one-task-out probe in CLAUDE.md §5 can tell which definition is used.
+
+## Can the 13,184 unlabeled train rows help? Upper bound (round 5, `exp19_unlabeled_bound.py`)
+Inside each fold, 13,184 labeled rows were hidden ("U"). Single LGB on fe_v2, lr 0.05, 3 seeds, nested F2m:
+
+| training set | F2m nested | AUC | gain vs L only |
+|---|---|---|---|
+| L only | 0.78010 ± 0.0002 | 0.89260 | – |
+| L + U hard pseudo-labels (conf > 0.85, w 0.5) | 0.78002 ± 0.0003 | 0.89273 | −0.0001 |
+| L + U soft pseudo-labels (p / 1−p weights) | 0.77978 ± 0.0012 | 0.89262 | −0.0003 |
+| **L + U with their TRUE labels (ceiling)** | 0.78108 ± 0.0007 | 0.89315 | **+0.0010** |
+
+- Even if every unlabeled row were labeled perfectly, it would be worth only about +0.001 F2m.
+- Pseudo-labels recover none of it, because the teacher's labels add no information the student lacks.
+- This matches the earlier semi-supervised attempts: mixture-NB EM with unlabeled rows (exp07, −0.001) and in-fold pseudo-labeling (exp11, −0.0006).
+- The unlabeled rows are already used where they are safe: they help fit the label-free age/level prior and the bin edges.
+
+Blending (recap of exp B, exp13, exp06, final v1): nested AUC-optimised weights, LR stacking and rank averaging of LGB / XGB / CatBoost / LGB variants / MLP / mixture-NB never beat LightGBM alone by more than noise.
+- The GBMs' OOF predictions are highly correlated.
+- The weaker models (MLP 0.885, NB 0.870) get weights of 0.00–0.08.

@@ -40,3 +40,7 @@
 {"name": "exp15 lgb fe_v2 no_freq_logs (50 feats)", "seeds": [42, 7, 2024], "auc": 0.89332, "auc_sd": 0.00011, "f2m": 0.78193, "f2m_sd": 0.00018, "f2m_nested": 0.78154, "f2m_nested_sd": 0.00061, "f2b": 0.8383, "f2b_sd": 0.00046, "f2b_nested": 0.83797, "f2b_nested_sd": 0.00055}
 {"name": "exp15 lgb fe_v2 no_skillz_inter (49 feats)", "seeds": [42, 7, 2024], "auc": 0.89335, "auc_sd": 0.00014, "f2m": 0.78111, "f2m_sd": 0.00063, "f2m_nested": 0.78053, "f2m_nested_sd": 0.00072, "f2b": 0.83863, "f2b_sd": 0.00045, "f2b_nested": 0.83816, "f2b_nested_sd": 0.00072}
 {"name": "exp15 lgb fe_v2 compact (34 feats)", "seeds": [42, 7, 2024], "auc": 0.89369, "auc_sd": 0.0002, "f2m": 0.78162, "f2m_sd": 0.00049, "f2m_nested": 0.78107, "f2m_nested_sd": 0.00093, "f2b": 0.83895, "f2b_sd": 0.00016, "f2b_nested": 0.83866, "f2b_nested_sd": 0.00022}
+{"name": "exp19 a_L_only", "f2m_nested": 0.7801, "f2m_nested_sd": 0.00017, "auc": 0.8926, "paired_gain_vs_L_only": 0.0}
+{"name": "exp19 b1_pseudo_hard", "f2m_nested": 0.78002, "f2m_nested_sd": 0.00032, "auc": 0.89273, "paired_gain_vs_L_only": -8e-05}
+{"name": "exp19 b2_pseudo_soft", "f2m_nested": 0.77978, "f2m_nested_sd": 0.00123, "auc": 0.89262, "paired_gain_vs_L_only": -0.00032}
+{"name": "exp19 c_true_labels", "f2m_nested": 0.78108, "f2m_nested_sd": 0.00067, "auc": 0.89315, "paired_gain_vs_L_only": 0.00098}

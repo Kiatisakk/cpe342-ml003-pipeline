@@ -1,0 +1,1 @@
+{"name": "exp15 lgb fe_v2 no_freq_logs (50 feats) [seed 42]", "auc": 0.89323, "f2m": 0.78194, "f2m_nested": 0.78172, "f2b": 0.83842, "f2b_nested": 0.83831, "pos_rate_m": 0.395, "pos_rate_b": 0.6296, "time": "15.8m"}

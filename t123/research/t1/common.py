@@ -269,3 +269,51 @@ def cat_fp(params=None, lr=0.05):
         m.fit(Xa, ya, eval_set=(Xv, yv), use_best_model=True)
         return m.predict_proba(Xb)[:, 1], (m.predict_proba(Xt)[:, 1] if Xt is not None else None)
     return f
+
+
+# ------------------------------------------------------------------ v3: label-free imputers for missing key features
+# target feature -> (bin edges for a multiclass imputer, {zone name: (lo, hi)})
+IMPUTE_SPECS = {
+    "reports_received": (np.arange(3.5, 30.5, 1.0), {"rep4": (3.5, 4.5), "rep_ge20": (19.5, 99)}),
+    "friend_network_size": (np.array([-1, 9.5, 30, 50, 70, 90, 120, 150, 180, 210, 240, 269.5, 400]), {"fr_lt10": (-1, 9.5), "fr_gt269": (269.5, 999)}),
+    "crosshair_placement": (np.array([0, .82, .845, .87, .895, .92, .94, 1]), {"ch_lt082": (0, .82), "ch_gt094": (.94, 1)}),
+    "account_age_days": (np.array([0, 15, 50, 110, 120, 150, 180, 200, 350, 600, 900, 1000, 1300, 1600]),
+                         {"age_lt15": (0, 15), "age_110_120": (110, 120), "age_180_200": (180, 200), "age_ge1000": (1000, 9e9), "age_lt110": (0, 110)}),
+    "level": (np.array([0, 28, 40, 55, 70, 85, 96, 101]), {"lv_lt28": (0, 28), "lv_gt96": (96, 999)}),
+}
+_IMPUTERS = {}
+
+
+def fit_imputers(ref, use_noise=True, seed=0):
+    """Label-free: each imputer predicts the bin of one feature from all other raw columns (signal + noise),
+    trained on the `ref` rows where that feature is observed. ref = train rows only."""
+    import lightgbm as lgb
+    cols = raw_cols(ref) if use_noise else SIGNAL
+    imps = {}
+    for f, (edges, zones) in IMPUTE_SPECS.items():
+        obs = ref[f].notna().values
+        Xi = ref.loc[obs, [c for c in cols if c != f]]
+        yi = np.clip(np.searchsorted(edges, ref.loc[obs, f].values, side="right") - 1, 0, len(edges) - 2)
+        m = lgb.LGBMClassifier(n_estimators=300, learning_rate=0.08, num_leaves=31, min_child_samples=50, subsample=0.8, subsample_freq=1,
+                               colsample_bytree=0.8, verbose=-1, n_jobs=4, random_state=seed)
+        m.fit(Xi, yi)
+        imps[f] = (m, [c for c in cols if c != f], edges, zones)
+    return imps
+
+
+def fe_impute(df, imps):
+    out = pd.DataFrame(index=df.index)
+    for f, (m, cols, edges, zones) in imps.items():
+        P = np.zeros((len(df), len(edges) - 1)); P[:, m.classes_] = m.predict_proba(df[cols])
+        mids = (edges[:-1] + edges[1:]) / 2
+        mids[0] = max(mids[0], edges[1] - (edges[2] - edges[1]) / 2); mids[-1] = min(mids[-1], edges[-2] + (edges[-2] - edges[-3]) / 2)
+        miss = df[f].isna().values; v = df[f].values
+        out[f"imp_{f}"] = np.where(miss, P @ mids, v)
+        for z, (lo, hi) in zones.items():
+            sel = (mids > lo) & (mids < hi)
+            out[f"pz_{z}"] = np.where(miss, P[:, sel].sum(1), ((v >= lo) & (v < hi)).astype(float))
+    return out
+
+
+def fe_v3(df, ref, imps):
+    return pd.concat([fe_v2(df, ref), fe_impute(df, imps)], axis=1)

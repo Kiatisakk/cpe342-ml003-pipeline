@@ -12,6 +12,8 @@ ap.add_argument("--l2", type=float, default=3); ap.add_argument("--border", type
 ap.add_argument("--rs", type=float, default=1.0, help="random_strength")
 ap.add_argument("--ratio", action="store_true", help="add features in ratio space relative to prev_month")
 ap.add_argument("--frac", type=float, default=1.0, help="learning curve: fraction of training-fold payers used")
+ap.add_argument("--bt", type=float, default=1.0, help="bagging_temperature")
+ap.add_argument("--rsm", type=float, default=1.0); ap.add_argument("--grow", default="SymmetricTree"); ap.add_argument("--mdl", type=int, default=1)
 ap.add_argument("--p_avg", action="store_true", help="score with 3-seed p (lgbh_log, clf_s1, clf_s2)")
 a = ap.parse_args()
 ALPHAS = np.array([float(x) for x in a.alphas.split(",")])
@@ -33,7 +35,8 @@ for k, (tr, va) in enumerate(F):
     if a.frac < 1:
         keep = np.random.RandomState(a.seed + k).rand(len(r)) < a.frac; Xp, r = Xp[keep], r[keep]
     i, j = train_test_split(np.arange(len(r)), test_size=0.1, random_state=a.seed)
-    m = CatBoostRegressor(loss_function=loss, iterations=20000, learning_rate=a.lr, depth=a.depth, l2_leaf_reg=a.l2, border_count=a.border, random_strength=a.rs,
+    m = CatBoostRegressor(loss_function=loss, iterations=20000, learning_rate=a.lr, depth=a.depth, l2_leaf_reg=a.l2, border_count=a.border, random_strength=a.rs, bagging_temperature=a.bt, rsm=a.rsm,
+                          grow_policy=a.grow, **({"min_data_in_leaf": a.mdl} if a.grow != "SymmetricTree" else {}),
                           od_type="Iter", od_wait=200, random_seed=a.seed, thread_count=NT, verbose=False)
     m.fit(Xp.iloc[i], r[i], eval_set=(Xp.iloc[j], r[j]), use_best_model=True); its.append(m.get_best_iteration())
     OQ[va] = np.exp(np.sort(m.predict(X.iloc[va]), 1) + prev_offset(X.iloc[va])[:, None])

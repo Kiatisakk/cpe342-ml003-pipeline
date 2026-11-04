@@ -24,3 +24,4 @@ E21 | CatBoost-q offset bag of 4 (seeds 0,1,2 lr .06 + lr .03) | 0.79472 | 0.794
 E22 | equal-weight geo-mean of 7 quantile models (4 CB + 3 XGB d5) + 3-seed p | 0.79490 | 0.79495 +- 0.0076 | KEEP (BEST) | no tuning -> no nesting needed
 E23 | CatBoost-q lr .03 bag of 3 seeds | 0.79476 | 0.79480 +- 0.0076 | part of final | single seeds 0.79449/0.79462/0.79450
 E24 | FINAL: geo-mean of 6 quantile models (3 CB lr .03 + 3 XGB d5) + 3-seed p | 0.79492 | 0.79496 +- 0.0076 | KEEP (BEST) | = run_all.sh recipe; adding 3 CB lr .06 -> 0.79493 (saturated)
+E25 | XGB-q d5, offset log hist - 1.05 (instead of log prev) | 0.79421 | 0.79426 +- 0.0076 | discard | = prev offset alone; adding to final bag -> 0.79490 (no gain)

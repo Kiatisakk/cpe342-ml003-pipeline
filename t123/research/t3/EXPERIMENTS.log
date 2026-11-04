@@ -12,3 +12,4 @@ E09 | E07 + feature-only weight exp(0.5*log prev) | 0.79263 | 0.79268 +- 0.0078 
 E10 | offset = per-segment ridge on all feats (fold-fitted) | 0.79283 | 0.79289 +- 0.0079 | discard | -0.0012 vs E07; kept only as stacking candidate
 E11 | nested LAD stack of 12 bases (E05-E10, LGB hurdle, v4 cols) | 0.79421 | 0.79427 +- 0.0078 | neutral | +0.00016 over E07 = noise; weights mostly xq_extra/xq_prev/xq_linfull
 E12 | CatBoost MultiQuantile (11 alphas) d8 lr .06, offset log prev + extra feats | 0.79434 | 0.79439 +- 0.0079 | KEEP (best single) | +0.0003 vs E07 (borderline); stops at ~300 iters
+E13 | whale specialist (XGB-q on seg-3 payers, offset) geometric-mixed with E07 by p_whale | 0.79148 | 0.79154 +- 0.0081 | discard | -0.0026: specialist has less data, general model already shares structure

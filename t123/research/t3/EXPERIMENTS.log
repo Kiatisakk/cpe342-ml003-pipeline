@@ -42,3 +42,4 @@ R2-00 | round-2 reference: CB d4 seed 0 scored with 3-seed p | 0.79512 | 0.79516
 R2-01 | analysis: rows with missing prev_month (5.8%) | - | - | no run | err ratio 0.252 vs 0.258 rest -> better prev imputation cannot help
 R2-02 | analysis: whale log-residual of final vs feature deciles | - | - | no run | max decile median shift 0.04 -> no feature signal left marginally
 R2-03 | CB d4, 17 alphas dense near 0.41-0.5 (whale q ~ 0.46) | 0.79511 | 0.79516 +- 0.0075 | discard | interpolation error negligible
+R2-04 | CB d4 + 7 ratio-space feats (log feat - offset) | 0.79502 | 0.79507 +- 0.0074 | discard | -0.0001 (noise/slightly worse)

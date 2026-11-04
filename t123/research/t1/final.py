@@ -1,4 +1,4 @@
-"""FINAL T1 recipe (run from repo root:  python t123/research/t1/final.py).
+"""Round-1 T1 recipe, superseded by final_v2.py; writes v1_* files (run from repo root:  python t123/research/t1/final.py).
 
 features : fe_v2 = baseline FE (task1_gbm_pipeline) + exact zone posteriors for missing age / level
            (label-free; prior fitted on train rows = labeled + unlabeled train; test only transformed)
@@ -40,10 +40,10 @@ if __name__ == "__main__":
                          for k in ["auc", "f2m", "f2m_nested", "f2b", "f2b_nested"]}
         print("AGG", comp, json.dumps(summary[comp]), flush=True)
     oofs = np.array([per[s]["blend"][0] for s in SEEDS]); test = np.mean([per[s]["blend"][1] for s in SEEDS], 0)
-    np.save(os.path.join(ROOT, "best_oof.npy"), oofs[0]); np.save(os.path.join(ROOT, "best_oof_allseeds.npy"), oofs)
-    np.save(os.path.join(ROOT, "best_test_proba.npy"), test)
+    np.save(os.path.join(ROOT, "v1_best_oof.npy"), oofs[0]); np.save(os.path.join(ROOT, "v1_best_oof_allseeds.npy"), oofs)
+    np.save(os.path.join(ROOT, "v1_best_test_proba.npy"), test)
     out = {"summary_mean_sd": summary}
-    for kind, fn in [("macro", "t1_best_test.csv"), ("binary", "t1_best_test_binaryF2.csv")]:
+    for kind, fn in [("macro", "v1_t1_best_test.csv"), ("binary", "v1_t1_best_test_binaryF2.csv")]:
         thr = [best_thr(y, oofs[i], kind) for i in range(len(SEEDS))]
         t_prob = float(np.mean([t[0] for t in thr])); rate = float(np.mean([t[2] for t in thr]))
         # test cut = OOF-optimal positive rate (test is i.i.d. with train; averaging 15 models smooths the
@@ -55,5 +55,5 @@ if __name__ == "__main__":
                          oof_score_seed42=round(float(thr[0][1]), 5))
         print(kind, out[kind], flush=True)
     out["time"] = T()
-    json.dump(out, open(os.path.join(ROOT, "final_results.json"), "w"), indent=1)
+    json.dump(out, open(os.path.join(ROOT, "v1_final_results.json"), "w"), indent=1)
     print("done", T(), "- nothing submitted")

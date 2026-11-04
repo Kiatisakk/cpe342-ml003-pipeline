@@ -8,33 +8,42 @@ Nothing was submitted to Kaggle. No pretrained model, AutoML tool or test row wa
 | | AUC | F2-macro (OOF-opt thr) | **F2-macro nested thr** | binary F2 (OOF-opt) | binary F2 nested |
 |---|---|---|---|---|---|
 | Baseline `oof_blend.npy` (XGB+LGB+Cat, Optuna, rank blend), seed-42 folds | 0.89248 | 0.78026 | 0.77987 | 0.83834 | 0.83819 |
-| **Final** (seed-42 folds, same scheme as the baseline) | **0.89403** | **0.78225** | **0.78233** | **0.83928** | **0.83895** |
-| **Final**, mean ± sd over fold-split seeds 42 / 7 / 2024 | 0.89412 ± 0.00008 | 0.78225 ± 0.00026 | **0.78184 ± 0.00064** | 0.83904 ± 0.00029 | 0.83877 ± 0.00016 |
+| Round 1 final (`final.py`, now writes `v1_*`), 3 seeds | 0.89412 ± 0.00008 | 0.78225 ± 0.00026 | 0.78184 ± 0.00064 | 0.83904 ± 0.00029 | 0.83877 ± 0.00016 |
+| **Final v2** (`final_v2.py`), seed-42 folds (baseline scheme) | **0.89446** | **0.78243** | **0.78186** | **0.83955** | **0.83922** |
+| **Final v2**, mean ± sd over fold-split seeds 42 / 7 / 2024 | **0.89453 ± 0.00006** | 0.78251 ± 0.00034 | **0.78201 ± 0.00046** | 0.83938 ± 0.00021 | 0.83911 ± 0.00026 |
 
-Honest gain: **about +0.002 F2-macro** (nested 0.7799 → 0.7818) and **+0.0016 AUC**. Binary F2 rises from 0.8382 to 0.8388 (nested).
-The gain is about 3 seed-sd, so it is real but small. The F2-macro ceiling of this data looks close to 0.78.
+Honest gain over the baseline: **about +0.002 F2-macro** (nested 0.7799 → 0.7820), **+0.002 AUC** (0.8925 → 0.8945), and **+0.001 binary F2** (nested 0.8382 → 0.8391).
+
+Round 2 (MCAR masking augmentation) improved on round 1 as follows:
+- AUC +0.0004, which is solid at 7× the seed sd.
+- Binary F2 +0.0003.
+- F2-macro only +0.0002. By the "< 0.001 is noise" rule, that part is not a real macro gain.
+
+v2 was adopted because it is at least as good as round 1 on every 3-seed mean, with lower variance. The F2-macro ceiling of this data looks close to 0.78.
 
 "Nested thr" means the threshold, stored as a positive rate, is picked on the other 4 folds' OOF and applied to the held-out fold.
 The final model has no fitted blend weights or calibration, so nothing else needs nesting.
 
-### Final recipe (`final.py`)
+### Final recipe (`final_v2.py`, about 26 minutes on 4 CPU cores)
 1. **Features `fe_v2`**: the baseline feature set from `task1_gbm_pipeline.py` (15 signal columns, the noise 16 dropped, missing flags, lps-identity bounds, zone flags, ratios, frequency encodings), plus the **exact zone posteriors** from exp03.
    - When `account_age_days` is missing (14.5%), use the identity `lps = level·r/age` with r ~ U(0.15, 1.08) and the empirical age prior. This gives the posterior over age on a 1-day grid: posterior ∝ prior(age) · age · 1[r ∈ range].
    - From that posterior: P(age in each class-exclusive zone) and E[age]. The zones are cheater-only 110–120 d, and legit-only <15 d, 180–200 d and ≥1000 d. Two of them (110–120 and 180–200) were not among the baseline's zone flags.
    - The same is done for a missing `level`: P(level<28) for cheater-only, P(level>96) for legit-only, and E[level].
    - The features are label-free. The prior is fitted on train rows only (labeled and unlabeled); test is only transformed.
-2. **Model**: LightGBM with the baseline's Optuna-tuned params, **lr 0.02** (was 0.05 in screening), early stopping on an inner 10% split, as in the baseline.
-3. **Bagging**: 3 bags per fold, each with a different inner split and model seed, averaged.
+2. **MCAR masking augmentation** (exp16).
+   - Missingness is MCAR: the cheater rate given NaN equals the base rate for every column.
+   - In each fold, 4 copies of the fold-train rows get extra NaNs. Each signal value is hidden with probability equal to its observed missing rate, and `fe_v2` is recomputed on the masked raw data.
+   - The model therefore learns P(y | x without reports/friends/age/…) from all 72k fold-train rows instead of only the ~16k that are really incomplete. Those incomplete rows are where AUC drops from 0.90 to 0.855.
+   - The early-stopping holdout, the held-out fold and test are never augmented.
+3. **Model**: LightGBM with the baseline's Optuna-tuned params, lr 0.02, early stopping on an inner 10% split as in the baseline. 3 bags per fold (different inner split and seed, and different masks), averaged.
 4. **CV**: 5-fold StratifiedKFold, seed 42 (plus 7 and 2024 for the error bars). `best_oof.npy` holds the seed-42 OOF probabilities in labeled-train file order (90,816 rows).
-5. **Test**: the average of 15 models (5 folds × 3 split seeds) × 3 bags. The test cut uses the OOF-optimal positive rate, averaged over seeds:
-   - macro: 42.3% predicted cheaters → `t1_best_test.csv`
-   - binary F2: 63.1% predicted cheaters → `t1_best_test_binaryF2.csv`
+5. **Test**: the average of 5 folds × 3 split seeds × 3 bags. The test cut uses the OOF-optimal positive rate, averaged over seeds:
+   - macro: 40.5% predicted cheaters → `t1_best_test.csv`
+   - binary F2: 63.2% predicted cheaters → `t1_best_test_binaryF2.csv`
 
-   A raw probability cut would give the same rate for macro (42.3%) but only 60.1% for binary F2, because averaging smooths the low-probability tail. That is why the rate cut is used.
+   A raw probability cut gives the same rate for macro (40.6%) but only 60.2% for binary F2, because averaging smooths the low-probability tail. That is why the rate cut is used.
 
-   Test predictions agree with the baseline's `t1_blend.csv` on 97.3% of rows (Spearman 0.993).
-
-Run time is about 7 minutes on 4 CPU cores.
+   Test predictions agree with the baseline's `t1_blend.csv` on 97.9% of rows, and with round 1 on 98.1%.
 
 ## Every experiment
 
@@ -67,9 +76,20 @@ Raw numbers are in `out/results.jsonl` (single seed) and `out/results_ms.jsonl` 
 | 10 | Optuna re-tune of LGB on fe_v2 (60 trials, separate 3-fold seed 99), eval lr 0.02, 3 seeds | 0.89342 | 0.78119 | 0.78042 | 0.83921 | ✗ | +0.0005 on the tuning split, does not transfer |
 | 11 | in-fold pseudo-labels on the 13k **unlabeled train** rows (conf 0.15, weight 0.5), 3 seeds | 0.89329 | 0.78101 | 0.78051 | 0.83855 | ✗ | vs 0.78108 without |
 | F1 | final v1: LGB lr0.02 bag3 + XGB, equal average, 3 seeds | 0.89386 | 0.78210 | 0.78167±.0004 | 0.83907 | ✗ | XGB half dilutes the LGB (`out/final_v1_lgb_xgb.log`) |
-| **F** | **final: LGB lr 0.02, bag 3, fe_v2**, 3 seeds | **0.89412±.0001** | **0.78225** | **0.78184±.0006** | **0.83904** | ✓ | |
+| F | round-1 final: LGB lr 0.02, bag 3, fe_v2, 3 seeds (`final.py`, now writes `v1_*`) | 0.89412±.0001 | 0.78225 | 0.78184±.0006 | 0.83904 | ✓ (round 1) | |
+| **— round 2 —** | | | | | | | |
+| 12 | label-free LGB imputers (zone probs + E[value] for missing reports/friends/crosshair/age/level, from the 30 other raw cols incl. noise), 3 seeds | 0.89306 | 0.78129 | 0.78105±.0002 | 0.83860 | ✗ | imputed crosshair predicts y at AUC 0.77 on its missing rows, but only by proxying class from the other columns, which the GBM already sees |
+| 13 | LGB extra_trees / linear_tree / GOSS / deep+reg / shallow, 3 seeds each | .8918/.8930/.8909/.8914/.8927 | | .7801/.7802/.7784/.7789/.7799 | | ✗ | all below the default; nested blend with lgb lr0.02 gives 0.7813 (no gain) |
+| 14 | nested out-of-fold kNN target rates (k 25/100/400, rank-gauss space) as features, seeds 42 & 7 | .8926/.8924 | | .7799/.7795 | | ✗ | kNN alone AUC 0.795; worse than without (stopped after 2 seeds) |
+| 15 | ablation: drop freq/log features / skill-z + interactions / both ("compact", 34 feats), 3 seeds | .8933/.8934/.8937 | | .7815/.7805/.7811 | | ✗ | compact gives +0.0005 AUC but no F2 gain |
+| **16** | **MCAR masking augmentation, 2 copies, rate 1×**, lr 0.05, 3 seeds | 0.89376±.0002 | 0.78205 | 0.78144±.0010 | 0.83876 | ✓ | +0.0006 AUC over exp03 on every seed |
+| **16** | **4 copies, rate 1×**, lr 0.05, 3 seeds | **0.89386±.00002** | 0.78202 | **0.78176±.0006** | 0.83890 | ✓ | rows missing reports/friends/age/crosshair: +0.001–0.002 AUC |
+| 16 | 2 copies, rate 2×, lr 0.05, 3 seeds | 0.89372 | 0.78156 | 0.78115 | 0.83877 | ✗ | over-masking is no better |
+| **F2** | **final v2: fe_v2 + 4 masked copies + LGB lr 0.02 bag 3**, 3 seeds | **0.89453±.00006** | **0.78251** | **0.78201±.0005** | **0.83938** | ✓ | AUC +0.0004 vs round-1 final (solid); F2m +0.0002 (noise) |
 
-After the last kept change (lr 0.02), the next 8 ideas gave nothing beyond noise (class weights, CatBoost/XGB blending, MLP, NB, semi-supervised ×2, ratios, Optuna), so the loop stopped under the 6-idea rule.
+Round 1: after the last kept change (lr 0.02), the next 8 ideas gave nothing beyond noise (class weights, CatBoost/XGB blending, MLP, NB, semi-supervised ×2, ratios, Optuna), so the loop stopped under the 6-idea rule.
+
+Round 2: error analysis showed the error is concentrated in rows missing reports/friends/age/crosshair (AUC 0.854–0.863 vs 0.90). Three missing-value ideas followed: imputers ✗, kNN ✗, masking augmentation ✓. After the augmentation, the rest (LGB variants, rate 2×, feature ablation) gave nothing beyond noise.
 
 ## Findings worth keeping
 - **The "noise" 16 features are not pure noise, but they carry no class information.** Each has marginal AUC ≈ 0.50 and KS p > 0.07. Several correlate with signal features (input_consistency–reaction_time ρ≈0.26, damage–win_rate, first_blood–reaction_time), equally in both classes. Adding them costs 0.0004 AUC, so dropping them is right.
@@ -80,17 +100,21 @@ After the last kept change (lr 0.02), the next 8 ideas gave nothing beyond noise
   - Trees find these windows when age is observed. When age is missing, the identity-based posterior recovers part of that information, and that is where the exp03 gain comes from.
 - The level-speed ratio r = lps·age/level is U(0.15, 1.08) in both classes and in every age segment, so it is not informative by itself.
 - The from-scratch MLP (0.8855) and mixture NB (0.875) are clearly worse than the GBMs and get ~0 blend weight. Within-class feature correlations (aim/spray/reaction ≈ 0.3) break the NB assumptions.
+- **Where the error is**: AUC is 0.918 for rows with no missing signal feature and falls to 0.81 with 5 missing. Rows missing reports, friends, age or crosshair score 0.854–0.863. No ID or row-order leakage (player_id AUC 0.498; train/test IDs disjoint); no duplicates; no value-precision artefacts.
+- **MCAR is exploitable**: because missingness is independent of the label, artificially masking training rows is a valid augmentation. It is the only missing-value idea that helped beyond the exact identity posterior.
 - Unlabeled train rows: neither semi-supervised EM nor pseudo-labeling helps. With 90k labels the extra 13k rows add little.
 
 ## Files
 - `common.py`: data loading, baseline FE re-implementation, `fe_zone_post` / `fe_v2`, vectorised F-beta threshold search, nested threshold scoring, CV runners for LGB/XGB/CatBoost, multi-seed reporting
-- `exp00…exp11*.py`: one script per experiment (table above); `mixnb.py` holds the mixture naive Bayes; `blend.py` does nested blending (rank / AUC weights / LR stacking)
-- `final.py`: final recipe. It writes:
+- `exp00…exp16*.py`: one script per experiment (table above); `mixnb.py` holds the mixture naive Bayes; `blend.py` does nested blending (rank / AUC weights / LR stacking)
+- `final_v2.py`: **final recipe**. It writes:
   - `best_oof.npy`: seed-42 OOF probabilities
   - `best_oof_allseeds.npy`: (3, 90816)
   - `best_test_proba.npy`
   - `t1_best_test.csv` and `t1_best_test_binaryF2.csv` (`id,pred,score`, ids ANS00001..ANS25889 in test order)
   - `final_results.json`
+- `final.py`: round-1 recipe (no augmentation); writes the `v1_*` copies of the same files
 - `out/`: logs and result jsonl files. OOF `.npy` files and the Optuna db are git-ignored and can be regenerated.
 
-Not done (left for later): out-of-fold kNN features, monotone constraints. Monotone constraints are unlikely to help, because the class signal is zone-shaped rather than monotone.
+Not done: monotone constraints. They are unlikely to help, because the class signal is zone-shaped rather than monotone.
+Possible next steps: combine the compact feature set with augmentation; more bags or seeds for the test prediction (variance only).

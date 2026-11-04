@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 import lightgbm as lgb
 
-N_BAG = int(os.environ.get("N_BAG", 3)); NC = int(os.environ.get("NC", 2)); RATE = float(os.environ.get("RATE", 1.0))
+N_BAG = int(os.environ.get("N_BAG", 3)); NC = int(os.environ.get("NC", 4)); RATE = float(os.environ.get("RATE", 1.0))
 LR = float(os.environ.get("LR", 0.02)); PREFIX = os.environ.get("PREFIX", "")
 
 

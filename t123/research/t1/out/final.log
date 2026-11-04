@@ -1,0 +1,10 @@
+seed 42 done 2.3m
+seed 7 done 4.7m
+seed 2024 done 6.8m
+{"name": "final blend [seed 42]", "auc": 0.89403, "f2m": 0.78225, "f2m_nested": 0.78233, "f2b": 0.83928, "f2b_nested": 0.83895, "pos_rate_m": 0.4325, "pos_rate_b": 0.6323}
+{"name": "final blend [seed 7]", "auc": 0.89419, "f2m": 0.78199, "f2m_nested": 0.78112, "f2b": 0.83912, "f2b_nested": 0.83871, "pos_rate_m": 0.4275, "pos_rate_b": 0.6431}
+{"name": "final blend [seed 2024]", "auc": 0.89415, "f2m": 0.7825, "f2m_nested": 0.78206, "f2b": 0.83872, "f2b_nested": 0.83864, "pos_rate_m": 0.41, "pos_rate_b": 0.6188}
+AGG blend {"auc": [0.89412, 8e-05], "f2m": [0.78225, 0.00026], "f2m_nested": [0.78184, 0.00064], "f2b": [0.83904, 0.00029], "f2b_nested": [0.83877, 0.00016]}
+macro {'threshold_prob': 0.37588, 'oof_pos_rate': 0.4233, 'test_pos_rate': 0.4233, 'test_pos_rate_if_prob_cut': 0.4226, 'oof_score_seed42': 0.78225}
+binary {'threshold_prob': 0.18768, 'oof_pos_rate': 0.6314, 'test_pos_rate': 0.6314, 'test_pos_rate_if_prob_cut': 0.601, 'oof_score_seed42': 0.83928}
+done 6.8m - nothing submitted

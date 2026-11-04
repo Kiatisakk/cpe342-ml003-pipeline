@@ -1,0 +1,8 @@
+{"name": "exp06 xgb fe_v2 [seed 42]", "auc": 0.89274, "f2m": 0.78092, "f2m_nested": 0.78071, "f2b": 0.83874, "f2b_nested": 0.83861, "pos_rate_m": 0.4075, "pos_rate_b": 0.635, "time": "0.6m"}
+{"name": "exp06 xgb fe_v2 [seed 7]", "auc": 0.89271, "f2m": 0.78114, "f2m_nested": 0.78092, "f2b": 0.83885, "f2b_nested": 0.83854, "pos_rate_m": 0.3925, "pos_rate_b": 0.6377, "time": "0.6m"}
+{"name": "exp06 xgb fe_v2 [seed 2024]", "auc": 0.89293, "f2m": 0.78067, "f2m_nested": 0.77999, "f2b": 0.83833, "f2b_nested": 0.83788, "pos_rate_m": 0.405, "pos_rate_b": 0.6377, "time": "0.6m"}
+AGG {"name": "exp06 xgb fe_v2", "seeds": [42, 7, 2024], "auc": 0.89279, "auc_sd": 0.00012, "f2m": 0.78091, "f2m_sd": 0.00024, "f2m_nested": 0.78054, "f2m_nested_sd": 0.00049, "f2b": 0.83864, "f2b_sd": 0.00027, "f2b_nested": 0.83834, "f2b_nested_sd": 0.0004}
+{"name": "exp06 cat fe_v2 [seed 42]", "auc": 0.89218, "f2m": 0.77883, "f2m_nested": 0.77819, "f2b": 0.83833, "f2b_nested": 0.83777, "pos_rate_m": 0.4175, "pos_rate_b": 0.6431, "time": "0.7m"}
+{"name": "exp06 cat fe_v2 [seed 7]", "auc": 0.89225, "f2m": 0.77966, "f2m_nested": 0.77897, "f2b": 0.83804, "f2b_nested": 0.83794, "pos_rate_m": 0.4075, "pos_rate_b": 0.6404, "time": "0.6m"}
+{"name": "exp06 cat fe_v2 [seed 2024]", "auc": 0.89261, "f2m": 0.78056, "f2m_nested": 0.78059, "f2b": 0.83782, "f2b_nested": 0.83752, "pos_rate_m": 0.42, "pos_rate_b": 0.6323, "time": "0.6m"}
+AGG {"name": "exp06 cat fe_v2", "seeds": [42, 7, 2024], "auc": 0.89235, "auc_sd": 0.00023, "f2m": 0.77968, "f2m_sd": 0.00087, "f2m_nested": 0.77925, "f2m_nested_sd": 0.00122, "f2b": 0.83806, "f2b_sd": 0.00026, "f2b_nested": 0.83774, "f2b_nested_sd": 0.00021}

@@ -1,0 +1,562 @@
+[{"stream_name":"stdout","time":15.952157223,"data":"GPU: True | models ('xgb', 'lgb', 'cat') | trials 200 | timeout/model 2.3 h\n"}
+,{"stream_name":"stdout","time":17.498135414,"data":"train (90816, 33) (dropped 13184 unlabeled) | test (25889, 32) | cheater rate 0.349\n"}
+,{"stream_name":"stdout","time":18.135352783,"data":"features: 48 (5 categorical)\n"}
+,{"stream_name":"stdout","time":18.135407164,"data":"\n"}
+,{"stream_name":"stdout","time":18.135412349,"data":"===== xgb: Optuna =====\n"}
+,{"stream_name":"stdout","time":405.342174878,"data":"   [xgb] trial 25 | best AUC 0.88988 | 6 min\n"}
+,{"stream_name":"stdout","time":773.779016689,"data":"   [xgb] trial 50 | best AUC 0.89018 | 13 min\n"}
+,{"stream_name":"stdout","time":1325.029265267,"data":"   [xgb] trial 75 | best AUC 0.89059 | 22 min\n"}
+,{"stream_name":"stdout","time":1828.932597926,"data":"   [xgb] trial 100 | best AUC 0.89062 | 30 min\n"}
+,{"stream_name":"stdout","time":2291.301477943,"data":"   [xgb] trial 125 | best AUC 0.89067 | 38 min\n"}
+,{"stream_name":"stdout","time":2812.855640484,"data":"   [xgb] trial 150 | best AUC 0.89076 | 47 min\n"}
+,{"stream_name":"stdout","time":3439.864600441,"data":"   [xgb] trial 175 | best AUC 0.89076 | 57 min\n"}
+,{"stream_name":"stdout","time":3991.460400588,"data":"   [xgb] trial 200 | best AUC 0.89092 | 66 min\n"}
+,{"stream_name":"stdout","time":3991.48360977,"data":"[xgb] tuning done: 200 trials | best 3-fold AUC 0.89092 | 66 min\n"}
+,{"stream_name":"stdout","time":3991.484796406,"data":"[xgb] best params: {'max_depth': 7, 'min_child_weight': 1.4104607765610724, 'subsample': 0.9983803458250254, 'colsample_bytree': 0.6964613905152919, 'reg_lambda': 15.435762030980067, 'reg_alpha': 11.784650859403348, 'gamma': 0.03686656101587725, 'max_bin': 128, 'grow_policy': 'lossguide'}\n"}
+,{"stream_name":"stdout","time":3991.510175336,"data":"===== xgb: final 5-fold @ lr 0.02 =====\n"}
+,{"stream_name":"stdout","time":4003.144463813,"data":"   fold 0: AUC 0.8928 | best_iter 745\n"}
+,{"stream_name":"stdout","time":4016.394561543,"data":"   fold 1: AUC 0.8919 | best_iter 864\n"}
+,{"stream_name":"stdout","time":4030.420482846,"data":"   fold 2: AUC 0.8923 | best_iter 960\n"}
+,{"stream_name":"stdout","time":4045.478341843,"data":"   fold 3: AUC 0.8868 | best_iter 1011\n"}
+,{"stream_name":"stdout","time":4059.439115695,"data":"   fold 4: AUC 0.8931 | best_iter 928\n"}
+,{"stream_name":"stdout","time":4060.889988915,"data":"[xgb] OOF AUC 0.89137 | F2 macro 0.77902 @ thr 0.395\n"}
+,{"stream_name":"stdout","time":4060.891007705,"data":"\n"}
+,{"stream_name":"stdout","time":4060.891028026,"data":"===== lgb: Optuna =====\n"}
+,{"stream_name":"stdout","time":4505.765913604,"data":"   [lgb] trial 25 | best AUC 0.89044 | 7 min\n"}
+,{"stream_name":"stdout","time":4886.400813568,"data":"   [lgb] trial 50 | best AUC 0.89116 | 14 min\n"}
+,{"stream_name":"stdout","time":5266.072819735,"data":"   [lgb] trial 75 | best AUC 0.89116 | 20 min\n"}
+,{"stream_name":"stdout","time":5645.611877242,"data":"   [lgb] trial 100 | best AUC 0.89148 | 26 min\n"}
+,{"stream_name":"stdout","time":6015.646211042,"data":"   [lgb] trial 125 | best AUC 0.89148 | 33 min\n"}
+,{"stream_name":"stdout","time":6381.345532679,"data":"   [lgb] trial 150 | best AUC 0.89148 | 39 min\n"}
+,{"stream_name":"stdout","time":6756.155858412,"data":"   [lgb] trial 175 | best AUC 0.89148 | 45 min\n"}
+,{"stream_name":"stdout","time":7121.314156561,"data":"   [lgb] trial 200 | best AUC 0.89148 | 51 min\n"}
+,{"stream_name":"stdout","time":7121.338214416,"data":"[lgb] tuning done: 200 trials | best 3-fold AUC 0.89148 | 51 min\n"}
+,{"stream_name":"stdout","time":7121.339688211,"data":"[lgb] best params: {'num_leaves': 39, 'min_child_samples': 8, 'subsample': 0.8140545534012371, 'colsample_bytree': 0.4548065558904867, 'reg_lambda': 4.0107045889162665, 'reg_alpha': 0.004458057378575586, 'min_split_gain': 0.020080444638464076, 'max_bin': 511, 'cat_smooth': 83.19551447348591, 'cat_l2': 15.956212913499856}\n"}
+,{"stream_name":"stdout","time":7121.365231866,"data":"===== lgb: final 5-fold @ lr 0.02 =====\n"}
+,{"stream_name":"stdout","time":7131.228549678,"data":"   fold 0: AUC 0.8934 | best_iter 477\n"}
+,{"stream_name":"stdout","time":7144.491019829,"data":"   fold 1: AUC 0.8926 | best_iter 728\n"}
+,{"stream_name":"stdout","time":7158.507114253,"data":"   fold 2: AUC 0.8928 | best_iter 780\n"}
+,{"stream_name":"stdout","time":7169.674078224,"data":"   fold 3: AUC 0.8867 | best_iter 562\n"}
+,{"stream_name":"stdout","time":7180.539120304,"data":"   fold 4: AUC 0.8941 | best_iter 509\n"}
+,{"stream_name":"stdout","time":7181.972761253,"data":"[lgb] OOF AUC 0.89193 | F2 macro 0.7794 @ thr 0.391\n"}
+,{"stream_name":"stdout","time":7181.973895254,"data":"\n"}
+,{"stream_name":"stdout","time":7181.973915819,"data":"===== cat: Optuna =====\n"}
+,{"stream_name":"stderr","time":7182.947760722,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7223.131333625,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7274.099403789,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7318.106699521,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7332.443325201,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7351.793044815,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7385.023831164,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7396.872803184,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7411.979509037,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7426.349230508,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7440.83774212,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7459.917214646,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7481.413078408,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7506.788496847,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7526.276702605,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7551.676228597,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7575.960461155,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7628.125990174,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7657.364446724,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7680.552380326,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7714.931711216,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7753.045473594,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7771.134927737,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7788.066848694,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7810.187208415,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7825.034095863,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7846.042340784,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7861.498308687,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7876.48784747,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7893.535736072,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7913.85995822,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":7942.12933932,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8000.313016962,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8036.003843988,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8062.193412866,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8095.274299425,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8121.065873463,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8134.653056022,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8171.02393475,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8190.549373139,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8212.551909484,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8257.766694523,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8289.592036593,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8321.744936317,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8357.027412119,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8402.985742313,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8436.592199986,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8463.198539686,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8488.357007818,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8506.341391262,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8527.489241276,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8545.189736851,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8558.343648302,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8582.973657236,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8602.206733153,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8615.408689478,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8637.729992812,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8650.371967513,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8687.61629617,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8742.092191427,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8768.665585423,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8783.665839308,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8806.391115483,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8826.542702539,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8841.339237811,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8860.118305784,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8883.788173063,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8904.003719683,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8928.332229996,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8952.338926214,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":8972.397857957,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9023.208807451,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9065.20371744,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9099.286035393,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9164.941276809,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":9210.873594621,"data":"   [cat] trial 25 | best AUC 0.89030 | 34 min\n"}
+,{"stream_name":"stderr","time":9211.438240198,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9222.254782032,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9237.159370938,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9253.578112972,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9267.919688277,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9288.493177741,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9305.599780156,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9321.483060137,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9343.291508951,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9361.208359754,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9372.909214988,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9394.98995628,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9410.169214508,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9421.064463791,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9438.513896247,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9455.432286233,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9470.735242333,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9486.779569858,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9499.379642671,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9510.330624966,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9524.48138492,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9540.497331097,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9551.061692268,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9566.440623279,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9580.581398373,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9595.697973098,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9615.226667999,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9631.351693814,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9642.750720037,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9656.457945529,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9670.523497369,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9680.368331251,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9693.007474784,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9707.02006665,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9722.454964844,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9736.625510232,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9751.737464167,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9767.882106691,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9790.798145775,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9804.408215223,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9819.321823322,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9836.125072953,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9851.456748815,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9862.699686005,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9878.736102106,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9894.915138918,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9906.468001545,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9920.077383338,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9940.673238536,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9955.671744981,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9975.436932485,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":9988.077752749,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10000.430465908,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10017.294690352,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10031.685085933,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10040.657853435,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10053.79546365,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10066.202111974,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10078.575792551,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10094.393944111,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10108.747246269,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10120.785460061,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10136.234790325,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10151.246802118,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10162.374964749,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10178.493903636,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10195.452046829,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10209.183128042,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10228.529501467,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10245.414129495,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10261.978583261,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10277.968482105,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10296.319523752,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10314.404433956,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10338.031659729,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":10357.395913812,"data":"   [cat] trial 50 | best AUC 0.89052 | 53 min\n"}
+,{"stream_name":"stderr","time":10358.029221742,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10369.485869368,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10389.449812216,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10404.22470471,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10417.676559688,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10434.875465584,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10453.20641499,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10465.336653982,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10485.545220858,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10505.652510753,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10519.352106505,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10533.088199536,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10547.514613751,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10560.798014077,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10583.972531937,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10599.015761246,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10612.716442919,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10635.057163994,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10651.814326991,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10664.923832536,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10687.599141845,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10707.649842853,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10718.962019728,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10735.973287399,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10750.241769814,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10760.385380701,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10780.881430425,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10794.232036006,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10808.156416355,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10826.713150022,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10837.371665081,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10850.332607336,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10867.570778479,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10885.411414758,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10896.041219196,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10910.170436454,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10923.111627164,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10936.191059477,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10953.624145417,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10967.791667414,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":10982.31093818,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11003.120755768,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11019.655077793,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11036.838058604,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11061.054298886,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11075.023822548,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11093.809293947,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11111.707432228,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11129.467004089,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11142.077517543,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11157.442846727,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11172.224778787,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11186.311575523,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11206.094303795,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11223.616182482,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11232.85644647,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11248.682995448,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11265.177004765,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11279.106023571,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11299.224253499,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11317.922398067,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11328.871513706,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11344.413918047,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11360.94357251,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11373.05022886,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11390.456392551,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11407.273529424,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11420.463096281,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11438.347667971,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11452.547837229,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11466.078710022,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11485.318848147,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11501.049687764,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11516.210968995,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11532.422750453,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":11545.397712607,"data":"   [cat] trial 75 | best AUC 0.89061 | 73 min\n"}
+,{"stream_name":"stderr","time":11546.007744582,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11559.80742341,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11577.950845512,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11591.662530584,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11606.652867823,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11622.398598965,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11645.18398422,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11655.757398715,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11671.77694547,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11686.110556368,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11700.006607825,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11723.857145174,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11737.026198645,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11750.803028949,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11767.731451614,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11783.996498223,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11798.229549666,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11817.884851024,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11833.124752421,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11848.247499771,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11864.210064621,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11881.711976167,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11892.653312965,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11908.928959951,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11922.568799847,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11937.207166348,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11956.024739306,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11975.001393519,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":11988.757432733,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12010.223998197,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12026.038911178,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12039.167154357,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12050.712206691,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12068.818803673,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12082.144521696,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12103.753549919,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12117.687749618,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12134.322054938,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12155.115919347,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12166.883707004,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12176.766168726,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12193.563677024,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12205.914353296,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12222.151372142,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12239.468306218,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12253.427049924,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12266.459666829,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12283.926380056,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12301.58616234,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12314.686422422,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12330.713211471,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12345.031471775,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12358.496511527,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12374.808683647,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12389.45000005,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12401.371316824,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12418.815080662,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12435.90311959,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12455.974847757,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12471.43478397,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12485.40528798,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12498.054702406,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12515.235826746,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12526.811629041,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12540.147708188,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12557.487267704,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12576.157219288,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12587.720263218,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12607.782929436,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12624.661143016,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12635.094656287,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12652.738277131,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12664.260266895,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12679.205515806,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12701.780559627,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":12721.259732818,"data":"   [cat] trial 100 | best AUC 0.89067 | 92 min\n"}
+,{"stream_name":"stderr","time":12721.878833659,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12735.137366606,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12751.89462196,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12769.588034027,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12781.483326742,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12798.954791349,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12813.057868529,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12826.009555612,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12842.036480525,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12855.821041403,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12870.440411095,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12885.38073418,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12902.52303836,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12918.954754393,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12939.473281862,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12955.442463889,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12971.349578061,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":12988.845520872,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13008.869833379,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13020.719131199,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13037.76609973,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13051.033654266,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13063.445920019,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13082.747389274,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13099.04570427,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13111.146638423,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13128.590906178,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13141.359746858,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13154.049181495,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13174.515920753,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13185.535673962,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13197.374458112,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13220.60434224,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13234.749453056,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13249.193352007,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13271.399457131,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13286.893185399,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13297.689547985,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13315.115659801,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13328.953026534,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13348.535024833,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13370.78448276,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13386.750668053,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13400.197248403,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13416.918059882,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13431.637298536,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13451.69762604,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13463.523591578,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13481.259044291,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13490.796531055,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13504.646155563,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13517.431620803,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13531.262321858,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13547.156156974,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13565.990223869,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13577.914362399,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13597.388052846,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13610.179010829,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13623.353959839,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13639.688579589,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13662.400049397,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13675.170029239,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13692.681455888,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13706.598519522,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13719.522960285,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13737.64598256,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13753.941692524,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13767.512041875,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13780.36705741,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13798.483123823,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13817.300855779,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13837.275557488,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13853.95283702,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13866.060973187,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13887.17011273,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":13902.281478588,"data":"   [cat] trial 125 | best AUC 0.89067 | 112 min\n"}
+,{"stream_name":"stderr","time":13902.880586109,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13912.295252008,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13932.272024756,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13945.371561029,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13958.451317043,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13972.358853566,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13986.660178905,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":13999.784607649,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14022.270024288,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14035.709010422,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14050.940162294,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14064.363686574,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14086.559928646,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14099.060105495,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14111.407375668,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14127.455987646,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14137.711979651,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14153.442112195,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14168.671901265,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14180.926901793,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14198.901165282,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14214.546899707,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14225.058964842,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14242.121545512,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14254.115367511,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14267.160957956,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14283.779701376,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14299.117357256,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14314.269589727,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14334.107617135,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14350.032398858,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14366.730127643,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14387.69683143,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14402.286756135,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14415.25799569,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14428.60392335,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14445.479236052,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14460.011114324,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14476.891139094,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14495.443624154,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14508.708460791,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14525.266306743,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14545.195432183,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14560.247437519,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14579.560872275,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14592.780368219,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14611.422098528,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14624.732751429,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14639.162932561,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14650.750915158,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14672.164564125,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14687.868741474,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14700.712009459,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14716.935865789,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14732.328450101,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14749.897607202,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14767.806280758,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14782.371174251,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14798.620765233,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14817.036695336,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14833.526838974,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14848.406468736,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14867.399373353,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14885.638108213,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14898.066469095,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14916.526898909,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14932.670555837,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14945.497755561,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14960.913659615,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14975.622110359,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14986.513944607,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":14999.552190199,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15018.932449033,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15032.872612508,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15050.41718341,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":15070.662247783,"data":"   [cat] trial 150 | best AUC 0.89067 | 131 min\n"}
+,{"stream_name":"stderr","time":15071.292143538,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15081.275143564,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15104.22253872,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15123.728290499,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15136.872594908,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15153.485183146,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15171.821319149,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15186.322282685,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15200.827761882,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15216.913524002,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15229.555453901,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15247.680704899,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15264.035286822,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15278.270202724,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15294.76337691,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15310.303862548,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15325.853182278,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15345.88412772,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15357.552425933,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15372.680391179,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15392.074127375,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15414.686113471,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15425.473427508,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15441.833436585,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15455.244074119,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15469.701567423,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15484.947919407,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15500.439450486,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15510.333241436,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15532.632229846,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15549.541827211,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15561.033867044,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stderr","time":15579.021537579,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":15593.435514427,"data":"[cat] tuning done: 161 trials | best 3-fold AUC 0.89067 | 140 min\n"}
+,{"stream_name":"stdout","time":15593.437107831,"data":"[cat] best params: {'depth': 5, 'l2_leaf_reg': 0.683246012387474, 'random_strength': 0.070592450252751, 'border_count': 254, 'bootstrap_type': 'Bernoulli', 'subsample': 0.8099566629960088}\n"}
+,{"stream_name":"stdout","time":15593.464247237,"data":"===== cat: final 5-fold @ lr 0.02 =====\n"}
+,{"stream_name":"stderr","time":15594.046555118,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":15628.065811668,"data":"   fold 0: AUC 0.8917 | best_iter 1804\n"}
+,{"stream_name":"stderr","time":15628.629923963,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":15659.468402909,"data":"   fold 1: AUC 0.8915 | best_iter 1675\n"}
+,{"stream_name":"stderr","time":15660.034398461,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":15685.731479993,"data":"   fold 2: AUC 0.8926 | best_iter 1371\n"}
+,{"stream_name":"stderr","time":15686.309740514,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":15717.613829518,"data":"   fold 3: AUC 0.8865 | best_iter 1670\n"}
+,{"stream_name":"stderr","time":15718.187936276,"data":"Default metric period is 5 because AUC is/are not implemented for GPU\n"}
+,{"stream_name":"stdout","time":15746.660331116,"data":"   fold 4: AUC 0.8939 | best_iter 1522\n"}
+,{"stream_name":"stdout","time":15748.245340778,"data":"[cat] OOF AUC 0.89124 | F2 macro 0.77899 @ thr 0.385\n"}
+,{"stream_name":"stdout","time":15809.17029651,"data":"\n"}
+,{"stream_name":"stdout","time":15809.17036347,"data":"================ SUMMARY ================\n"}
+,{"stream_name":"stdout","time":15809.170378745,"data":"reference (earlier): HGB 0.7782 | HGB+age bounds 0.7799 | TabPFN+HGB 0.7825\n"}
+,{"stream_name":"stdout","time":15809.170385235,"data":"xgb {'trials': 200, 'tune_auc_3fold': 0.89092, 'oof_auc': np.float64(0.89137), 'oof_f2m': 0.77902, 'thr': 0.3946}\n"}
+,{"stream_name":"stdout","time":15809.170390168,"data":"lgb {'trials': 200, 'tune_auc_3fold': 0.89148, 'oof_auc': np.float64(0.89193), 'oof_f2m': 0.7794, 'thr': 0.3912}\n"}
+,{"stream_name":"stdout","time":15809.17039493,"data":"cat {'trials': 161, 'tune_auc_3fold': 0.89067, 'oof_auc': np.float64(0.89124), 'oof_f2m': 0.77899, 'thr': 0.3854}\n"}
+,{"stream_name":"stdout","time":15809.170399788,"data":"blend {'weights': {'xgb': 0.1834, 'lgb': 0.4848, 'cat': 0.3318}, 'oof_auc': np.float64(0.89248), 'oof_f2m': 0.78039, 'cv_blend_auc': np.float64(0.89245), 'cv_blend_f2m': 0.78017, 'thr_rank': 0.5963, 'pred_pos_rate': 0.404}\n"}
+,{"stream_name":"stdout","time":15809.250348641,"data":"test predicted cheater rate 0.404 (OOF 0.404) | total 4.39 h\n"}
+,{"stream_name":"stdout","time":15809.250383106,"data":"wrote /kaggle/working/t1_pipeline - nothing submitted\n"}
+,{"stream_name":"stderr","time":15813.760415362,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":15813.760457253,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":15814.026865133,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":15814.026911642,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":15814.937368485,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":15815.479382484,"data":"[NbConvertApp] Writing 403168 bytes to __results__.html\n"}
+]

@@ -1,0 +1,214 @@
+{
+ "trials": 224,
+ "results_f1_[seed42,seed7,seed123]": {
+  "baseline": [
+   0.7548,
+   0.7556,
+   0.7546
+  ],
+  "optuna": [
+   0.7562,
+   0.7555,
+   0.7553
+  ],
+  "ll_select": [
+   0.7513,
+   0.7516,
+   0.751
+  ]
+ },
+ "optuna": {
+  "alpha": 1.0,
+  "cfg": {
+   "play_frequency": [
+    16,
+    1.5
+   ],
+   "avg_session_duration": [
+    24,
+    2.0
+   ],
+   "total_playtime_hours": [
+    48,
+    1.5
+   ],
+   "login_streak": [
+    32,
+    2.0
+   ],
+   "days_since_last_login": [
+    16,
+    2.0
+   ],
+   "total_spending_thb": [
+    24,
+    0.5
+   ],
+   "avg_monthly_spending": [
+    12,
+    1.5
+   ],
+   "spending_frequency": [
+    32,
+    1.0
+   ],
+   "friend_count": [
+    24,
+    2.0
+   ],
+   "team_play_percentage": [
+    8,
+    0
+   ],
+   "chat_activity_score": [
+    32,
+    1.0
+   ],
+   "friend_invites_sent": [
+    64,
+    2.0
+   ],
+   "gifts_sent_received": [
+    32,
+    1.0
+   ],
+   "ranked_participation_rate": [
+    32,
+    1.0
+   ],
+   "tournament_entries": [
+    24,
+    0.7
+   ],
+   "win_rate_ranked": [
+    12,
+    2.0
+   ],
+   "achievement_completion_rate": [
+    8,
+    2.0
+   ],
+   "collection_progress": [
+    48,
+    0.7
+   ],
+   "rare_items_count": [
+    32,
+    1.0
+   ],
+   "speed_of_progression": [
+    16,
+    0.7
+   ],
+   "item_type_preference_cosmetic": [
+    64,
+    0.7
+   ],
+   "item_type_preference_performance": [
+    32,
+    1.5
+   ],
+   "peak_concurrent_hours": [
+    48,
+    0.7
+   ]
+  }
+ },
+ "ll_select": {
+  "alpha": 1.0,
+  "cfg": {
+   "play_frequency": [
+    8,
+    0.5
+   ],
+   "avg_session_duration": [
+    8,
+    0.5
+   ],
+   "total_playtime_hours": [
+    8,
+    0.5
+   ],
+   "login_streak": [
+    8,
+    0
+   ],
+   "days_since_last_login": [
+    8,
+    0
+   ],
+   "total_spending_thb": [
+    8,
+    0
+   ],
+   "avg_monthly_spending": [
+    8,
+    0
+   ],
+   "spending_frequency": [
+    8,
+    0
+   ],
+   "friend_count": [
+    8,
+    0
+   ],
+   "team_play_percentage": [
+    8,
+    0.5
+   ],
+   "chat_activity_score": [
+    8,
+    0.5
+   ],
+   "friend_invites_sent": [
+    8,
+    0
+   ],
+   "gifts_sent_received": [
+    8,
+    0.5
+   ],
+   "ranked_participation_rate": [
+    8,
+    2.0
+   ],
+   "tournament_entries": [
+    8,
+    0
+   ],
+   "win_rate_ranked": [
+    8,
+    0.5
+   ],
+   "achievement_completion_rate": [
+    8,
+    0.5
+   ],
+   "collection_progress": [
+    8,
+    0.7
+   ],
+   "rare_items_count": [
+    8,
+    0
+   ],
+   "speed_of_progression": [
+    8,
+    0.5
+   ],
+   "item_type_preference_cosmetic": [
+    8,
+    0.5
+   ],
+   "item_type_preference_performance": [
+    8,
+    0.5
+   ],
+   "peak_concurrent_hours": [
+    8,
+    0
+   ]
+  }
+ }
+}

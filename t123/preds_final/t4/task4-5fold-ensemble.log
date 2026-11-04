@@ -1,0 +1,117 @@
+[{"stream_name":"stdout","time":17.652438115,"data":"HF_TOKEN loaded\n"}
+,{"stream_name":"stdout","time":17.934895921,"data":"Tesla T4 | timm 1.0.30\n"}
+,{"stream_name":"stdout","time":20.838119598,"data":"/kaggle/input/datasets/kiatisakkk/task4-image-classification/task4_image_classification (31546, 2) (25889, 2) ['7-11k', 'fiveN', 'freefried', 'pube', 'roblock'] | sample: ['/kaggle/input/competitions/player-intelligence-system-cpe-342-ml/cpe342-kaggle-main/sample_submission.csv']\n"}
+,{"stream_name":"stdout","time":51.207872376,"data":"train: (31546, 120, 230, 3) in 30s\n"}
+,{"stream_name":"stdout","time":76.032190641,"data":"test: (25889, 120, 230, 3) in 25s\n"}
+,{"stream_name":"stdout","time":90.922702005,"data":"model: convnext_tiny.dinov3_lvd1689m\n"}
+,{"stream_name":"stdout","time":195.19630406,"data":"fold 0 ep 1/14 loss 1.4740 val macroF1 0.3114 (104s)\n"}
+,{"stream_name":"stdout","time":407.937888175,"data":"fold 0 ep 2/14 loss 1.0520 val macroF1 0.8049 (213s)\n"}
+,{"stream_name":"stdout","time":607.355142616,"data":"fold 0 ep 3/14 loss 0.7342 val macroF1 0.9433 (199s)\n"}
+,{"stream_name":"stdout","time":806.392643443,"data":"fold 0 ep 4/14 loss 0.6275 val macroF1 0.9683 (199s)\n"}
+,{"stream_name":"stdout","time":1004.107691791,"data":"fold 0 ep 5/14 loss 0.5989 val macroF1 0.9775 (198s)\n"}
+,{"stream_name":"stdout","time":1200.287201163,"data":"fold 0 ep 6/14 loss 0.5668 val macroF1 0.9810 (196s)\n"}
+,{"stream_name":"stdout","time":1397.497608756,"data":"fold 0 ep 7/14 loss 0.5433 val macroF1 0.9835 (197s)\n"}
+,{"stream_name":"stdout","time":1594.929008343,"data":"fold 0 ep 8/14 loss 0.5284 val macroF1 0.9853 (197s)\n"}
+,{"stream_name":"stdout","time":1791.269722061,"data":"fold 0 ep 9/14 loss 0.5167 val macroF1 0.9870 (196s)\n"}
+,{"stream_name":"stdout","time":1986.450232791,"data":"fold 0 ep 10/14 loss 0.5023 val macroF1 0.9883 (195s)\n"}
+,{"stream_name":"stdout","time":2181.364670177,"data":"fold 0 ep 11/14 loss 0.4912 val macroF1 0.9892 (195s)\n"}
+,{"stream_name":"stdout","time":2373.432434607,"data":"fold 0 ep 12/14 loss 0.4819 val macroF1 0.9896 (192s)\n"}
+,{"stream_name":"stdout","time":2564.986940694,"data":"fold 0 ep 13/14 loss 0.4790 val macroF1 0.9900 (192s)\n"}
+,{"stream_name":"stdout","time":2756.420703053,"data":"fold 0 ep 14/14 loss 0.4757 val macroF1 0.9903 (191s)\n"}
+,{"stream_name":"stdout","time":2821.628704667,"data":"== fold 0 best macroF1 0.9903 | elapsed 46 min\n"}
+,{"stream_name":"stdout","time":2913.550572833,"data":"fold 1 ep 1/14 loss 1.4621 val macroF1 0.4018 (91s)\n"}
+,{"stream_name":"stdout","time":3112.911455035,"data":"fold 1 ep 2/14 loss 1.0470 val macroF1 0.8497 (199s)\n"}
+,{"stream_name":"stdout","time":3312.531596325,"data":"fold 1 ep 3/14 loss 0.7338 val macroF1 0.9521 (200s)\n"}
+,{"stream_name":"stdout","time":3511.919425674,"data":"fold 1 ep 4/14 loss 0.6305 val macroF1 0.9676 (199s)\n"}
+,{"stream_name":"stdout","time":3711.264806783,"data":"fold 1 ep 5/14 loss 0.5921 val macroF1 0.9765 (199s)\n"}
+,{"stream_name":"stdout","time":3908.064801394,"data":"fold 1 ep 6/14 loss 0.5625 val macroF1 0.9821 (197s)\n"}
+,{"stream_name":"stdout","time":4105.096957722,"data":"fold 1 ep 7/14 loss 0.5446 val macroF1 0.9850 (197s)\n"}
+,{"stream_name":"stdout","time":4300.645111634,"data":"fold 1 ep 8/14 loss 0.5240 val macroF1 0.9866 (196s)\n"}
+,{"stream_name":"stdout","time":4496.182265313,"data":"fold 1 ep 9/14 loss 0.5095 val macroF1 0.9879 (196s)\n"}
+,{"stream_name":"stdout","time":4691.030428531,"data":"fold 1 ep 10/14 loss 0.4968 val macroF1 0.9883 (195s)\n"}
+,{"stream_name":"stdout","time":4884.572746367,"data":"fold 1 ep 11/14 loss 0.4854 val macroF1 0.9899 (194s)\n"}
+,{"stream_name":"stdout","time":5076.514881027,"data":"fold 1 ep 12/14 loss 0.4837 val macroF1 0.9906 (192s)\n"}
+,{"stream_name":"stdout","time":5267.349594449,"data":"fold 1 ep 13/14 loss 0.4770 val macroF1 0.9913 (191s)\n"}
+,{"stream_name":"stdout","time":5457.311213808,"data":"fold 1 ep 14/14 loss 0.4767 val macroF1 0.9906 (190s)\n"}
+,{"stream_name":"stdout","time":5520.679609659,"data":"== fold 1 best macroF1 0.9913 | elapsed 90 min\n"}
+,{"stream_name":"stdout","time":5605.516856826,"data":"fold 2 ep 1/14 loss 1.4753 val macroF1 0.3711 (84s)\n"}
+,{"stream_name":"stdout","time":5804.77303362,"data":"fold 2 ep 2/14 loss 1.0467 val macroF1 0.8192 (199s)\n"}
+,{"stream_name":"stdout","time":6003.853781376,"data":"fold 2 ep 3/14 loss 0.7245 val macroF1 0.9545 (199s)\n"}
+,{"stream_name":"stdout","time":6202.835233538,"data":"fold 2 ep 4/14 loss 0.6337 val macroF1 0.9724 (199s)\n"}
+,{"stream_name":"stdout","time":6401.246175077,"data":"fold 2 ep 5/14 loss 0.5911 val macroF1 0.9808 (198s)\n"}
+,{"stream_name":"stdout","time":6598.417334663,"data":"fold 2 ep 6/14 loss 0.5600 val macroF1 0.9812 (197s)\n"}
+,{"stream_name":"stdout","time":6793.834315593,"data":"fold 2 ep 7/14 loss 0.5418 val macroF1 0.9845 (195s)\n"}
+,{"stream_name":"stdout","time":6989.154654569,"data":"fold 2 ep 8/14 loss 0.5254 val macroF1 0.9865 (195s)\n"}
+,{"stream_name":"stdout","time":7184.132134734,"data":"fold 2 ep 9/14 loss 0.5111 val macroF1 0.9866 (195s)\n"}
+,{"stream_name":"stdout","time":7378.302452708,"data":"fold 2 ep 10/14 loss 0.4990 val macroF1 0.9879 (194s)\n"}
+,{"stream_name":"stdout","time":7571.32763849,"data":"fold 2 ep 11/14 loss 0.4876 val macroF1 0.9885 (193s)\n"}
+,{"stream_name":"stdout","time":7763.153349815,"data":"fold 2 ep 12/14 loss 0.4832 val macroF1 0.9884 (192s)\n"}
+,{"stream_name":"stdout","time":7954.871044631,"data":"fold 2 ep 13/14 loss 0.4767 val macroF1 0.9888 (192s)\n"}
+,{"stream_name":"stdout","time":8145.936990204,"data":"fold 2 ep 14/14 loss 0.4785 val macroF1 0.9891 (191s)\n"}
+,{"stream_name":"stdout","time":8208.800780486,"data":"== fold 2 best macroF1 0.9891 | elapsed 135 min\n"}
+,{"stream_name":"stdout","time":8293.623542119,"data":"fold 3 ep 1/14 loss 1.4770 val macroF1 0.2745 (84s)\n"}
+,{"stream_name":"stdout","time":8492.91618764,"data":"fold 3 ep 2/14 loss 1.0585 val macroF1 0.8652 (199s)\n"}
+,{"stream_name":"stdout","time":8692.240735329,"data":"fold 3 ep 3/14 loss 0.7300 val macroF1 0.9549 (199s)\n"}
+,{"stream_name":"stdout","time":8890.868919397,"data":"fold 3 ep 4/14 loss 0.6259 val macroF1 0.9718 (199s)\n"}
+,{"stream_name":"stdout","time":9087.25528559,"data":"fold 3 ep 5/14 loss 0.5895 val macroF1 0.9776 (196s)\n"}
+,{"stream_name":"stdout","time":9282.903670731,"data":"fold 3 ep 6/14 loss 0.5642 val macroF1 0.9817 (196s)\n"}
+,{"stream_name":"stdout","time":9478.329423739,"data":"fold 3 ep 7/14 loss 0.5439 val macroF1 0.9831 (195s)\n"}
+,{"stream_name":"stdout","time":9673.223172305,"data":"fold 3 ep 8/14 loss 0.5270 val macroF1 0.9846 (195s)\n"}
+,{"stream_name":"stdout","time":9868.392569841,"data":"fold 3 ep 9/14 loss 0.5096 val macroF1 0.9856 (195s)\n"}
+,{"stream_name":"stdout","time":10063.340048437,"data":"fold 3 ep 10/14 loss 0.5010 val macroF1 0.9867 (195s)\n"}
+,{"stream_name":"stdout","time":10257.209690918,"data":"fold 3 ep 11/14 loss 0.4890 val macroF1 0.9868 (194s)\n"}
+,{"stream_name":"stdout","time":10449.221158886,"data":"fold 3 ep 12/14 loss 0.4828 val macroF1 0.9867 (192s)\n"}
+,{"stream_name":"stdout","time":10639.369454295,"data":"fold 3 ep 13/14 loss 0.4801 val macroF1 0.9869 (190s)\n"}
+,{"stream_name":"stdout","time":10829.248669219,"data":"fold 3 ep 14/14 loss 0.4762 val macroF1 0.9866 (190s)\n"}
+,{"stream_name":"stdout","time":10892.881854928,"data":"== fold 3 best macroF1 0.9869 | elapsed 180 min\n"}
+,{"stream_name":"stdout","time":10977.902789902,"data":"fold 4 ep 1/14 loss 1.4634 val macroF1 0.3961 (84s)\n"}
+,{"stream_name":"stdout","time":11177.440166833,"data":"fold 4 ep 2/14 loss 1.0590 val macroF1 0.8570 (200s)\n"}
+,{"stream_name":"stdout","time":11376.744239187,"data":"fold 4 ep 3/14 loss 0.7234 val macroF1 0.9522 (199s)\n"}
+,{"stream_name":"stdout","time":11575.65354371,"data":"fold 4 ep 4/14 loss 0.6283 val macroF1 0.9699 (199s)\n"}
+,{"stream_name":"stdout","time":11772.967020669,"data":"fold 4 ep 5/14 loss 0.5907 val macroF1 0.9771 (197s)\n"}
+,{"stream_name":"stdout","time":11970.483335834,"data":"fold 4 ep 6/14 loss 0.5614 val macroF1 0.9814 (198s)\n"}
+,{"stream_name":"stdout","time":12166.189645743,"data":"fold 4 ep 7/14 loss 0.5388 val macroF1 0.9832 (196s)\n"}
+,{"stream_name":"stdout","time":12361.818541818,"data":"fold 4 ep 8/14 loss 0.5240 val macroF1 0.9851 (196s)\n"}
+,{"stream_name":"stdout","time":12556.907384673,"data":"fold 4 ep 9/14 loss 0.5085 val macroF1 0.9851 (195s)\n"}
+,{"stream_name":"stdout","time":12751.025941764,"data":"fold 4 ep 10/14 loss 0.4995 val macroF1 0.9867 (194s)\n"}
+,{"stream_name":"stdout","time":12945.114147818,"data":"fold 4 ep 11/14 loss 0.4913 val macroF1 0.9857 (194s)\n"}
+,{"stream_name":"stdout","time":13136.173232495,"data":"fold 4 ep 12/14 loss 0.4798 val macroF1 0.9862 (191s)\n"}
+,{"stream_name":"stdout","time":13327.482402699,"data":"fold 4 ep 13/14 loss 0.4797 val macroF1 0.9860 (191s)\n"}
+,{"stream_name":"stdout","time":13516.364157837,"data":"fold 4 ep 14/14 loss 0.4748 val macroF1 0.9857 (189s)\n"}
+,{"stream_name":"stdout","time":13579.565437408,"data":"== fold 4 best macroF1 0.9867 | elapsed 225 min\n"}
+,{"stream_name":"stdout","time":13579.567563587,"data":"\n"}
+,{"stream_name":"stdout","time":13579.56758646,"data":"per-fold best macroF1: {0: 0.9903, 1: 0.9913, 2: 0.9891, 3: 0.9869, 4: 0.9867}\n"}
+,{"stream_name":"stdout","time":13579.571285183,"data":"OOF macro F1 (folds [0, 1, 2, 3, 4]) = 0.9889   (v3a fold0 alone 0.9915)\n"}
+,{"stream_name":"stdout","time":13579.583471385,"data":"              precision    recall  f1-score   support\n"}
+,{"stream_name":"stdout","time":13579.583497948,"data":"\n"}
+,{"stream_name":"stdout","time":13579.583504138,"data":"       7-11k     0.9944    0.9940    0.9942     12429\n"}
+,{"stream_name":"stdout","time":13579.583508775,"data":"       fiveN     0.9851    0.9898    0.9874      4407\n"}
+,{"stream_name":"stdout","time":13579.583513615,"data":"   freefried     0.9925    0.9904    0.9914      5596\n"}
+,{"stream_name":"stdout","time":13579.583518359,"data":"        pube     0.9905    0.9882    0.9894      5926\n"}
+,{"stream_name":"stdout","time":13579.583522848,"data":"     roblock     0.9803    0.9834    0.9818      3188\n"}
+,{"stream_name":"stdout","time":13579.583527898,"data":"\n"}
+,{"stream_name":"stdout","time":13579.583532055,"data":"    accuracy                         0.9906     31546\n"}
+,{"stream_name":"stdout","time":13579.583536152,"data":"   macro avg     0.9886    0.9891    0.9889     31546\n"}
+,{"stream_name":"stdout","time":13579.583540498,"data":"weighted avg     0.9906    0.9906    0.9906     31546\n"}
+,{"stream_name":"stdout","time":13579.583551005,"data":"\n"}
+,{"stream_name":"stdout","time":13579.59568553,"data":"           7-11k  fiveN  freefried  pube  roblock\n"}
+,{"stream_name":"stdout","time":13579.595709569,"data":"7-11k      12355     24         14    17       19\n"}
+,{"stream_name":"stdout","time":13579.595715947,"data":"fiveN         17   4362          6     7       15\n"}
+,{"stream_name":"stdout","time":13579.595721283,"data":"freefried     15     10       5542    22        7\n"}
+,{"stream_name":"stdout","time":13579.595725578,"data":"pube          12     18         18  5856       22\n"}
+,{"stream_name":"stdout","time":13579.595740446,"data":"roblock       25     14          4    10     3135\n"}
+,{"stream_name":"stdout","time":13579.604138701,"data":"test: mean agreement of single folds with ensemble 0.9463; predicted class share: {'7-11k': np.float64(0.152), 'fiveN': np.float64(0.26), 'freefried': np.float64(0.152), 'pube': np.float64(0.259), 'roblock': np.float64(0.178)}\n"}
+,{"stream_name":"stdout","time":13579.716224083,"data":"         id   id_img  pred_num pred_str\n"}
+,{"stream_name":"stdout","time":13579.716264636,"data":"0  ANS00001  scyd5lz         1    fiveN\n"}
+,{"stream_name":"stdout","time":13579.716270171,"data":"1  ANS00002  slbh6z4         0    7-11k\n"}
+,{"stream_name":"stdout","time":13579.716273902,"data":"2  ANS00003  s3u8t8d         3     pube\n"}
+,{"stream_name":"stdout","time":13579.716277901,"data":"3  ANS00004  s0jrf0c         3     pube\n"}
+,{"stream_name":"stdout","time":13579.716281865,"data":"4  ANS00005  susbkwa         3     pube\n"}
+,{"stream_name":"stdout","time":13579.716285496,"data":"wrote preds/ - nothing submitted\n"}
+,{"stream_name":"stderr","time":13585.952735551,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":13585.952774308,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":13586.174040546,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":13586.174101733,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":13586.971780947,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":13587.912046555,"data":"[NbConvertApp] Writing 350436 bytes to __results__.html\n"}
+]

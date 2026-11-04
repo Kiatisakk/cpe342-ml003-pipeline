@@ -1,0 +1,42 @@
+[{"stream_name":"stdout","time":5.036973981,"data":"xgboost 3.4.1 | device cuda | trees {'clf': 4000, 'sig': 4000, 'mu': 15000, 'q': 8000, 'mae': 4000, 'qw': 8000, 'qraw': 8000}\n"}
+,{"stream_name":"stdout","time":7.14701494,"data":"(104000, 34) (25889, 33)\n"}
+,{"stream_name":"stdout","time":7.235241579,"data":"exact fill: train 28527 cells, test 7160 cells | NaN before {'historical_spending': 0.058, 'total_transactions': 0.0583, 'avg_transaction_value': 0.0576, 'purchases_on_discount': 0.0585, 'discount_rate_used': 0.0587} -\u003e after {'historical_spending': 0.0038, 'total_transactions': 0.001, 'avg_transaction_value': 0.0044, 'purchases_on_discount': 0.0035, 'discount_rate_used': 0.0041}\n"}
+,{"stream_name":"stdout","time":18.231602851,"data":"segment imputer holdout acc: 0.9286\n"}
+,{"stream_name":"stdout","time":18.293683657,"data":"45 features\n"}
+,{"stream_name":"stdout","time":478.648308623,"data":"fold 0: 460s | best_iter mae=3335, clf=1132, mu=5158, sig=745, q=3394, qw0.3=3229, qw0.6=2604, qraw=1415\n"}
+,{"stream_name":"stdout","time":978.800786082,"data":"fold 1: 500s | best_iter mae=2041, clf=1117, mu=6331, sig=612, q=3594, qw0.3=3324, qw0.6=3051, qraw=1717\n"}
+,{"stream_name":"stdout","time":1458.360437865,"data":"fold 2: 480s | best_iter mae=2088, clf=1288, mu=4833, sig=1328, q=3402, qw0.3=3186, qw0.6=2960, qraw=1543\n"}
+,{"stream_name":"stdout","time":1931.719579103,"data":"fold 3: 473s | best_iter mae=2776, clf=1666, mu=5365, sig=971, q=3472, qw0.3=3192, qw0.6=2846, qraw=1205\n"}
+,{"stream_name":"stdout","time":2419.008891621,"data":"fold 4: 487s | best_iter mae=3999, clf=1178, mu=5085, sig=1654, q=3566, qw0.3=3242, qw0.6=2826, qraw=1393\n"}
+,{"stream_name":"stdout","time":2419.008952679,"data":"total 2401s\n"}
+,{"stream_name":"stdout","time":2419.008957985,"data":"WARNING: mae used ~all 4000 trees\n"}
+,{"stream_name":"stdout","time":2527.64613693,"data":"calib (shift, kappa): {'q': (np.float64(-0.0), np.float64(1.0)), 'qw0.3': (np.float64(-0.025), np.float64(1.0)), 'qw0.6': (np.float64(-0.0), np.float64(0.975)), 'whale': (np.float64(-0.0), np.float64(1.0))} | whale base: q | C [ 1.7 -0. ]\n"}
+,{"stream_name":"stdout","time":2527.727996412,"data":"blend weights: {'D_qw0.3': 0.36, 'D_q': 0.57, 'D_qw0.6': 0.07}\n"}
+,{"stream_name":"stdout","time":2527.728049909,"data":"reference: v1 0.7893 | v2 0.7916 | v3 0.7917\n"}
+,{"stream_name":"stdout","time":2527.728057431,"data":"zero             0.5000  (err ratio 1.0000)\n"}
+,{"stream_name":"stdout","time":2527.728062772,"data":"A_mae            0.7860  (err ratio 0.2723)\n"}
+,{"stream_name":"stdout","time":2527.728068039,"data":"C_tuned          0.7900  (err ratio 0.2658)\n"}
+,{"stream_name":"stdout","time":2527.728072499,"data":"D_q_raw          0.7917  (err ratio 0.2631)\n"}
+,{"stream_name":"stdout","time":2527.728077443,"data":"D_q              0.7917  (err ratio 0.2631)\n"}
+,{"stream_name":"stdout","time":2527.72808196,"data":"D_qw0.3_raw      0.7914  (err ratio 0.2636)\n"}
+,{"stream_name":"stdout","time":2527.728088334,"data":"D_qw0.3          0.7914  (err ratio 0.2636)\n"}
+,{"stream_name":"stdout","time":2527.728093181,"data":"D_qw0.6_raw      0.7887  (err ratio 0.2679)\n"}
+,{"stream_name":"stdout","time":2527.728097861,"data":"D_qw0.6          0.7895  (err ratio 0.2666)\n"}
+,{"stream_name":"stdout","time":2527.728102333,"data":"D_whale_raw      0.7878  (err ratio 0.2693)\n"}
+,{"stream_name":"stdout","time":2527.728548558,"data":"E_blend          0.7920  (err ratio 0.2627)\n"}
+,{"stream_name":"stdout","time":2527.775266528,"data":"          n       sum_err         sum_y  err_ratio  share_err\n"}
+,{"stream_name":"stdout","time":2527.775297126,"data":"seg                                                          \n"}
+,{"stream_name":"stdout","time":2527.775301736,"data":"-1.0   5935  1.722547e+07  6.768574e+07      0.254      0.060\n"}
+,{"stream_name":"stdout","time":2527.775332978,"data":" 0.0  39241  2.869188e+06  2.902183e+06      0.989      0.010\n"}
+,{"stream_name":"stdout","time":2527.775337421,"data":" 1.0  24483  1.686023e+07  2.312102e+07      0.729      0.059\n"}
+,{"stream_name":"stdout","time":2527.775341483,"data":" 2.0  19762  2.180640e+07  4.513335e+07      0.483      0.076\n"}
+,{"stream_name":"stdout","time":2527.775345301,"data":" 3.0  14579  2.280278e+08  9.528499e+08      0.239      0.795\n"}
+,{"stream_name":"stdout","time":2529.31988321,"data":"USE: E_blend | OOF NMAE 0.792 | test zero% 0.504 mean 10421.2\n"}
+,{"stream_name":"stdout","time":2529.319914237,"data":"wrote /kaggle/working/preds - nothing submitted\n"}
+,{"stream_name":"stderr","time":2535.298632742,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":2535.298669066,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":2535.626977327,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":2535.627014952,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":2537.705222734,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":2538.840487032,"data":"[NbConvertApp] Writing 383408 bytes to __results__.html\n"}
+]

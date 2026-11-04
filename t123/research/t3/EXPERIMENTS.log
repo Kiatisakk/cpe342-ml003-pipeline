@@ -2,3 +2,5 @@ id | experiment | OOF | fold mean +- sd | kept? | note
 E00 | v4 D_q alone (repo OOF) | 0.79169 | 0.79174 +- 0.0075 | ref | baseline single
 E01 | v4 blend, in-sample greedy weights | 0.79195 | 0.79201 +- 0.0077 | ref | weights tuned on same OOF (optimistic)
 E02 | v4 A,C,D_q,D_qw0.3,D_qw0.6 nested LAD blend | 0.79191 | 0.79196 +- 0.0077 | ref | HONEST baseline (nested)
+E03 | LightGBM hurdle: binary clf + 11 per-alpha quantile regs on log y (lr .03, 63 leaves) | 0.79002 | 0.79007 +- 0.0076 | discard | clf AUC 0.7838 (= v4 0.7840); amount model weaker than v4 XGB multi-quantile
+E04 | nested per-segment (p-shift, kappa) calibration on E03 | 0.79002 | 0.79007 +- 0.0076 | discard | all segments pick shift 0 / kappa 1 -> already calibrated

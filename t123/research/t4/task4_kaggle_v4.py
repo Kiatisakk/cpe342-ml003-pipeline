@@ -3,7 +3,7 @@
 # NO SUBMIT - writes /kaggle/working/preds only.
 #
 # Changes vs v3_5f (see t123/research/t4/REPORT.md):
-#   1. BACKBONE is a preset key: run the notebook once per backbone, then blend runs with t4_blend_runs.py.
+#   1. BACKBONE is a preset key: run the notebook once per backbone, then blend runs with t4_robust_blend.py.
 #        "cnxt_t_d3"  convnext_tiny.dinov3   (v3 model, at higher res, as the control)
 #        "cnxt_s_d3"  convnext_small.dinov3  (bigger DINOv3 ConvNeXt)
 #        "eva02_s"    eva02_small_patch14_336.mim_in22k_ft_in1k (ViT family -> diversity for the 2-model ensemble)
@@ -15,7 +15,7 @@
 #   4. Longer schedule (20 epochs) and NO best-epoch-on-validation selection: the final EMA model is used, so the
 #      OOF score is an honest estimate (v3 picked the best of 14 epochs on the same fold it reports).
 #   5. TTA: every view (plain, hflip, up-scale) is saved separately for OOF and test, so the TTA combination can be
-#      chosen on OOF afterwards (t4_blend_runs.py) instead of guessing.
+#      chosen on OOF afterwards (t4_robust_blend.py, --per-view) instead of guessing.
 #   6. Time guard for the 12 h Kaggle session; RUN_FOLDS can be split over several sessions (files are per fold).
 # Output format is the same as v3 (+ per-view files):
 #   preds/{TAG}_oof.npy (N_train x 5, mean of TTA_DEFAULT views), preds/{TAG}_oof_{view}.npy,

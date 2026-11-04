@@ -11,7 +11,7 @@ prior estimate in §A, computed from the model's **test predictions only**.
 | `results_prior_shift.json`, `log_prior_shift.txt` | all numbers from that run |
 | `t4_test_proba_{ts,bcts}_em.npy` | EM-corrected test probabilities (kept for reference; **not recommended**) |
 | `task4_kaggle_v4.py` | §B: improved Kaggle GPU training script (not run here) |
-| `t4_blend_runs.py` | §B: blends v3 + v4 runs on OOF (nested-CV weights) → test proba + csv |
+| `t4_robust_blend.py` | §E: robust ensemble-weight blending pipeline (per-member calibration, 6 blenders, nested shift-aware evaluation, conservative selection) |
 | `t4_test_diagnostics.py`, `results_diagnostics.json`, `log_diagnostics.txt` | §D: label-free test-difficulty estimates, fold disagreement, uncertainty pairs, expected-F1 decoding |
 | `t4_make_label_csv.py` | §C: builds the two string-label files below |
 | `t4_test_str.csv` | §C: `id,pred`, labels exactly as in train.csv (`7-11k`) |
@@ -110,11 +110,8 @@ The token is read only through `kaggle_secrets.UserSecretsClient`; nothing is ha
 
 Outputs (same format as v3, plus per-view files): `preds/v4_<bb>_oof.npy`, `_oof_<view>.npy`, `_test_fold{k}.npy`, `_test_fold{k}_<view>.npy`, `task4_v4_<bb>_test_proba.npy`, `task4_v4_<bb>.csv`, `v4_<bb>_log.json`.
 
-Blending (local, CPU):
-`python t123/research/t4/t4_blend_runs.py --run v3_5f=t123/preds_final/t4/preds --run v4_cnxt_s_d3=<dir> --run v4_eva02_s=<dir> [--views plain,hflip]`
-It searches log-prob blend weights on a simplex grid and reports a **nested 5-fold** OOF score next to the equal-weight blend, then writes `blend/t4_blend.csv` and `blend/t4_blend_test_str.csv`.
-I tested it with v3 alone (it reproduces v3 exactly) and with a synthetic noisy second run (it correctly gives that run weight 0).
-v3's OOF is slightly optimistic (best-epoch selection), so its blend weight will be a bit inflated. Prefer the equal-weight blend unless the nested score is clearly higher.
+Blending: use `t4_robust_blend.py` (§E).
+v3's OOF is slightly optimistic (best-epoch selection), so v3 will look a little better than it is in any OOF-based weighting.
 
 Suggested order (about 30 GPU-h per week): 1) `eva02_s` (most diverse), 2) `cnxt_s_d3`. Then blend with v3_5f.
 Expected gain: v3 makes ~350 OOF errors out of 31.5k, so realistically +0.001–0.003 OOF. The test is harder than the OOF, so a robust ensemble matters more there.
@@ -196,9 +193,59 @@ No gain, the same conclusion as §A. With this model, the decision rule is not w
 
 ---
 
+## E. Robust ensemble-weight blending pipeline (`t4_robust_blend.py`)
+It replaces the earlier `t4_blend_runs.py`, which used one F1 grid with no calibration and no shift check.
+```
+python t123/research/t4/t4_robust_blend.py --run v3_5f=t123/preds_final/t4/preds \
+       --run v4_eva02_s=<dir> --run v4_cnxt_s_d3=<dir> [--views plain,hflip] [--per-view] [--out t123/research/t4/blend]
+python t123/research/t4/t4_robust_blend.py --selftest      # pipeline check with synthetic members (~1 min)
+```
+Steps:
+1. **Load members.** A member is a run, or (with `--per-view`) a TTA view of a run. Folds from several Kaggle sessions are merged by giving the same TAG twice. The script checks that every OOF row and all 5 test folds are present.
+2. **Per-member temperature scaling** on OOF. This matters because v3 (label smoothing 0.1) and v4 (0.05) differ in sharpness. In a plain probability average, the sharper model would dominate regardless of quality. Self-test temperatures: 0.50 / 1.18 / 2.61.
+3. **Candidate blenders**, all log-linear pooling with simplex weights:
+   - `equal`;
+   - `nll`: log-loss-optimal weights;
+   - `nll_bag`: the same, bagged over 20 bootstrap resamples;
+   - `caruana`: greedy forward selection with replacement, bagged ×10 (Caruana et al. 2004);
+   - `shrink`: ½ bagged-nll + ½ equal;
+   - `f1grid`: the old F1 grid, only for ≤ 4 members.
+4. **Nested 5-fold evaluation.** Calibration and weights are fitted on 4/5 of the OOF and scored on 1/5 in three scenarios:
+   - `plain`;
+   - `shift`: held-out rows resampled to the EM test class mix;
+   - `shift_conf`: also matched to the test's lower confidence (the stress test from §A/§D).
+
+   Deltas are paired against `equal`, with standard errors. The script also reports how much the weights vary across folds; large variation is a warning sign of over-fitting.
+5. **Conservative selection.** A weighted method replaces `equal` only if its Δ ≥ 0 in **every** scenario and its plain Δ > 2 se. Among those, the one with the best worst-case Δ wins. Otherwise `equal` is kept.
+6. **Refit on all OOF**, apply to the test, and write:
+   - `t4_blend.csv` (`id,id_img,pred_num,pred_str`), `t4_blend_test_str.csv`, `t4_blend_test_str_711K.csv`;
+   - test probabilities and the nested OOF of the selected method;
+   - `blend_summary.json` and `BLEND_REPORT.md`.
+7. **Label-free test diagnostics**, reported only and **never used for selection**: ATC accuracy per member and for the blend, disagreement between members on test, and fold disagreement per member.
+
+Verification:
+- **v3 alone:** selects `equal` and reproduces `t4_test_str.csv` exactly.
+- **Self-test** (v3 + a differently-sharpened noisy copy of v3 + a clearly bad member, single OOF 0.54):
+
+| method | nested OOF mF1 | Δ plain | Δ shift | Δ shift_conf | weights v3 / copy / bad |
+|---|---|---|---|---|---|
+| equal | 0.98827 | 0 | 0 | 0 | .33 / .33 / .33 |
+| **nll (selected)** | 0.98879 | +0.00053 ± 0.00022 | +0.00042 | +0.00285 | .97 / .02 / .01 |
+| nll_bag | 0.98879 | +0.00053 | +0.00042 | +0.00285 | .95 / .04 / .01 |
+| caruana | 0.98876 | +0.00049 | +0.00038 | +0.00265 | .97 / .03 / .00 |
+| shrink | 0.98849 | +0.00023 | +0.00021 | +0.00193 | .65 / .18 / .17 |
+| f1grid | 0.98878 | +0.00051 | +0.00037 | +0.00309 | .98 / .00 / .02 |
+
+  The bad member drags the equal blend down, most of all under `shift_conf`. Every weighted method removes it.
+  The noisy copy adds no information (it is v3 plus noise), so it correctly gets ~0 weight.
+  This only checks the selection logic. Real gains need real, *diverse* members (v4 EVA02 / ConvNeXt-S): with two members of similar quality, expect `equal` or `shrink` to win.
+- **Runtime:** about 1 min for 3 members on CPU.
+
+---
+
 ## Recommendation
 0. **Expect T4 on the private LB to be ≈ 0.87–0.94, not 0.989 (§D1).** The test is shifted in image content, mainly freefried / fiveN / pube. That is why the v4 robustness run plus a second backbone is the most valuable T4 work left, more than any post-processing.
 1. T4 final = **v3_5f plain argmax** (`t4_test_str.csv` strings, or v6's numeric column), with **no prior-shift correction and no logit bias**.
-2. If GPU time allows, run `task4_kaggle_v4.py` for `eva02_s` and `cnxt_s_d3`. Blend with `t4_blend_runs.py` and switch only if the nested/equal-weight OOF beats 0.9889 and the per-view numbers look sane.
+2. If GPU time allows, run `task4_kaggle_v4.py` for `eva02_s` and `cnxt_s_d3`. Blend with `t4_robust_blend.py` (§E). Use its selected blend if its nested OOF ≥ 0.9889 and its Δ vs v3 alone is not negative in any scenario.
 3. For the string-vs-number question: the slide's sample submission uses strings in the task4 column.
    If the team decides the private LB expects strings, put `t4_test_str.csv` (or the 711K variant) into the task4 column of the final file. That changes only T4, which the public LB does not score.

@@ -43,3 +43,4 @@ R2-01 | analysis: rows with missing prev_month (5.8%) | - | - | no run | err rat
 R2-02 | analysis: whale log-residual of final vs feature deciles | - | - | no run | max decile median shift 0.04 -> no feature signal left marginally
 R2-03 | CB d4, 17 alphas dense near 0.41-0.5 (whale q ~ 0.46) | 0.79511 | 0.79516 +- 0.0075 | discard | interpolation error negligible
 R2-04 | CB d4 + 7 ratio-space feats (log feat - offset) | 0.79502 | 0.79507 +- 0.0074 | discard | -0.0001 (noise/slightly worse)
+R2-05 | CB d4, l2_leaf_reg 10 (vs 3) | 0.79517 | 0.79522 +- 0.0076 | neutral | +0.00005 = noise

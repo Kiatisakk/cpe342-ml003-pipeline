@@ -34,13 +34,13 @@ the ceiling because 3% of labels are random flips. Whether to use it is a team /
 | E04 | e04_wanbia.py w | WANBIA, one weight per feature (honest inner-OOF blocks) | 0.7541 (s42), nested bias 0.7555 | 0.6201 | discarded | — |
 | E04 | e04_wanbia.py wk | WANBIA, per feature × class weights | 0.7542 (s42) | 0.6207 | discarded | — |
 | E04 | e04_wanbia.py lr | multinomial LR on all centred NB log-lik blocks | 0.7539 (s42) | 0.6195 | discarded | — |
-| E05 | e05_lgbm.py raw | LightGBM on raw features | RAW_RES | | discarded | probes for interactions (CI violations) |
-| E05 | e05_lgbm.py nbf | LightGBM on raw + honest inner-OOF NB log-lik ratios | NBF_RES | | discarded | |
+| E05 | e05_lgbm.py raw | LightGBM on raw features | 0.7509 (s42) | 0.6173 | discarded | GBMs find no interaction signal NB misses; their LL is better but F1 is worse |
+| E05 | e05_lgbm.py nbf | LightGBM on raw + honest inner-OOF NB log-lik ratios | 0.7506 (s42) | 0.6161 | discarded | NB features do not help the GBM beat NB |
 | E06 | e06_emnb.py | **label-noise-aware NB by EM** (latent true class, symmetric noise ε) | 0.7557 ± 0.0004 (nested bias 0.7557 ± 0.0002) | **0.6017** | kept for probabilities | ε estimated from the labels alone is 0.028 (true value 0.030, §2). Same argmax as NB, much better calibrated |
 | E06 | e06_emnb.py idclean | diagnostic: NB trained on ID-cleaned labels | 0.7560 (s42) | — | diagnostic | clean labels do not change argmax decisions |
 | E07 | e07_nbbag.py | multi-resolution NB (average log-densities of 6 bin/σ configs) | 0.7555 ± 0.0003 | 0.6230 | discarded | — |
 | E08 | e08_blend.py | geometric mean NB + EM-NB + GAM | 0.7556 ± 0.0001 | 0.6106 | discarded | — |
-| E08 | e08_blend.py | nested LR stack of NB + EM-NB + GAM | STACK_RES | | discarded | |
+| E08 | e08_blend.py | nested LR stack of NB + EM-NB + GAM | raw 0.7556 ± 0.0001, nested bias 0.7560 ± 0.0004 | 0.6005 | discarded | +0.0003 is below the 0.001 noise bar; the extra complexity is not worth it |
 | E09 | e09_2x2.py | 2×2-factorised NB (pool each feature's density over an axis, chosen per fold) | 0.7550 (s42) | 0.6245 | discarded | the data rejects pooling for 26/28 features (small cross-axis effects exist) |
 | E10 | e10_idblock.py | **player_id block rule + NB tie-break in boundary gaps** | **0.9677 ± 0.0000** | 0.168 | separate deliverable (LEAK) | see §2 |
 
@@ -72,3 +72,6 @@ the ceiling because 3% of labels are random flips. Whether to use it is a team /
 **ID-leak variant (team decision):** `idleak_oof_proba.npy`, `idleak_test_proba.npy`, `t2_idleak_test.csv`.
 CV 0.9677 ± 0.0000. Reproduce everything with `python t123/research/t2/make_final.py`.
 Experiments cache to `t123/research/t2/cache/` (git-ignored).
+
+## 4. Stopping
+The stop rule fired: more than 6 consecutive ideas (E01, E02, E04×3, E05×2, E07, E08×2, E09) gave no gain ≥ 0.001.

@@ -10,3 +10,5 @@ E07 | E06 + 4 log-ratio feats (lprev-lhist, l_atv*freq, l_hist/tx, l_hist/age) |
 E08 | offset = fold-fitted linear model (log prev/hist/atv x segment) instead of log prev | 0.79223 | 0.79228 +- 0.0075 | discard | -0.0018 vs E07: unit-coef log prev offset is better than fitted mean offset
 E09 | E07 + feature-only weight exp(0.5*log prev) | 0.79263 | 0.79268 +- 0.0078 | discard | -0.0014: up-weighting large rows hurts
 E10 | offset = per-segment ridge on all feats (fold-fitted) | 0.79283 | 0.79289 +- 0.0079 | discard | -0.0012 vs E07; kept only as stacking candidate
+E11 | nested LAD stack of 12 bases (E05-E10, LGB hurdle, v4 cols) | 0.79421 | 0.79427 +- 0.0078 | neutral | +0.00016 over E07 = noise; weights mostly xq_extra/xq_prev/xq_linfull
+E12 | CatBoost MultiQuantile (11 alphas) d8 lr .06, offset log prev + extra feats | 0.79434 | 0.79439 +- 0.0079 | KEEP (best single) | +0.0003 vs E07 (borderline); stops at ~300 iters

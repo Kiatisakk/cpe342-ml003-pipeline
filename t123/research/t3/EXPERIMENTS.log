@@ -1,0 +1,4 @@
+id | experiment | OOF | fold mean +- sd | kept? | note
+E00 | v4 D_q alone (repo OOF) | 0.79169 | 0.79174 +- 0.0075 | ref | baseline single
+E01 | v4 blend, in-sample greedy weights | 0.79195 | 0.79201 +- 0.0077 | ref | weights tuned on same OOF (optimistic)
+E02 | v4 A,C,D_q,D_qw0.3,D_qw0.6 nested LAD blend | 0.79191 | 0.79196 +- 0.0077 | ref | HONEST baseline (nested)

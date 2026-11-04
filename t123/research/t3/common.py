@@ -56,9 +56,12 @@ def folds_v4(y, seed=42):
 
 
 def load():
+    """FOLD_SEED env var (robustness checks only) swaps in a different StratifiedKFold split of the same strata."""
     f = os.path.join(CACHE, "data_v4.pkl")
     if os.path.exists(f):
-        return pickle.load(open(f, "rb"))
+        d = pickle.load(open(f, "rb"))
+        if os.environ.get("FOLD_SEED"): d["folds"] = folds_v4(d["y"], int(os.environ["FOLD_SEED"]))
+        return d
     import xgboost as xgb
     from sklearn.model_selection import train_test_split
     tr = pd.read_csv(os.path.join(DATA, "train.csv")); te = pd.read_csv(os.path.join(DATA, "test.csv"))

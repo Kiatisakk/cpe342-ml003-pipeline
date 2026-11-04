@@ -1,0 +1,4 @@
+{"name": "exp05 lgb fe_v2 lr0.02 [seed 42]", "auc": 0.89366, "f2m": 0.78186, "f2m_nested": 0.78191, "f2b": 0.8392, "f2b_nested": 0.83916, "pos_rate_m": 0.4225, "pos_rate_b": 0.6269, "time": "9.1m"}
+{"name": "exp05 lgb fe_v2 lr0.02 [seed 7]", "auc": 0.89374, "f2m": 0.78191, "f2m_nested": 0.78179, "f2b": 0.83901, "f2b_nested": 0.83848, "pos_rate_m": 0.405, "pos_rate_b": 0.6323, "time": "12.2m"}
+{"name": "exp05 lgb fe_v2 lr0.02 [seed 2024]", "auc": 0.89383, "f2m": 0.78161, "f2m_nested": 0.78084, "f2b": 0.8385, "f2b_nested": 0.8381, "pos_rate_m": 0.4325, "pos_rate_b": 0.635, "time": "0.7m"}
+AGG {"name": "exp05 lgb fe_v2 lr0.02", "seeds": [42, 7, 2024], "auc": 0.89374, "auc_sd": 9e-05, "f2m": 0.78179, "f2m_sd": 0.00016, "f2m_nested": 0.78151, "f2m_nested_sd": 0.00059, "f2b": 0.8389, "f2b_sd": 0.00036, "f2b_nested": 0.83858, "f2b_nested_sd": 0.00054}

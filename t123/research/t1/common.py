@@ -233,3 +233,39 @@ def fe_zone_post(df, ref):
 
 def fe_v2(df, ref):
     return pd.concat([fe_baseline(df, ref), fe_zone_post(df, ref)], axis=1)
+
+
+# ------------------------------------------------------------------ XGB / CatBoost runners (baseline-tuned params)
+XGB_BASE = dict(max_depth=7, min_child_weight=1.41, subsample=0.998, colsample_bytree=0.696, reg_lambda=15.4, reg_alpha=11.8,
+                gamma=0.0369, max_bin=128, grow_policy="lossguide", tree_method="hist", n_jobs=4)
+CAT_BASE = dict(depth=5, l2_leaf_reg=0.683, random_strength=0.0706, border_count=254, bootstrap_type="Bernoulli", subsample=0.81, thread_count=4)
+
+
+def cv_generic(fit_pred, X, y, seed=42, Xt=None, inner_seed_offset=0):
+    oof = np.zeros(len(y)); tp = np.zeros(len(Xt)) if Xt is not None else None
+    for k, (a, b) in enumerate(folds_for(y, seed)):
+        rng = np.random.default_rng(seed + k + inner_seed_offset); a = rng.permutation(a); cut = int(0.9 * len(a))
+        pv, pt = fit_pred(X.iloc[a[:cut]], y[a[:cut]], X.iloc[a[cut:]], y[a[cut:]], X.iloc[b], Xt, seed + k)
+        oof[b] = pv
+        if Xt is not None: tp += pt / 5
+    return oof, tp
+
+
+def xgb_fp(params=None, lr=0.05):
+    import xgboost as xgb
+    def f(Xa, ya, Xv, yv, Xb, Xt, rs):
+        p = dict(XGB_BASE); p.update(params or {})
+        m = xgb.XGBClassifier(n_estimators=5000, learning_rate=lr, early_stopping_rounds=200, eval_metric="auc", random_state=rs, **p)
+        m.fit(Xa, ya, eval_set=[(Xv, yv)], verbose=False)
+        return m.predict_proba(Xb)[:, 1], (m.predict_proba(Xt)[:, 1] if Xt is not None else None)
+    return f
+
+
+def cat_fp(params=None, lr=0.05):
+    import catboost as cb
+    def f(Xa, ya, Xv, yv, Xb, Xt, rs):
+        p = dict(CAT_BASE); p.update(params or {})
+        m = cb.CatBoostClassifier(iterations=5000, learning_rate=lr, eval_metric="AUC", od_type="Iter", od_wait=200, random_seed=rs, verbose=False, **p)
+        m.fit(Xa, ya, eval_set=(Xv, yv), use_best_model=True)
+        return m.predict_proba(Xb)[:, 1], (m.predict_proba(Xt)[:, 1] if Xt is not None else None)
+    return f

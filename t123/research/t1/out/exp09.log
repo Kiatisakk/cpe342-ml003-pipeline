@@ -1,0 +1,4 @@
+{"name": "exp09 mlp PLE16 3x256 fe_v2 [seed 42]", "auc": 0.88543, "f2m": 0.77311, "f2m_nested": 0.77296, "f2b": 0.83439, "f2b_nested": 0.8338, "pos_rate_m": 0.385, "pos_rate_b": 0.6512, "time": "3.7m"}
+{"name": "exp09 mlp PLE16 3x256 fe_v2 [seed 7]", "auc": 0.88539, "f2m": 0.773, "f2m_nested": 0.7714, "f2b": 0.83445, "f2b_nested": 0.83279, "pos_rate_m": 0.3925, "pos_rate_b": 0.6404, "time": "4.1m"}
+{"name": "exp09 mlp PLE16 3x256 fe_v2 [seed 2024]", "auc": 0.88561, "f2m": 0.77232, "f2m_nested": 0.77096, "f2b": 0.83535, "f2b_nested": 0.83521, "pos_rate_m": 0.4125, "pos_rate_b": 0.6512, "time": "3.5m"}
+AGG {"name": "exp09 mlp PLE16 3x256 fe_v2", "seeds": [42, 7, 2024], "auc": 0.88548, "auc_sd": 0.00012, "f2m": 0.77281, "f2m_sd": 0.00043, "f2m_nested": 0.77177, "f2m_nested_sd": 0.00105, "f2b": 0.83473, "f2b_sd": 0.00054, "f2b_nested": 0.83393, "f2b_nested_sd": 0.00122}

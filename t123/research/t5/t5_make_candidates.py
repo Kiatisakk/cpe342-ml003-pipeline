@@ -15,13 +15,20 @@ union = (R[["shock"] + gcols].max(axis=1) == 1)
 post = R["post_C0"]
 cands = {
     "t5_union_1811":            union,                      # reference = sub_v6 T5 (pipeline reproduction)
-    "t5_union_plus_acckda_p50": union | (post > 0.5),       # recommended first probe
-    "t5_union_plus_acckda_p10": union | (post > 0.1),       # F3-optimal threshold (marginal precision ~ F3/10)
-    "t5_union_plus_acckda_p90": union | (post > 0.9),       # most conservative
+    "t5_union_plus_acckda_box": union | (R["C0"] == 1),     # RECOMMENDED: exact per-period box (244 rows)
+    "t5_union_plus_acckda_box_lsnan": None,                # box + lowstab members hidden by NaN behavior_stability (low confidence)
+    "t5_union_plus_acckda_p50": union | (post > 0.5),       # Gaussian-EM posterior variants (superseded by box)
+    "t5_union_plus_acckda_p10": union | (post > 0.1),
+    "t5_union_plus_acckda_p90": union | (post > 0.9),
 }
+LS = "t123/research/t5/out/lowstab_nan_scores.csv"   # from t5_box_analysis.py
+if os.path.exists(LS):
+    cands["t5_union_plus_acckda_box_lsnan"] = cands["t5_union_plus_acckda_box"] | (pd.read_csv(LS)["post_lowstab_nan"].values > 0.1)
+else:
+    cands.pop("t5_union_plus_acckda_box_lsnan")
 rows = []
 for name, m in cands.items():
     pd.DataFrame({"id": ANS, "pred": m.astype(int)}).to_csv(f"{OUT}/{name}.csv", index=False, lineterminator="\n")
     add = m & ~union
-    rows.append((name, int(m.sum()), int(add.sum()), round(float(post[add].sum()), 1)))
-print(pd.DataFrame(rows, columns=["file", "n_flagged", "n_added", "expected_TP_added"]).to_string(index=False))
+    rows.append((name, int(m.sum()), int(add.sum()), int((add & (R["C0"] == 1)).sum())))
+print(pd.DataFrame(rows, columns=["file", "n_flagged", "n_added", "added_in_box"]).to_string(index=False))

@@ -2,17 +2,33 @@
  "shock": 827,
  "components": [
   {
-   "pi": 0.00985239825975105,
-   "n_eff": 237.22604529828584,
+   "pi": 0.009508072977323293,
+   "n_eff": 228.9353811479903,
    "mu": {
-    "accuracy_std": 10.448,
+    "accuracy_std": 10.465,
     "kda_std": 0.847,
-    "performance_stability": 0.898
+    "performance_stability": 0.899,
+    "performance_stability~vol": -0.472
    },
-   "name": "C0_accuracy_std>+kda_std>+performance_stability>",
-   "n_flag": 294,
-   "n_post05": 251,
-   "exp_tp": 234.3177162749478
+   "name": "C0_accuracy_std>+kda_std>+performance_stability>+performance_stability~vol<",
+   "box": {
+    "accuracy_std": [
+     8.9512,
+     12.0371
+    ],
+    "kda_std": [
+     0.6963,
+     1.005
+    ],
+    "performance_stability": [
+     0.8493,
+     0.951
+    ]
+   },
+   "n_flag": 244,
+   "n_post_tau": 275,
+   "n_post05": 234,
+   "exp_tp": 212.25415471522552
   }
  ],
  "gap_groups": [
@@ -45,5 +61,5 @@
    "n": 207
   }
  ],
- "iforest_auc_final": 0.8815302488828595
+ "iforest_auc_final": 0.8849073284050857
 }

@@ -16,10 +16,14 @@ Stages
   C. Mixture model per component: EM on [Gaussian cluster] vs [background = product of 1-D marginal
      KDEs, i.e. the independence null].  Posterior P(cluster | x) is the anomaly score; a row is
      flagged when the posterior exceeds TAU (F3-optimal: marginal precision ~ F3/10 ~ 0.09).
-  D. Isolation Forest on the same features (reported as an independent check, soft vote).
      After a first EM pass the component is expanded with every feature whose cluster mean differs from
-     the background by > 0.6 sd (signature expansion; next-largest shift is ~0.3 sd), and EM is run again.
-Final = A OR B0 OR any C component (hard OR-vote).
+     the background by > 0.6 sd (signature expansion; next-largest shift is ~0.3 sd), and EM is run again;
+     from the second round the pool also holds the level-adjusted period-to-period variability ("~vol")
+     of the signature features (the new cluster has ~half the normal period noise in performance_stability).
+  C2. Support estimation: the box (per-period min/max) of each signature metric is estimated from the
+     confident members (posterior > 0.9); every row whose observed periods all fall inside is flagged.
+  D. Isolation Forest on the same features (reported as an independent check, soft vote).
+Final = A OR B0 OR any C2 box (hard OR-vote).
 """
 import sys, os, json, numpy as np, pandas as pd, warnings
 from scipy.stats import multivariate_normal
@@ -30,6 +34,7 @@ SRC = sys.argv[1] if len(sys.argv) > 1 else "cpe342-kaggle-main/05_anomaly_detec
 OUT = sys.argv[2] if len(sys.argv) > 2 else "t123/research/t5/out"
 os.makedirs(OUT, exist_ok=True)
 TAU = 0.10
+EXP_T = float(os.environ.get("T5_EXP_T", 0.6))   # signature-expansion threshold in sd
 X = pd.read_csv(SRC); P = [1, 2, 3, 4]; ID = X.columns[0]
 ALLB = sorted({c[:-2] for c in X.columns if c[-2:] in ("_1", "_2", "_3", "_4")})
 
@@ -118,8 +123,19 @@ print("B dependency edges (z>%.0f):" % ZMIN)
 for a, b, z in sorted(edges, key=lambda t: -t[2]): print(f"   {z:6.1f}  {a} x {b}")
 
 # ---------------- C. EM mixture per component ----------------
-def em_cluster(cols, sign, mask):
-    Y0 = F.loc[mask, cols]
+# level-adjusted period-to-period variability ("~vol"): log std over the 4 periods minus a cubic fit on the
+# row's own mean (fitted on rows not flagged so far), so it is independent of the level in normal data.
+V = {}
+for b in CONT:
+    m = X[[f"{b}_{p}" for p in P]].values.astype(float)
+    mu, l = np.nanmean(m, 1), np.log(np.nanstd(m, 1) + 1e-9)
+    ok = rest & ~np.isnan(m).any(1)
+    co = np.polyfit(mu[ok], l[ok], 3); v = l - np.polyval(co, mu); v[np.isnan(m).any(1)] = np.nan
+    V[f"{b}~vol"] = v
+FE = pd.concat([F, pd.DataFrame(V, index=F.index)], axis=1)
+
+def em_cluster(cols, sign, mask, init=None):
+    Y0 = FE.loc[mask, cols]
     Y0 = Y0.fillna(Y0.median())
     mu0, sd0 = Y0.mean(), Y0.std()
     Y = ((Y0 - mu0) / sd0).values
@@ -133,6 +149,7 @@ def em_cluster(cols, sign, mask):
     for j, s in enumerate(sign):
         r *= (s * Y[:, j] > np.quantile(s * Y[:, j], 0.9))
     r = r.astype(float) + 1e-6
+    if init is not None: r = np.asarray(init, float) + 1e-6      # warm start from the previous posterior
     for _ in range(100):
         pi = r.mean(); mu = (r[:, None] * Y).sum(0) / r.sum(); d = Y - mu
         S = (r[:, None, None] * np.einsum("ij,ik->ijk", d, d)).sum(0) / r.sum() + 1e-6 * np.eye(len(cols))
@@ -147,23 +164,41 @@ for k, comp in enumerate(sorted(comps, key=len, reverse=True)):
     cols = [c for c, _ in comp]; sign = [s for _, s in comp]
     if len(set(cols)) < len(cols): continue
     post, _, info = em_cluster(cols, sign, rest)
-    # signature expansion: other features shifted by > 1 sd inside the cluster
-    w = post[rest].values; Fa = F[rest]; mu_c = (Fa.mul(w, axis=0)).sum() / w.sum()
-    shift = (mu_c - Fa.mean()) / Fa.std()
-    print("    shift:", shift.round(2).sort_values().iloc[[0, 1, -3, -2, -1]].to_dict())
-    extra = [(c, int(np.sign(shift[c]))) for c in F.columns if c not in cols and abs(shift[c]) > 0.6]
-    if extra:
-        comp = comp + extra; cols = [c for c, _ in comp]; sign = [s for _, s in comp]
-        post, _, info = em_cluster(cols, sign, rest)
-    flag = (post > TAU).values
+    # signature expansion (repeated until stable): add features - 4-period means, and then the level-adjusted
+    # variability of the features already in the signature - whose cluster mean differs by > 0.6 sd
+    for it in range(4):
+        w = post[rest].values; Fa = FE[rest]; mu_c = (Fa.mul(w, axis=0)).sum() / w.sum()
+        shift = (mu_c - Fa.mean()) / Fa.std()
+        pool = list(F.columns) + ([f"{c}~vol" for c in cols if f"{c}~vol" in FE] if it > 0 else [])
+        extra = [(c, int(np.sign(shift[c]))) for c in pool if c not in cols and abs(shift[c]) > EXP_T]
+        print(f"    expansion {it}: largest other shifts", shift.drop(cols).abs().sort_values().tail(3).round(2).to_dict(), "-> add", extra)
+        if not extra: break
+        if it == 0: res[f"post_C{k}_seed"] = post.round(4).values    # seed (pair-only) version, kept for comparison
+        comp2 = comp + extra; cols2 = [c for c, _ in comp2]; sign2 = [s for _, s in comp2]
+        post2, _, info2 = em_cluster(cols2, sign2, rest, init=post[rest].values)
+        if info2["n_eff"] < 0.7 * info["n_eff"]:      # guard: expansion must not collapse the cluster
+            print("    expansion rejected (n_eff %.0f -> %.0f)" % (info["n_eff"], info2["n_eff"])); break
+        comp, cols, sign, post, info = comp2, cols2, sign2, post2, info2
+    # C2. support estimation: injected types turned out to be independent uniform draws per period inside a
+    # fixed box. Estimate the box of every per-period metric in the signature from the confident members
+    # (posterior > 0.9; 0.5%/99.5% quantiles widened by 2% of the width) and flag rows whose observed periods
+    # ALL lie inside (NaN periods are ignored).  Chance rate for normal rows is ~1 row (see REPORT).
+    conf = rest & (post.values > 0.9); inbox = rest.copy(); bounds = {}
+    for c in [c for c in cols if c in CONT]:
+        m = X[[f"{c}_{p}" for p in P]].values.astype(float); v = m[conf].ravel(); v = v[~np.isnan(v)]
+        lo, hi = np.quantile(v, [0.005, 0.995]); w = hi - lo; lo, hi = lo - 0.02 * w, hi + 0.02 * w
+        bounds[c] = (round(float(lo), 4), round(float(hi), 4))
+        inbox &= (((m >= lo) & (m <= hi)) | np.isnan(m)).all(1)
+    flag = inbox if bounds else (post > TAU).values
     name = f"C{k}_" + "+".join(f"{c}{'>' if s > 0 else '<'}" for c, s in comp)
-    res[f"post_C{k}"] = post.round(4).values; res[f"C{k}"] = flag.astype(int)
-    info.update(name=name, n_flag=int(flag.sum()), n_post05=int((post > 0.5).sum()), exp_tp=float(post[flag].sum()))
+    res[f"post_C{k}"] = post.round(4).values; res[f"C{k}_post{TAU}"] = (post > TAU).values.astype(int); res[f"C{k}"] = flag.astype(int)
+    info.update(name=name, box=bounds, n_flag=int(flag.sum()), n_post_tau=int((post > TAU).sum()), n_post05=int((post > 0.5).sum()), exp_tp=float(post[flag].sum()))
+    print(f"    support box {bounds}: {int(flag.sum())} rows (posterior>{TAU}: {int((post > TAU).sum())}, overlap {int((flag & (post > TAU).values).sum())})")
     summary["components"].append(info)
-    print(f"C{k}: {name}\n    pi={info['pi']:.4f} n_eff={info['n_eff']:.0f} flagged(post>{TAU})={info['n_flag']} expTP={info['exp_tp']:.0f} centre={info['mu']}")
+    print(f"C{k}: {name}\n    pi={info['pi']:.4f} n_eff={info['n_eff']:.0f} flagged(box)={info['n_flag']} flagged(post>{TAU})={info['n_post_tau']} expTP={info['exp_tp']:.0f} centre={info['mu']}")
 
 R = pd.DataFrame(res)
-ccols = [c for c in R.columns if c[:1] == "C"]
+ccols = [c for c in R.columns if c[:1] == "C" and c[1:].isdigit()]
 for i, g in enumerate(groups): R[f"G{i}"] = g["flag"].astype(int)
 summary["gap_groups"] = [{"rules": g["rules"], "n": int(g["flag"].sum())} for g in groups]
 R["final"] = R[["shock"] + [f"G{i}" for i in range(len(groups))] + ccols].max(axis=1)

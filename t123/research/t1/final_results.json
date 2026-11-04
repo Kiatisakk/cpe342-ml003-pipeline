@@ -41,5 +41,34 @@
   "test_pos_rate_if_prob_cut": 0.6022,
   "oof_score_seed42": 0.83955
  },
- "time": "25.8m"
+ "time": "25.8m",
+ "avg3_oof": {
+  "auc": 0.89482,
+  "macro": {
+   "oof_score": 0.7831,
+   "nested_per_seed": [
+    0.78287,
+    0.78265,
+    0.78285
+   ],
+   "nested_mean": 0.78279,
+   "nested_sd": 0.00012,
+   "pos_rate": 0.4125,
+   "thr_prob": 0.3826,
+   "test_pos_rate": 0.4125
+  },
+  "binary": {
+   "oof_score": 0.83948,
+   "nested_per_seed": [
+    0.83896,
+    0.83926,
+    0.8391
+   ],
+   "nested_mean": 0.83911,
+   "nested_sd": 0.00015,
+   "pos_rate": 0.6296,
+   "thr_prob": 0.19,
+   "test_pos_rate": 0.6296
+  }
+ }
 }

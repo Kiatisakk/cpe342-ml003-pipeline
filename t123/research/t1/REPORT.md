@@ -11,8 +11,9 @@ Nothing was submitted to Kaggle. No pretrained model, AutoML tool or test row wa
 | Round 1 final (`final.py`, now writes `v1_*`), 3 seeds | 0.89412 ± 0.00008 | 0.78225 ± 0.00026 | 0.78184 ± 0.00064 | 0.83904 ± 0.00029 | 0.83877 ± 0.00016 |
 | **Final v2** (`final_v2.py`), seed-42 folds (baseline scheme) | **0.89446** | **0.78243** | **0.78186** | **0.83955** | **0.83922** |
 | **Final v2**, mean ± sd over fold-split seeds 42 / 7 / 2024 | **0.89453 ± 0.00006** | 0.78251 ± 0.00034 | **0.78201 ± 0.00046** | 0.83938 ± 0.00021 | 0.83911 ± 0.00026 |
+| **Final v2, 3-seed averaged OOF** (= the model used for test; cut from this OOF, exp17) | **0.89482** | 0.78310 | **0.78279 ± 0.00012** | 0.83948 | 0.83911 ± 0.00015 |
 
-Honest gain over the baseline: **about +0.002 F2-macro** (nested 0.7799 → 0.7820), **+0.002 AUC** (0.8925 → 0.8945), and **+0.001 binary F2** (nested 0.8382 → 0.8391).
+Honest gain over the baseline: **about +0.003 F2-macro** for the delivered test model (nested 0.7799 → 0.7828 with the 3-seed averaged OOF; 0.7820 for a single split), **+0.002 AUC** (0.8925 → 0.8945), and **+0.001 binary F2** (nested 0.8382 → 0.8391).
 
 Round 2 (MCAR masking augmentation) improved on round 1 as follows:
 - AUC +0.0004, which is solid at 7× the seed sd.
@@ -37,13 +38,12 @@ The final model has no fitted blend weights or calibration, so nothing else need
    - The early-stopping holdout, the held-out fold and test are never augmented.
 3. **Model**: LightGBM with the baseline's Optuna-tuned params, lr 0.02, early stopping on an inner 10% split as in the baseline. 3 bags per fold (different inner split and seed, and different masks), averaged.
 4. **CV**: 5-fold StratifiedKFold, seed 42 (plus 7 and 2024 for the error bars). `best_oof.npy` holds the seed-42 OOF probabilities in labeled-train file order (90,816 rows).
-5. **Test**: the average of 5 folds × 3 split seeds × 3 bags. The test cut uses the OOF-optimal positive rate, averaged over seeds:
-   - macro: 40.5% predicted cheaters → `t1_best_test.csv`
-   - binary F2: 63.2% predicted cheaters → `t1_best_test_binaryF2.csv`
+5. **Test**: the average of 5 folds × 3 split seeds × 3 bags. The matching OOF is the **average of the 3 split-seed OOFs** (`best_oof_avg3.npy`): each row's 3 predictions come from models that never saw it.
+   The test cut is the optimal positive rate of that averaged OOF (`make_test_files.py`, round 3):
+   - macro: 41.25% predicted cheaters → `t1_best_test.csv`, nested F2m 0.7828 ± 0.0001
+   - binary F2: 63.0% predicted cheaters → `t1_best_test_binaryF2.csv`, nested 0.8391
 
-   A raw probability cut gives the same rate for macro (40.6%) but only 60.2% for binary F2, because averaging smooths the low-probability tail. That is why the rate cut is used.
-
-   Test predictions agree with the baseline's `t1_blend.csv` on 97.9% of rows, and with round 1 on 98.1%.
+   A raw probability cut would give the same rate for macro but too few positives for binary F2, because averaging smooths the low-probability tail. That is why the rate cut is used.
 
 ## Every experiment
 
@@ -86,6 +86,12 @@ Raw numbers are in `out/results.jsonl` (single seed) and `out/results_ms.jsonl` 
 | **16** | **4 copies, rate 1×**, lr 0.05, 3 seeds | **0.89386±.00002** | 0.78202 | **0.78176±.0006** | 0.83890 | ✓ | rows missing reports/friends/age/crosshair: +0.001–0.002 AUC |
 | 16 | 2 copies, rate 2×, lr 0.05, 3 seeds | 0.89372 | 0.78156 | 0.78115 | 0.83877 | ✗ | over-masking is no better |
 | **F2** | **final v2: fe_v2 + 4 masked copies + LGB lr 0.02 bag 3**, 3 seeds | **0.89453±.00006** | **0.78251** | **0.78201±.0005** | **0.83938** | ✓ | AUC +0.0004 vs round-1 final (solid); F2m +0.0002 (noise) |
+| **— round 3: post-processing (exp17, on the saved OOF; every tuned quantity nested) —** | | | | | | | |
+| 17A | single positive-rate cut (what final_v2 does) vs single probability cut | | | 0.78201 / 0.78201 | | ref | identical |
+| 17B | hard overrides in observed class-exclusive zones (6,658 forced to 1, 24,397 to 0) | | | 0.78202 | | ✗ | the model already gets all 31,055 zone rows right |
+| 17C | per-group thresholds, jointly tuned (groups: 0/1/2+ key features missing; or reports/friends missing) | | | 0.78166±.0011 / 0.78202±.0007 | | ✗ | more variance, no gain: a single cut on the posterior is already optimal for F-measures |
+| 17D | per-group isotonic calibration + one probability cut (same groups) | | | 0.78146±.0013 / 0.78180±.0006 | | ✗ | |
+| **17E** | **average of the 3 split-seed OOFs (= the averaged test model), rate cut from it** | **0.89482** | 0.78310 | **0.78279±.0001** | 0.83948 | ✓ | +0.0008 on every seed; really a bigger ensemble, not post-processing. Test cut now set from this OOF (41.25% vs 40.5%) |
 
 Round 1: after the last kept change (lr 0.02), the next 8 ideas gave nothing beyond noise (class weights, CatBoost/XGB blending, MLP, NB, semi-supervised ×2, ratios, Optuna), so the loop stopped under the 6-idea rule.
 
@@ -107,6 +113,8 @@ Round 2: error analysis showed the error is concentrated in rows missing reports
 ## Files
 - `common.py`: data loading, baseline FE re-implementation, `fe_zone_post` / `fe_v2`, vectorised F-beta threshold search, nested threshold scoring, CV runners for LGB/XGB/CatBoost, multi-seed reporting
 - `exp00…exp16*.py`: one script per experiment (table above); `mixnb.py` holds the mixture naive Bayes; `blend.py` does nested blending (rank / AUC weights / LR stacking)
+- `make_test_files.py`: rebuilds the test CSVs from the saved predictions, with cuts from the averaged OOF; `final_v2.py` calls it at the end
+- `exp17_postproc.py`: the post-processing tests (round 3)
 - `final_v2.py`: **final recipe**. It writes:
   - `best_oof.npy`: seed-42 OOF probabilities
   - `best_oof_allseeds.npy`: (3, 90816)

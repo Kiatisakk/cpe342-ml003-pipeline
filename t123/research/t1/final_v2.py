@@ -6,7 +6,7 @@
   MCAR (cheater rate | NaN = base rate for every column). Early-stopping holdout, held-out fold and test untouched.
 Outputs (overwrite final.py's): best_oof.npy (seed-42 OOF probs), best_oof_allseeds.npy, best_test_proba.npy,
 t1_best_test.csv (macro-F2 cut), t1_best_test_binaryF2.csv (binary-F2 cut), final_results.json.
-Test cut = OOF-optimal positive rate (mean over seeds).
+Test cut = OOF-optimal positive rate of the 3-seed averaged OOF (make_test_files.py, exp17).
 """
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -60,6 +60,8 @@ def main():
         print(kind, out[kind], flush=True)
     out["time"] = T()
     json.dump(out, open(P("final_results.json"), "w"), indent=1)
+    from make_test_files import build
+    build(PREFIX)   # final cuts from the 3-seed averaged OOF (matches the averaged test model)
     print("done", T(), "- nothing submitted")
 
 

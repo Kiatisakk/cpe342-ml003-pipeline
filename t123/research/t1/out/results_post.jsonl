@@ -1,0 +1,8 @@
+{"name": "A  single rate cut (final_v2)", "f2m_nested": 0.78201, "f2m_nested_sd": 0.00046, "per_seed": [0.78186, 0.78165, 0.78253]}
+{"name": "A2 single probability cut", "f2m_nested": 0.78201, "f2m_nested_sd": 0.00046, "per_seed": [0.78186, 0.78165, 0.78253]}
+{"name": "B  hard zone overrides + rate cut", "f2m_nested": 0.78202, "f2m_nested_sd": 0.00045, "per_seed": [0.78186, 0.78167, 0.78253]}
+{"name": "C  per-group thresholds [nkey012]", "f2m_nested": 0.78166, "f2m_nested_sd": 0.00114, "per_seed": [0.78168, 0.78051, 0.78279]}
+{"name": "D  per-group isotonic + one prob cut [nkey012]", "f2m_nested": 0.78146, "f2m_nested_sd": 0.00126, "per_seed": [0.78088, 0.78058, 0.78291]}
+{"name": "C  per-group thresholds [rep_or_fr_missing]", "f2m_nested": 0.78202, "f2m_nested_sd": 0.00069, "per_seed": [0.78262, 0.78127, 0.78216]}
+{"name": "D  per-group isotonic + one prob cut [rep_or_fr_missing]", "f2m_nested": 0.7818, "f2m_nested_sd": 0.00056, "per_seed": [0.78221, 0.78117, 0.78202]}
+{"name": "E  3-seed OOF average + rate cut", "f2m_nested": 0.78279, "f2m_nested_sd": 0.00013, "per_seed": [0.78287, 0.78265, 0.78285]}

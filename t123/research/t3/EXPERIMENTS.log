@@ -47,3 +47,4 @@ R2-05 | CB d4, l2_leaf_reg 10 (vs 3) | 0.79517 | 0.79522 +- 0.0076 | neutral | +
 R2-06 | CB d4, lr .03 | 0.79516 | 0.79521 +- 0.0075 | neutral | = noise
 R2-07 | bag 5 = final 3 CB d4 seeds + l2-10 + lr-.03 | 0.79528 | 0.79532 +- 0.0076 | neutral | = final (0.79529): CB bag saturated
 R2-08 | from-scratch MLP (3x256, SiLU, BN) 11-quantile pinball on offset target, 2 seeds, 3-seed p | 0.78430 | 0.78436 +- 0.0080 | discard | nested LAD with final bag gives NN weight 0.000 in all folds (0.79528)
+R2-09 | ROBUSTNESS: new fold split (FOLD_SEED=7): v4-equivalent XGB (no offset) vs final-recipe CB d4 (1 seed each, same p) | 0.79183 -> 0.79531 | paired +0.00348 +- 0.00045 (5/5 folds) | confirms | original folds same pair: +0.00344

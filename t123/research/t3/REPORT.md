@@ -50,6 +50,16 @@ Files: `best_oof.csv` (y, pred; train row order) and `t3_best_test.csv` (id ANS0
 * The segment imputer is fitted once on all train rows with known segment (features only, no target), as in v4.
 * Early stopping uses an inner 10 % split of each training fold, never the validation fold. Nothing submitted to Kaggle.
 
+## Round 2 (extra research, no change to the final recipe)
+* **Robustness on a fresh fold split** (`FOLD_SEED=7`, `queue9.sh`): v4-equivalent XGB (no offset) 0.79183 vs final-recipe CatBoost d4
+  0.79531 → paired **+0.00348 ± 0.00045, 5/5 folds positive** (same pair on the v4 folds: +0.00344). The gain is not a fold artefact.
+* Tried, no gain (all within ±0.0001 of the 0.79512 single-seed reference): dense alpha grid near the whale quantile level,
+  ratio-space features (log feature − offset), l2_leaf_reg 10, lr 0.03, bag of 5 CatBoost variants (0.79528 = final).
+* From-scratch NN (MLP, 11-quantile pinball loss on the offset target; PyTorch installed from PyPI): 0.78430 alone; nested LAD
+  with the final bag assigns it weight 0 in every fold.
+* Analyses: rows with missing prev_month are not worse (err ratio 0.252 vs 0.258) → no imputation gain; whale log-residuals of the
+  final model vary ≤ 0.04 across deciles of every feature → no marginal feature signal left. 6 consecutive ideas without gain → stopped.
+
 ## Every experiment
 | id | experiment | OOF NMAE | fold mean ± sd | decision | note |
 |---|---|---|---|---|---|
@@ -92,9 +102,19 @@ Files: `best_oof.csv` (y, pred; train row order) and `t3_best_test.csv` (id ANS0
 | E36 | CB d3/d4/d6 bag of 7 | 0.79523 | 0.79528 +- 0.0076 | neutral | = E35 |
 | E37 | CB shallow 7 + XGB d5 x3 (10 models) | 0.79524 | 0.79529 +- 0.0076 | neutral | = E35 (+0.00333 paired); XGB adds no diversity once CB is shallow |
 | E38 | CB d4 x3 + XGB d5 x3 | 0.79517 | 0.79522 +- 0.0076 | neutral | = E35 |
+| R2-00 | round-2 reference: CB d4 seed 0 scored with 3-seed p | 0.79512 | 0.79516 +- 0.0075 | ref | comparisons below are single-seed vs this |
+| R2-01 | analysis: rows with missing prev_month (5.8%) | - | - | no run | err ratio 0.252 vs 0.258 rest -> better prev imputation cannot help |
+| R2-02 | analysis: whale log-residual of final vs feature deciles | - | - | no run | max decile median shift 0.04 -> no feature signal left marginally |
+| R2-03 | CB d4, 17 alphas dense near 0.41-0.5 (whale q ~ 0.46) | 0.79511 | 0.79516 +- 0.0075 | discard | interpolation error negligible |
+| R2-04 | CB d4 + 7 ratio-space feats (log feat - offset) | 0.79502 | 0.79507 +- 0.0074 | discard | -0.0001 (noise/slightly worse) |
+| R2-05 | CB d4, l2_leaf_reg 10 (vs 3) | 0.79517 | 0.79522 +- 0.0076 | neutral | +0.00005 = noise |
+| R2-06 | CB d4, lr .03 | 0.79516 | 0.79521 +- 0.0075 | neutral | = noise |
+| R2-07 | bag 5 = final 3 CB d4 seeds + l2-10 + lr-.03 | 0.79528 | 0.79532 +- 0.0076 | neutral | = final (0.79529): CB bag saturated |
+| R2-08 | from-scratch MLP (3x256, SiLU, BN) 11-quantile pinball on offset target, 2 seeds, 3-seed p | 0.78430 | 0.78436 +- 0.0080 | discard | nested LAD with final bag gives NN weight 0.000 in all folds (0.79528) |
+| R2-09 | ROBUSTNESS: new fold split (FOLD_SEED=7): v4-equivalent XGB (no offset) vs final-recipe CB d4 (1 seed each, same p) | 0.79183 -> 0.79531 | paired +0.00348 +- 0.00045 (5/5 folds) | confirms | original folds same pair: +0.00344 |
 
 ## Scripts
 `common.py` (data, folds, metric, hurdle median), `exp_lgb_hurdle.py` (LGB clf + per-alpha quantiles), `exp_xgbq.py` (XGB multi-quantile, offsets,
-weights, whale subset, seed bag), `exp_cbq.py` (CatBoost MultiQuantile), `exp_direct.py` (direct log-link MAE), `calib_nested.py`, `mix_whale.py`,
+weights, whale subset, seed bag), `exp_cbq.py` (CatBoost MultiQuantile), `exp_direct.py` (direct log-link MAE), `calib_nested.py`, `mix_whale.py`, `exp_nnq.py` (from-scratch NN),
 `avg_q.py` (bagging + hurdle), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
 OOF/test arrays are written to `oof/` (git-ignored, regenerate with the scripts); data cache in `cache/` (git-ignored).

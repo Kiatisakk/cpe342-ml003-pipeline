@@ -31,3 +31,10 @@ E28 | nested LAD over family bags (CB3, XQ3, LGB-offset, linfull) | 0.79485 | 0.
 E29 | CatBoost-q offset depth 6 lr .04 (single seed) | 0.79497 | 0.79502 +- 0.0076 | KEEP | +0.0004 vs d8 singles; shallower better again (d10 run aborted)
 E30 | CatBoost-q offset depth 4 lr .05 (single seed) | 0.79505 | 0.79510 +- 0.0076 | KEEP | best single; d4 >= d6 > d8
 E31 | CatBoost-q d6 bag of 3 seeds | 0.79508 | 0.79513 +- 0.0076 | KEEP | singles 0.79482-0.79497
+E32 | CatBoost-q offset depth 3 lr .06 | 0.79507 | 0.79512 +- 0.0075 | neutral | = d4/d6; depth curve flat 3-6, worse at 8
+E33 | CatBoost-q offset depth 4 seeds 1,2 | 0.79515 / 0.79518 | - | part of final | seed 0 = 0.79505
+E34 | XGB-q offset depth 3 | 0.79410 | 0.79415 +- 0.0076 | discard | XGB best at d5
+E35 | CatBoost d4 bag of 3 seeds + 3-seed p  (FINAL) | 0.79529 | 0.79534 +- 0.0076 | KEEP (BEST) | paired vs nested v4: +0.00337 +- 0.00043, all 5 folds positive
+E36 | CB d3/d4/d6 bag of 7 | 0.79523 | 0.79528 +- 0.0076 | neutral | = E35
+E37 | CB shallow 7 + XGB d5 x3 (10 models) | 0.79524 | 0.79529 +- 0.0076 | neutral | = E35 (+0.00333 paired); XGB adds no diversity once CB is shallow
+E38 | CB d4 x3 + XGB d5 x3 | 0.79517 | 0.79522 +- 0.0076 | neutral | = E35

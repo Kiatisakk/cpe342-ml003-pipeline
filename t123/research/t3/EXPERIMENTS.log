@@ -22,3 +22,5 @@ E19 | E15 with classifier p averaged over 3 LGB seeds | 0.79429 | 0.79434 +- 0.0
 E20 | XGB-q d5 offset, 3 seeds bagged (geo-mean quantiles) + 3-seed p | 0.79446 | 0.79451 +- 0.0076 | KEEP | +0.0002 over single seeds (0.79416-0.79431); variance reduction
 E21 | CatBoost-q offset bag of 4 (seeds 0,1,2 lr .06 + lr .03) | 0.79472 | 0.79476 +- 0.0076 | KEEP | +0.0002 over best single CB
 E22 | equal-weight geo-mean of 7 quantile models (4 CB + 3 XGB d5) + 3-seed p | 0.79490 | 0.79495 +- 0.0076 | KEEP (BEST) | no tuning -> no nesting needed
+E23 | CatBoost-q lr .03 bag of 3 seeds | 0.79476 | 0.79480 +- 0.0076 | part of final | single seeds 0.79449/0.79462/0.79450
+E24 | FINAL: geo-mean of 6 quantile models (3 CB lr .03 + 3 XGB d5) + 3-seed p | 0.79492 | 0.79496 +- 0.0076 | KEEP (BEST) | = run_all.sh recipe; adding 3 CB lr .06 -> 0.79493 (saturated)

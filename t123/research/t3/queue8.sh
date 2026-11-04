@@ -7,3 +7,4 @@ run cb_fine  exp_cbq.py cb_fine  $C --alphas 0.02,0.05,0.1,0.15,0.2,0.25,0.3,0.3
 run cb_ratio exp_cbq.py cb_ratio $C --ratio
 run cb_l2_10 exp_cbq.py cb_l2_10 $C --l2 10
 run cb_lr03  exp_cbq.py cb_lr03  --depth 4 --lr 0.03 --p_avg
+run nnq exp_nnq.py nnq --seeds 2 --epochs 60

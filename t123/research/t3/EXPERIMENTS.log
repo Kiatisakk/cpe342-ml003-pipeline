@@ -27,3 +27,4 @@ E24 | FINAL: geo-mean of 6 quantile models (3 CB lr .03 + 3 XGB d5) + 3-seed p |
 E25 | XGB-q d5, offset log hist - 1.05 (instead of log prev) | 0.79421 | 0.79426 +- 0.0076 | discard | = prev offset alone; adding to final bag -> 0.79490 (no gain)
 E26 | LightGBM per-alpha quantile, offset log prev, 31 leaves lr .05, 3-seed p | 0.79390 | 0.79395 +- 0.0077 | discard (as member) | offset +0.0039 vs E03; adding to final bag -> 0.79489 (no gain)
 E27 | arithmetic mean of the 6 models' hurdle predictions (instead of geo-mean of quantiles) | 0.79486 | - | discard | equivalent to E24 (-0.00006)
+E28 | nested LAD over family bags (CB3, XQ3, LGB-offset, linfull) | 0.79485 | 0.79490 +- 0.0077 | discard | = E24; equal weights are as good and need no tuning

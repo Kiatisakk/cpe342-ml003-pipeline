@@ -8,3 +8,4 @@ E05 | XGB multi-quantile log y (lr .05 d7), LGB clf p | 0.79162 | 0.79167 +- 0.0
 E06 | E05 + offset target log y - log prev_month (fallback log hist - 1.05) | 0.79391 | 0.79396 +- 0.0076 | KEEP | +0.0023 vs E05; trees model residual multiplier, fewer iters
 E07 | E06 + 4 log-ratio feats (lprev-lhist, l_atv*freq, l_hist/tx, l_hist/age) | 0.79405 | 0.79410 +- 0.0077 | neutral | +0.00014 = noise; kept as default feature set
 E08 | offset = fold-fitted linear model (log prev/hist/atv x segment) instead of log prev | 0.79223 | 0.79228 +- 0.0075 | discard | -0.0018 vs E07: unit-coef log prev offset is better than fitted mean offset
+E09 | E07 + feature-only weight exp(0.5*log prev) | 0.79263 | 0.79268 +- 0.0078 | discard | -0.0014: up-weighting large rows hurts

@@ -13,6 +13,8 @@ ap.add_argument("--lr", type=float, default=0.05); ap.add_argument("--depth", ty
 ap.add_argument("--seed", type=int, default=0); ap.add_argument("--mcw", type=float, default=5)
 ap.add_argument("--extra", action="store_true", help="add log-ratio features")
 ap.add_argument("--wscale", type=float, default=0.0, help="feature-only weight exp(off)^wscale")
+ap.add_argument("--subset", default="all"); ap.add_argument("--ens_seeds", type=int, default=1)
+ap.add_argument("--colsample", type=float, default=0.7)
 a = ap.parse_args()
 ALPHAS = np.array([0.02, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5])
 OD = os.path.join(os.path.dirname(os.path.abspath(__file__)), "oof")
@@ -39,6 +41,7 @@ def offset(Z, lin=None):
 t0 = time.time(); OQ = np.zeros((n, len(ALPHAS))); TQ = np.zeros((nt, len(ALPHAS))); its = []
 for k, (tr, va) in enumerate(F):
     Xa, ya = X.iloc[tr], y[tr]; pos = ya > 0
+    if a.subset == "seg3": pos = pos & (Xa["segment"].values == 3)
     Xp, lt = Xa[pos], np.log(ya[pos])
     lin = None
     if a.offset == "lin":   # linear model of log y on log spend features + segment dummies, fit on train-fold payers
@@ -69,12 +72,19 @@ for k, (tr, va) in enumerate(F):
     w = np.exp(oa * a.wscale) if a.wscale else np.ones(len(r)); w = w / w.mean()
     i, j = train_test_split(np.arange(len(r)), test_size=0.1, random_state=a.seed)
     m = xgb.XGBRegressor(objective="reg:quantileerror", quantile_alpha=ALPHAS, n_estimators=20000, learning_rate=a.lr,
-                         early_stopping_rounds=150, max_depth=a.depth, min_child_weight=a.mcw, subsample=0.8, colsample_bytree=0.7,
+                         early_stopping_rounds=150, max_depth=a.depth, min_child_weight=a.mcw, subsample=0.8, colsample_bytree=a.colsample,
                          reg_lambda=2.0, tree_method="hist", n_jobs=NT, random_state=a.seed)
     m.fit(Xp.iloc[i], r[i], sample_weight=w[i], eval_set=[(Xp.iloc[j], r[j])], sample_weight_eval_set=[w[j]], verbose=False)
     its.append(m.best_iteration)
-    OQ[va] = np.exp(np.sort(m.predict(X.iloc[va]), 1) + offset(X.iloc[va], lin)[:, None])
-    TQ += np.exp(np.sort(m.predict(Xt), 1) + offset(Xt, lin)[:, None]) / 5
+    pv, pt = np.sort(m.predict(X.iloc[va]), 1), np.sort(m.predict(Xt), 1)
+    if a.ens_seeds > 1:      # multi-seed bagging of the quantile model (same ES split per seed)
+        for sd in range(1, a.ens_seeds):
+            m2 = xgb.XGBRegressor(**{**m.get_params(), "random_state": a.seed + 100 * sd})
+            m2.fit(Xp.iloc[i], r[i], sample_weight=w[i], eval_set=[(Xp.iloc[j], r[j])], sample_weight_eval_set=[w[j]], verbose=False)
+            pv += np.sort(m2.predict(X.iloc[va]), 1); pt += np.sort(m2.predict(Xt), 1)
+        pv /= a.ens_seeds; pt /= a.ens_seeds
+    OQ[va] = np.exp(pv + offset(X.iloc[va], lin)[:, None])
+    TQ += np.exp(pt + offset(Xt, lin)[:, None]) / 5
     print(f"fold {k} {time.time()-t0:.0f}s it {its[-1]}", flush=True)
 o = hurdle_median(Op, OQ, ALPHAS); t = hurdle_median(Tp, TQ, ALPHAS)
 save_oof(a.name, o, t); np.save(os.path.join(OD, f"{a.name}_Q.npy"), np.r_[OQ, TQ])

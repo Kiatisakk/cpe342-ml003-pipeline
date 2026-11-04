@@ -60,3 +60,7 @@ R4-02 | analysis: error decomposition of final | E/Y 0.2574 | - | info | zeros p
 R4-03 | LEARNING CURVE amount model (CB d4 1 seed, 3-seed p) on 25/50/75/100% of each training fold | 0.79341 / 0.79445 / 0.79501 / 0.79512 | - | info | gain per doubling +0.0010 -> +0.0007 (x0.6) -> extrapolated limit ~0.796-0.797 even with unlimited data
 R4-04 | LEARNING CURVE classifier (LGB) on 25/50/75/100% | AUC 0.7819 / 0.7830 / 0.7836 / 0.7838 | - | info | flat: limit ~0.785
 R4-05 | classifier CatBoost d6 / d4, XGB d5 (vs LGB 3-seed AUC 0.78409) | AUC 0.78446 / 0.78443 / 0.78413 | - | discard | final with CB-d6 p: 0.79531, with 4-model p mix: 0.79531 (+0.00002 = noise)
+R5-01 | nested LAD weights over 12 family bags (hurdle predictions) | 0.79526 | 0.79530 +- 0.0077 | discard | paired vs final -0.00003 +- 0.00009; weights unstable (fold sd up to 0.08)
+R5-02 | nested greedy forward selection (Caruana, 40 steps) on predictions | 0.79524 | 0.79529 +- 0.0077 | discard | paired -0.00004 +- 0.00009; ~0.67 cb_d4 + small xgb/cb_d3 shares
+R5-03 | nested greedy selection on log-quantiles (blend before hurdle rule) | 0.79523 | 0.79528 +- 0.0077 | discard | paired -0.00006 +- 0.00008
+R5-04 | UNTUNED family-equal blend: CB d4 x3, CB d3, CB d6 x3, XGB d5 x3 (each family 1/4, geo-mean quantiles) | 0.79526 | 0.79531 +- 0.0076 | alternative file | paired vs final -0.00003 +- 0.00015 (noise); worst fold 0.78336 vs 0.78328; test corr 0.99997 -> robust_oof.csv / t3_robust_test.csv

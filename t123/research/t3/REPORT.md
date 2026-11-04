@@ -79,6 +79,15 @@ post-processing has nothing left to correct; the final files are unchanged.
 * Conclusion: with these features the T3 OOF ceiling is ≈ 0.796–0.797; 0.80 is not reachable by modelling or post-processing.
   The final recipe (0.79529) is within ~0.0015 of that ceiling. Final files unchanged.
 
+## Round 5: ensemble weight blending for robustness (`blend_nested.py`, nested)
+12 model families (CatBoost d3/d4/d6/d8, XGB d5/d7/hist/linfull, LGB, NN), all with the same 3-seed classifier.
+Tuned weights (LAD, greedy forward selection on predictions, greedy on log-quantiles) score 0.79523–0.79526 nested, i.e. −0.00003 to
+−0.00006 vs the untuned final, and the weights move between folds (sd up to 0.09) → weight tuning only fits noise.
+For robustness without tuning, `robust_oof.csv` / `t3_robust_test.csv` hold a **family-equal blend** (CatBoost d4 / d3 / d6 and XGBoost d5,
+1/4 each, geometric mean of quantiles): OOF 0.79526 (paired −0.00003 ± 0.00015 = noise), worst fold slightly better (0.78336 vs 0.78328),
+test predictions correlate 0.99997 with the final file (mean |diff| 0.6 %). Both files are equally valid; the robust one depends less on a
+single algorithm/config.
+
 ## Every experiment
 | id | experiment | OOF NMAE | fold mean ± sd | decision | note |
 |---|---|---|---|---|---|
@@ -143,9 +152,13 @@ post-processing has nothing left to correct; the final files are unchanged.
 | R4-03 | LEARNING CURVE amount model (CB d4 1 seed, 3-seed p) on 25/50/75/100% of each training fold | 0.79341 / 0.79445 / 0.79501 / 0.79512 | - | info | gain per doubling +0.0010 -> +0.0007 (x0.6) -> extrapolated limit ~0.796-0.797 even with unlimited data |
 | R4-04 | LEARNING CURVE classifier (LGB) on 25/50/75/100% | AUC 0.7819 / 0.7830 / 0.7836 / 0.7838 | - | info | flat: limit ~0.785 |
 | R4-05 | classifier CatBoost d6 / d4, XGB d5 (vs LGB 3-seed AUC 0.78409) | AUC 0.78446 / 0.78443 / 0.78413 | - | discard | final with CB-d6 p: 0.79531, with 4-model p mix: 0.79531 (+0.00002 = noise) |
+| R5-01 | nested LAD weights over 12 family bags (hurdle predictions) | 0.79526 | 0.79530 +- 0.0077 | discard | paired vs final -0.00003 +- 0.00009; weights unstable (fold sd up to 0.08) |
+| R5-02 | nested greedy forward selection (Caruana, 40 steps) on predictions | 0.79524 | 0.79529 +- 0.0077 | discard | paired -0.00004 +- 0.00009; ~0.67 cb_d4 + small xgb/cb_d3 shares |
+| R5-03 | nested greedy selection on log-quantiles (blend before hurdle rule) | 0.79523 | 0.79528 +- 0.0077 | discard | paired -0.00006 +- 0.00008 |
+| R5-04 | UNTUNED family-equal blend: CB d4 x3, CB d3, CB d6 x3, XGB d5 x3 (each family 1/4, geo-mean quantiles) | 0.79526 | 0.79531 +- 0.0076 | alternative file | paired vs final -0.00003 +- 0.00015 (noise); worst fold 0.78336 vs 0.78328; test corr 0.99997 -> robust_oof.csv / t3_robust_test.csv |
 
 ## Scripts
 `common.py` (data, folds, metric, hurdle median), `exp_lgb_hurdle.py` (LGB clf + per-alpha quantiles), `exp_xgbq.py` (XGB multi-quantile, offsets,
 weights, whale subset, seed bag), `exp_cbq.py` (CatBoost MultiQuantile), `exp_direct.py` (direct log-link MAE), `calib_nested.py`, `mix_whale.py`, `exp_nnq.py` (from-scratch NN),
-`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
+`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `blend_nested.py` (nested weight blending), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
 OOF/test arrays are written to `oof/` (git-ignored, regenerate with the scripts); data cache in `cache/` (git-ignored).

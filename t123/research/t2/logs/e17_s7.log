@@ -1,1 +1,6 @@
 seed 7 fold 0: inner LL default 0.59931 best 0.59920 | outer F1 default 0.7578 tuned 0.7581 | {'alpha_cont': 0.9023312912107336, 'alpha_disc': 0.09511481359322073, 'sm_mult': 1.036047921858731, 'em_iters': 21, 'eps_mode': 'fixed'}
+seed 7 fold 1: inner LL default 0.60138 best 0.60128 | outer F1 default 0.7589 tuned 0.7591 | {'alpha_cont': 1.2590566171667579, 'alpha_disc': 0.09057660860641716, 'sm_mult': 1.1266248634115532, 'em_iters': 15, 'eps_mode': 'em'}
+seed 7 fold 2: inner LL default 0.60004 best 0.59998 | outer F1 default 0.7545 tuned 0.7542 | {'alpha_cont': 1.5860715043085256, 'alpha_disc': 0.1208265507929537, 'sm_mult': 1.0625568692920253, 'em_iters': 25, 'eps_mode': 'em'}
+seed 7 fold 3: inner LL default 0.59816 best 0.59808 | outer F1 default 0.7549 tuned 0.7549 | {'alpha_cont': 1.0526584028861083, 'alpha_disc': 0.3231692408625039, 'sm_mult': 1.0263344408448565, 'em_iters': 23, 'eps_mode': 'fixed'}
+seed 7 fold 4: inner LL default 0.59886 best 0.59876 | outer F1 default 0.7559 tuned 0.7559 | {'alpha_cont': 1.1696658282913703, 'alpha_disc': 0.08742997859361572, 'sm_mult': 1.0653150454191027, 'em_iters': 23, 'eps_mode': 'em'}
+seed 7: F1 default 0.7564 LL 0.5992 | tuned F1 0.7564 LL 0.5991

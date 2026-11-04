@@ -1,7 +1,8 @@
 """Write the deliverables.
 Feature-only (rule-safe, no player_id):  best_oof_proba.npy, best_test_proba.npy, t2_best_test.csv
-   = label-noise-aware EM Naive Bayes (e06, per-feature Optuna histogram cfg of the baseline).
-     OOF = seed-42 5-fold OOF probabilities (P(observed label | x)); test = model refit on ALL train rows.
+   = E14 g2+EM: per-feature (nbins, sigma) chosen by 4-fold CV univariate-posterior log-loss on ALL train rows
+     (grid bins {64,128,256} x sigma {3,4,6,8,12}), then label-noise-aware EM Naive Bayes (e06) refit on all train rows.
+     OOF = seed-42 nested OOF of the same recipe (P(observed label | x)).
 ID-leak variant (see REPORT.md, team decision): idleak_oof_proba.npy, idleak_test_proba.npy, t2_idleak_test.csv
    = player_id block rule with NB tie-break inside the (tiny) boundary gaps, cut points fitted on all train rows.
 usage: python t123/research/t2/make_final.py"""
@@ -13,11 +14,27 @@ import e10_idblock as I
 
 ids = [f'ANS{i:05d}' for i in range(1, NT + 1)]
 
-# ---- feature-only best: EM-NB refit on all train
-a = np.arange(N); B = E.binned(a, E.CFG); tabs, pi, eps = E.fit(a, B)
+# ---- feature-only best: LL-selected densities + EM-NB, refit on all train
+a = np.arange(N)
+GNB, GSM = [64, 128, 256], [3.0, 4.0, 6.0, 8.0, 12.0]
+inner = list(StratifiedKFold(4, shuffle=True, random_state=0).split(a, y))
+cfg = {}
+for c in CONT:
+    best = None
+    for nb_ in GNB:
+        for sm in GSM:
+            ll = 0
+            for ia, ib in inner:
+                L = loglik_block(c, ia, nb_, sm, 1.0)[0][ib] + logprior(ia)
+                ll += np.mean(np.log(softmax(L)[np.arange(len(ib)), y[ib]]))
+            if best is None or ll > best[0]: best = (ll, nb_, sm)
+    cfg[c] = best[1:]
+json.dump({c: list(v) for c, v in cfg.items()}, open(f'{OUT}/best_cfg.json', 'w'), indent=1)
+print('selected cfg:', cfg)
+B = E.binned(a, cfg); tabs, pi, eps = E.fit(a, B)
 M = np.full((K, K), eps / 3); np.fill_diagonal(M, 1 - eps)
 Pte = softmax(E.loglik(B, tabs, test=True) + np.log(pi)) @ M
-oof = load('emnb_em_opt_it15_a1')[0][0]
+oof = load('nb_llsel_g2_em1')[0][0]
 print('EM-NB eps(full train) =', round(eps, 4), '| seed-42 OOF F1', round(f1m(y, oof), 4))
 np.save(f'{OUT}/best_oof_proba.npy', oof.astype(np.float32)); np.save(f'{OUT}/best_test_proba.npy', Pte.astype(np.float32))
 pd.DataFrame({'id': ids, 'pred': Pte.argmax(1)}).to_csv(f'{OUT}/t2_best_test.csv', index=False, lineterminator='\n')

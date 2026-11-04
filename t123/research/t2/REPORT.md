@@ -10,23 +10,34 @@ on a dataset this size is about ±0.002, so differences below ~0.001 count as ti
 
 | | macro-F1 (OOF, 3 seeds) |
 |---|---|
-| Baseline NB, per-feature Optuna cfg (reproduced exactly: 0.7562 / 0.7555 / 0.7553) | **0.7557 ± 0.0004** |
-| Best feature-only model: label-noise-aware EM-NB (with nested bias: 0.7557 ± 0.0002) | **0.7557 ± 0.0004** (tie), log-loss 0.602 vs 0.624 |
-| **player_id block rule (ID LEAK, see §2)** | **0.9677 ± 0.0000** |
+| Baseline NB, per-feature Optuna cfg (reproduced exactly: 0.7562 / 0.7555 / 0.7553) | 0.7557 ± 0.0004, **optimistic** |
+| Same baseline, **nested** Optuna (honest, E13, seed 42) | 0.7544 |
+| Baseline NB, untuned uniform cfg (32 bins, σ 0.7) | 0.7550 ± 0.0004 |
+| **Best feature-only model (E14 g2 + EM): per-feature densities selected by inner-CV posterior log-loss + label-noise-aware EM-NB** | **0.7562 ± 0.0002** (0.7560 / 0.7564 / 0.7561), fully nested, log-loss 0.599 |
+| player_id block rule (ID leak, see §2) | 0.9677 ± 0.0000 |
 
-**Feature-only: no technique beats the baseline.** Every feature-only model lands within 0.0005 of 0.7557.
-The data explains why: features are independent given the class (|within-class Spearman| < 0.05),
-so NB with good densities is Bayes-optimal, and the score is the Bayes ceiling (≈ 0.756 on noisy labels).
+**Feature-only:** the honest gain is **+0.0012 over the untuned baseline and +0.0018 over nested Optuna**.
+It is also higher than the over-optimistic 0.7557.
+* The baseline's per-feature Optuna config overfits. All three seeds reuse the same 104k rows, so tuning 46
+  hyperparameters on macro-F1 learns those rows: nested Optuna gives 0.7544, below the untuned 0.7550 (E13).
+* `pf.py`'s "ll_select" has a bug. It compares histogram log-*mass* across different bin counts, which always
+  favours coarse bins. Selecting each feature's (bins, σ) by inner-CV **univariate posterior log-loss** is the
+  correct, low-variance criterion. It picks much finer and smoother densities (64–256 bins, σ 3–12)
+  and needs no F1 tuning (E14).
+* Modelling the 3% symmetric label noise with EM adds about +0.0004 and gives the best calibration (E06/E14).
+* Everything else ties or loses: bias, GAM (±noise correction), WANBIA, GBMs, 2×2 pooling, stacking.
+  Features are independent given the class, so NB is the right model. The learning curve (E11) shows only
+  ≈ 0.002 headroom from more data, so ≈ 0.757 is close to the feature-only Bayes ceiling.
 
-**The only real gain is a leak:** `player_id` was assigned in segment blocks. It gives 0.9677, which is
-the ceiling because 3% of labels are random flips. Whether to use it is a team / course-rules decision (§2).
+**The leak:** `player_id` was assigned in segment blocks. It gives 0.9677, which is the ceiling because
+3% of labels are random flips that cannot be predicted (§2). Whether to use it is a team / course-rules decision.
 
 ## 1. Experiments
 
 | # | script | experiment | macro-F1 (mean ± sd) | log-loss | kept? | note |
 |---|---|---|---|---|---|---|
 | E00 | e00_baseline.py | NB, uniform cfg (32 bins, σ 0.7) | 0.7550 ± 0.0004 | — | ref | matches nb.py exactly (0.7548 on seed 42) |
-| E00 | e00_baseline.py | NB, per-feature Optuna cfg (baseline) | 0.7557 ± 0.0004 | 0.6243 | **baseline** | cfg was tuned on seed-42 folds (slightly optimistic) |
+| E00 | e00_baseline.py | NB, per-feature Optuna cfg (baseline) | 0.7557 ± 0.0004 | 0.6243 | **baseline** | cfg was F1-tuned on these same rows; see E13 |
 | EDA | — | missingness as a class signal | — | — | discarded | NaN rate 7.5–8% for every feature and class; NaN count per row is equal across classes, so missingness is MCAR |
 | EDA | — | do the 16 noise columns carry signal? | — | — | discarded | univariate NB info gain ≤ 0 for all 16 |
 | E01 | e01_bias.py | nested macro-F1 class-bias on NB log-posterior | 0.7556 ± 0.0001 | — | discarded | tuned biases ≈ 0, so argmax is already F1-optimal |
@@ -43,6 +54,18 @@ the ceiling because 3% of labels are random flips. Whether to use it is a team /
 | E08 | e08_blend.py | nested LR stack of NB + EM-NB + GAM | raw 0.7556 ± 0.0001, nested bias 0.7560 ± 0.0004 | 0.6005 | discarded | +0.0003 is below the 0.001 noise bar; the extra complexity is not worth it |
 | E09 | e09_2x2.py | 2×2-factorised NB (pool each feature's density over an axis, chosen per fold) | 0.7550 (s42) | 0.6245 | discarded | the data rejects pooling for 26/28 features (small cross-axis effects exist) |
 | E10 | e10_idblock.py | **player_id block rule + NB tie-break in boundary gaps** | **0.9677 ± 0.0000** | 0.168 | separate deliverable (LEAK) | see §2 |
+| E11 | e11_learning_curve.py | learning curve, NB / EM-NB at 10–100% of fold-train | 0.746 → 0.752 → 0.754 → 0.755 → 0.7557 | — | diagnostic | +0.0018 per doubling and shrinking, so ≈ 0.002 headroom from unlimited data. EM helps most at small n |
+| — | (inline) | T3 train has a `segment` column: use it as extra T2 data? | — | — | discarded | different generator (e.g. playtime mean ≈ 500 vs 1,500) and only 7 shared columns |
+| E12 | e12_gam_nc.py | spline-GAM with forward label-noise correction (torch, ε learned = 0.027) | 0.7525 (s42) | 0.6029 | discarded | the noise correction fixes LL, not F1. GAM accuracy really is lower (0.768 vs 0.771) |
+| — | (inline) | sharp edges / jumps in class densities? (100-bin class fractions, z-test of adjacent bins) | — | — | discarded | max z 3–4.7 over ~400 tests per feature, consistent with noise: densities are smooth |
+| — | (inline) | parametric densities (truncated normal / gamma / lognormal per class) | — | — | discarded | truncnorm fits best (KS ≈ 0.01) but is still detectably wrong: lighter upper tail, extra mass at the lower edge |
+| E13 | e13_nested_optuna.py | **nested** per-feature Optuna (150 TPE trials on inner 4-fold CV per outer fold, seed 42) | 0.7544 (s42); same folds: uniform 0.7548, original Optuna 0.7562 | — | diagnostic | the baseline's +0.0007 to +0.0014 tuning gain is overfitting |
+| E14 | e14_llselect.py <s> g1 0 | per-feature (bins, σ) by inner-CV univariate posterior log-loss, grid bins 8–128 × σ 0–4 | 0.7554 ± 0.0001 | 0.6229 | superseded | picks sit at the 128-bin / σ 4 edge of the grid |
+| E14 | e14_llselect.py <s> g2 0 | same, extended grid bins {64,128,256} × σ {3,4,6,8,12} | 0.7558 ± 0.0002 (nested bias 0.7561) | 0.6229 | superseded | — |
+| E14 | e14_llselect.py <s> g2 1 | **g2 + label-noise EM-NB** | **0.7562 ± 0.0002** (nested bias 0.7560) | **0.5993** | **KEPT (final feature-only)** | honest +0.0012 vs uniform baseline, +0.0018 vs nested Optuna |
+| E14 | e14_llselect.py 42 g3 1 | grid further out, bins {128,256,512} × σ {6..24} | 0.7557 (s42 vs 0.7560 for g2) | — | discarded | over-smoothing |
+| E08 | e08_blend.py | geo-mean / nested LR stack of the E14 + EM-NB variants | 0.7561 / 0.7560 | 0.6075 / 0.5996 | discarded | no gain over E14 g2+EM alone |
+| — | (inline) | can the 3% label flips be predicted? (every column, id mod m, id/row position, neighbour labels) | — | — | discarded | no: flip rate is flat everywhere, a flipped label matches neighbour labels only at chance (0.24), flips are uniform over other classes (χ² p 0.44–0.84) |
 
 ## 2. player_id leak and label noise (important for the team)
 
@@ -62,16 +85,22 @@ the ceiling because 3% of labels are random flips. Whether to use it is a team /
 
 ## 3. Final recipes / files
 
-**Feature-only (rule-safe):** `best_oof_proba.npy` (seed-42 OOF, N×4), `best_test_proba.npy`, `t2_best_test.csv` (id,pred).
-* Features: the baseline's (16 noise columns dropped). Per-feature quantile-histogram densities with the baseline's Optuna (bins, σ) config, Laplace α = 1, NaN marginalised.
-* Fit: EM with a latent true class and symmetric label noise (15 iterations, ε → 0.028), on all train rows.
-* Predict: P(label | x) = softmax(log π + Σ log p_j(x_j | z)) · M_ε, then argmax.
-* CV 0.7557 ± 0.0004, the same as the baseline. Test predictions agree 97.6% with `preds_final/t2_nb.csv`.
-  There is no reason to resubmit for F1; its probabilities are better calibrated (LL 0.602) if T2 is stacked anywhere.
+**Feature-only (rule-safe):** `best_oof_proba.npy` (seed-42 nested OOF, N×4), `best_test_proba.npy`, `t2_best_test.csv` (id,pred), `best_cfg.json`.
+1. Features: the baseline's (16 noise columns dropped). NaN is marginalised for continuous features and is its own level for discrete ones.
+2. Densities: per continuous feature, quantile-histogram (bins, Gaussian σ in bin units), chosen from bins {64,128,256} × σ {3,4,6,8,12}
+   by 4-fold CV univariate posterior log-loss on the training rows (no F1 tuning). Laplace α = 1.
+3. Fit: EM with a latent true class and symmetric label noise (15 iterations, ε → 0.0285 on all train).
+4. Predict: P(label | x) = softmax(log π + Σ log p_j(x_j | z)) · M_ε, then argmax.
+* CV 0.7562 ± 0.0002, nested. Test predictions agree 98.1% with `preds_final/t2_nb.csv`.
+  Expected LB change for T2 ≈ +0.001 to +0.002 vs the honest baseline (tiny, but real and not overfit).
 
 **ID-leak variant (team decision):** `idleak_oof_proba.npy`, `idleak_test_proba.npy`, `t2_idleak_test.csv`.
 CV 0.9677 ± 0.0000. Reproduce everything with `python t123/research/t2/make_final.py`.
 Experiments cache to `t123/research/t2/cache/` (git-ignored).
 
-## 4. Stopping
+## 4. Stopping (round 1)
 The stop rule fired: more than 6 consecutive ideas (E01, E02, E04×3, E05×2, E07, E08×2, E09) gave no gain ≥ 0.001.
+
+## 5. Round 2 ("research more")
+Added E11–E14 and the flip / parametric / T3 / sharp-edge checks. Kept: E14 g2 + EM (+0.0012 honest).
+The feature-only track is now within ≈ 0.001–0.002 of its learning-curve ceiling. The ID track is at its ceiling (flips are random).

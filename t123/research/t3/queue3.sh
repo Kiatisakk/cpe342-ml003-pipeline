@@ -9,3 +9,4 @@ run xq_d5s1 exp_xgbq.py xq_d5s1 --offset prev --extra --depth 5 --seed 1
 run xq_d5s2 exp_xgbq.py xq_d5s2 --offset prev --extra --depth 5 --seed 2
 run cbq_s1  exp_cbq.py cbq_s1 --seed 1
 run cbq_s2  exp_cbq.py cbq_s2 --seed 2
+t123/research/t3/queue4.sh

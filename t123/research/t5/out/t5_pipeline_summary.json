@@ -1,0 +1,49 @@
+{
+ "shock": 827,
+ "components": [
+  {
+   "pi": 0.00985239825975105,
+   "n_eff": 237.22604529828584,
+   "mu": {
+    "accuracy_std": 10.448,
+    "kda_std": 0.847,
+    "performance_stability": 0.898
+   },
+   "name": "C0_accuracy_std>+kda_std>+performance_stability>",
+   "n_flag": 294,
+   "n_post05": 251,
+   "exp_tp": 234.3177162749478
+  }
+ ],
+ "gap_groups": [
+  {
+   "rules": [
+    "behavior_stability<0.543",
+    "behavior_stability<0.360"
+   ],
+   "n": 274
+  },
+  {
+   "rules": [
+    "activity_level<0.342"
+   ],
+   "n": 266
+  },
+  {
+   "rules": [
+    "communication_frequency<0.169"
+   ],
+   "n": 237
+  },
+  {
+   "rules": [
+    "ip_hash_entropy<0.239",
+    "kda_std<0.150",
+    "login_time_variance<1.109",
+    "session_duration_std<6.404"
+   ],
+   "n": 207
+  }
+ ],
+ "iforest_auc_final": 0.8815302488828595
+}

@@ -1,0 +1,13 @@
+B0 gap clusters:
+   n= 274  ['behavior_stability<0.543', 'behavior_stability<0.360']
+   n= 266  ['activity_level<0.342']
+   n= 237  ['communication_frequency<0.169']
+   n= 207  ['ip_hash_entropy<0.239', 'kda_std<0.150', 'login_time_variance<1.109', 'session_duration_std<6.404']
+A shock rows: 827
+B dependency edges (z>6):
+     20.9  ('accuracy_std', 1) x ('kda_std', 1)
+    shift: {'behavior_stability': -0.32, 'account_age_days': -0.23, 'performance_stability': 0.96, 'accuracy_std': 1.87, 'kda_std': 1.93}
+C0: C0_accuracy_std>+kda_std>+performance_stability>
+    pi=0.0099 n_eff=237 flagged(post>0.1)=294 expTP=234 centre={'accuracy_std': np.float64(10.448), 'kda_std': np.float64(0.847), 'performance_stability': np.float64(0.898)}
+IForest AUC vs final set: 0.882, vs shock: 1.000
+final flagged: 2105

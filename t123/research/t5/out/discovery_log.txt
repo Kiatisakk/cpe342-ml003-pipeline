@@ -1,0 +1,73 @@
+
+======== 1. independence of per-row means (outside union) ========
+max |corr| between different features: 0.032
+
+======== 2. group signatures (median robust-z vs outside rows, |z|>0.4, continuous features) ========
+rule 827 {'currency_transfers': 0.69, 'skill_trajectory': 0.78, 'friend_removes': 0.89, 'location_changes': 1.37}
+bot 207 {'ip_hash_entropy': -5.88, 'login_time_variance': -2.1, 'session_duration_std': -1.98, 'kda_std': -1.8, 'performance_stability': 1.66, 'play_pattern_consistency': 2.01}
+lowact 266 {'activity_level': -2.14, 'purchase_amount_mean': 0.82, 'skill_rating': 1.09}
+lowcomm 237 {'communication_frequency': -2.11, 'friend_adds': 1.46}
+lowstab 274 {'behavior_stability': -5.67, 'login_count': -0.93, 'account_age_days': 0.59, 'purchase_frequency': 1.07}
+
+======== 3. signature completeness: outside rows scoring like the group on its other features ========
+bot      leave-out ip_hash_entropy          group median  1.91 | outside 99.9%  1.02
+bot      leave-out login_time_variance      group median  2.66 | outside 99.9%  1.14
+bot      leave-out session_duration_std     group median  2.69 | outside 99.9%  1.12
+bot      leave-out kda_std                  group median  2.72 | outside 99.9%  1.11
+bot      leave-out performance_stability    group median  2.75 | outside 99.9%  1.09
+bot      leave-out play_pattern_consistency group median  2.68 | outside 99.9%  1.12
+lowact   leave-out activity_level           group median  0.96 | outside 99.9%  1.36
+lowact   leave-out purchase_amount_mean     group median  1.62 | outside 99.9%  1.31
+lowact   leave-out skill_rating             group median  1.48 | outside 99.9%  1.35
+lowcomm  leave-out communication_frequency  group median  1.46 | outside 99.9%  1.87
+lowcomm  leave-out friend_adds              group median  2.11 | outside 99.9%  1.44
+lowstab  leave-out behavior_stability       group median  1.02 | outside 99.9%  1.44
+lowstab  leave-out login_count              group median  3.37 | outside 99.9%  1.45
+lowstab  leave-out purchase_frequency       group median  3.30 | outside 99.9%  1.28
+
+======== 4. shock group: robust-z of period-q deviation from the mean of the other periods ========
+rule rows by #metrics with |z|>10 at p4: {0: 8, 1: 324, 2: 187, 3: 56, 4: 120, 5: 104, 6: 28}
+outside rows with any |z|>10 at p4: 20 -> {'skill_trajectory@4': 20}
+period 1: outside rows with any |z|>10: 2
+period 2: outside rows with any |z|>10: 3
+period 3: outside rows with any |z|>10: 9
+
+======== 5. pairwise 5%-tail co-occurrence vs independence (outside union, different metrics) ========
+z= 20.9  accuracy_std> x kda_std>  obs 222 exp 60.2
+z=  3.7  login_count< x session_duration_mean<  obs 89 exp 60.2
+z=  3.5  purchase_amount_std> x location_changes~sd>  obs 87 exp 60.2
+z=  3.5  kda_std> x performance_stability~sd<  obs 87 exp 60.2
+z=  3.5  kda_mean> x kda_std>  obs 87 exp 60.2
+z=  3.2  session_duration_std~sd< x mass_item_sale  obs 38 exp 22.6
+
+======== 6. triple grid scan on 4-period means (outside union) ========
+z= 19.8 ('accuracy_std', 'kda_std', 'performance_stability', 183, np.float64(47.0))
+z=  5.7 ('accuracy_std', 'kda_mean', 'kda_std', 86, np.float64(47.0))
+z=  5.7 ('accuracy_std', 'kda_std', 'location_changes', 86, np.float64(47.0))
+z=  5.7 ('accuracy_std', 'kda_std', 'skill_rating', 86, np.float64(47.0))
+median z over 2600 triples: 3.19
+
+======== 7. triple grid scans on dynamics features (outside union and outside new cluster) ========
+sd    top z= 4.7 ('currency_transfers', 'location_changes', 'skill_rating')  median z=2.75
+d12   top z= 4.9 ('friend_adds', 'login_time_variance', 'reaction_time_mean')  median z=2.76
+d34   top z= 5.1 ('ip_hash_entropy', 'play_pattern_consistency', 'reaction_time_mean')  median z=2.75
+slope top z= 5.0 ('kda_mean', 'location_changes', 'reaction_time_mean')  median z=2.81
+
+======== 8. discrete columns + flags vs every feature decile / each other (outside union) ========
+top 3: [(np.float64(3.1), 'guild_changes_3', 'purchase_amount_mean'), (np.float64(3.1), 'device_count_4', 'reaction_time_mean'), (np.float64(3.1), 'device_count_3', 'session_duration_std')]
+device_count: p4-p1 values outside union [np.float64(0.0), np.float64(1.0)], in union [np.float64(0.0), np.float64(1.0), np.float64(2.0)]
+refund_count: p4-p1 values outside union [np.float64(0.0), np.float64(1.0)], in union [np.float64(0.0), np.float64(1.0)]
+guild_changes: p4-p1 values outside union [np.float64(0.0), np.float64(1.0)], in union [np.float64(-1.0), np.float64(0.0), np.float64(1.0), np.float64(2.0), np.float64(3.0), np.float64(4.0)]
+
+======== 9. new cluster accuracy_std + kda_std + performance_stability ========
+copula density histogram (log2): [3, 13, 138, 820, 2568, 10171, 9317, 795, 26, 20, 24, 24, 39, 46, 48, 17, 9, 0]
+density>2: 253 rows, centre {'accuracy_std': 10.372, 'kda_std': 0.842, 'performance_stability': 0.897}
+density>4: 207 rows, centre {'accuracy_std': 10.498, 'kda_std': 0.853, 'performance_stability': 0.9}
+Mahalanobis radius | outside rows | shuffle-null expected | excess | in union
+  <1.5:   76     3.3    72.7  0
+  <  2:  159     8.6   150.4  0
+  <2.5:  214    19.0   195.0  1
+  <  3:  263    37.3   225.7  3
+  <3.5:  297    66.1   230.9  4
+  <  4:  340   106.6   233.4  5
+  <  5:  457   231.3   225.7  10

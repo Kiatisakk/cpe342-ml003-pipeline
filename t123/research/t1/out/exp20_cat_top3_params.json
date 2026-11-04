@@ -1,0 +1,9 @@
+{
+ "depth": 4,
+ "l2_leaf_reg": 7.4601898918757765,
+ "random_strength": 0.2376271452095052,
+ "border_count": 254,
+ "bootstrap_type": "Bernoulli",
+ "grow_policy": "SymmetricTree",
+ "subsample": 0.6114410038666286
+}

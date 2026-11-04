@@ -1,0 +1,14 @@
+{
+ "num_leaves": 23,
+ "max_depth": 12,
+ "min_child_samples": 62,
+ "min_sum_hessian_in_leaf": 4.3500039585205,
+ "subsample": 0.9313558142953815,
+ "colsample_bytree": 0.8158191714466115,
+ "feature_fraction_bynode": 0.6322907667903678,
+ "reg_lambda": 0.11393667570865651,
+ "reg_alpha": 7.004344500042133,
+ "min_split_gain": 0.011590093428238205,
+ "max_bin": 127,
+ "path_smooth": 12.365751359467456
+}

@@ -160,3 +160,29 @@ Inside each fold, 13,184 labeled rows were hidden ("U"). Single LGB on fe_v2, lr
 Blending (recap of exp B, exp13, exp06, final v1): nested AUC-optimised weights, LR stacking and rank averaging of LGB / XGB / CatBoost / LGB variants / MLP / mixture-NB never beat LightGBM alone by more than noise.
 - The GBMs' OOF predictions are highly correlated.
 - The weaker models (MLP 0.885, NB 0.870) get weights of 0.00–0.08.
+
+## Hyper-parameter tuning round 2 (round 6, `exp20_tune.py`)
+Optuna, objective = OOF AUC on a separate 3-fold split (seed 99). Top-3 trials per model were then re-evaluated on the standard 5-fold × seeds 42/7/2024 at lr 0.05 (fe_v2, no augmentation), against the baseline-tuned params.
+
+| model | trials | tuning-split AUC: baseline → best | standard CV: baseline params | best of top-3 tuned | verdict |
+|---|---|---|---|---|---|
+| LightGBM (wide space: depth, hessian, bynode, path_smooth, max_bin up to 1023…) | 120 | 0.89165 → 0.89231 | AUC 0.89315, F2m nested 0.78108 | top2: 0.89276 / 0.78022 | ✗ worse |
+| XGBoost (+ colsample_bynode, grow_policy) | 50 | 0.89186 → 0.89248 | 0.89279 / 0.78054 | top1: 0.89295 / 0.78087 | ✗ +0.0003 = noise, still < LGB |
+| CatBoost (+ Depthwise / Lossguide trees) | 40 | 0.89087 → 0.89120 | 0.89235 / 0.77925 | top3: 0.89217 / 0.77966 | ✗ noise |
+| nested blend: final_v2 + tuned XGB + tuned Cat (rank / AUC weights / LR stack) | – | – | final alone 0.78201 | 0.78165 / 0.78194 / 0.78186 | ✗ |
+
+- Tuning gains on the tuning split (+0.0003 to +0.0007 AUC) do not transfer to fresh folds.
+- The baseline's Optuna params (200 trials each, in `task1_gbm_pipeline.py`) are already at the optimum for these features. This confirms exp10.
+
+## In-sample ("train") vs honest scores (`exp21_train_insample.py`)
+Final recipe trained on 90% of all labeled rows (10% used for early stopping):
+
+| scored on | AUC | F2-macro | binary F2 |
+|---|---|---|---|
+| the same rows it was trained on (in-sample) | 0.9216 | 0.8188 | 0.8535 |
+| 10% holdout (also its early-stopping set, threshold tuned on it; 9k rows) | 0.8971 | 0.7885 | 0.8444 |
+| **5-fold OOF, 3 seeds, nested threshold (the trustworthy number)** | **0.8948** | **0.7828** | **0.8391** |
+
+The in-sample numbers are inflated by overfitting.
+- Without augmentation the in-sample score is even higher (F2m 0.825), while the holdout score is the same. Augmentation acts as a regularizer.
+- The single 10% holdout is optimistic: it chose the stopping round and its own threshold, and it is small. Use the OOF row.

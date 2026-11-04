@@ -1,0 +1,12 @@
+{
+ "max_depth": 7,
+ "min_child_weight": 0.5324893441191203,
+ "subsample": 0.9889823776179766,
+ "colsample_bytree": 0.6834761797777128,
+ "colsample_bynode": 0.9209627990583831,
+ "reg_lambda": 32.83167864946885,
+ "reg_alpha": 6.964049237559603,
+ "gamma": 0.04797028302152983,
+ "max_bin": 128,
+ "grow_policy": "lossguide"
+}

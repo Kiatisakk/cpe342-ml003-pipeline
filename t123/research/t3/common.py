@@ -117,3 +117,21 @@ def hurdle_median(p, Q, alphas, shift=0.0, kap=1.0, cap=300000):
     r = np.arange(len(q))
     v = Q[r, j] + (q - a0) / (a1 - a0) * (Q[r, j + 1] - Q[r, j])
     return np.where(pp > 0.5, np.clip(kap * v, 0, cap), 0.0)
+
+
+def extra_feats(X, Xt):
+    X, Xt = X.copy(), Xt.copy()
+    for Z in (X, Xt):
+        lp, lh = Z["log_prev_month_spending"], Z["log_historical_spending"]
+        Z["lprev_minus_lhist"] = lp - lh
+        Z["l_atv_x_freq"] = np.log1p(Z["avg_transaction_value"].clip(lower=0) * Z["purchase_frequency"])
+        Z["l_hist_per_tx"] = np.log1p(Z["historical_spending"] / (Z["total_transactions"] + 1))
+        Z["l_hist_per_age"] = np.log1p(Z["hist_per_day"])
+    return X, Xt
+
+
+def prev_offset(Z):
+    """log prev_month_spending, fallback log hist - 1.05, then 6.5 (feature-only, no target)."""
+    lp = Z["log_prev_month_spending"].values
+    o = np.where(np.isnan(lp), Z["log_historical_spending"].values - 1.05, lp)
+    return np.where(np.isnan(o), 6.5, o)

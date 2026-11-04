@@ -12,6 +12,7 @@ ap.add_argument("--seed", type=int, default=0); ap.add_argument("--lr", type=flo
 ap.add_argument("--leaves", type=int, default=63); ap.add_argument("--mcs", type=int, default=40)
 ap.add_argument("--offset", default="none"); ap.add_argument("--wpow", type=float, default=1.0); ap.add_argument("--clf_only", action="store_true")
 ap.add_argument("--alphas", default="0.02,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5")
+ap.add_argument("--frac", type=float, default=1.0)
 ap.add_argument("--skip_clf", action="store_true", help="reuse saved 3-seed p")
 a = ap.parse_args()
 ALPHAS = np.array([float(x) for x in a.alphas.split(",")])
@@ -40,6 +41,7 @@ def scale_w(Xa):
 Op = np.zeros(n); Tp = np.zeros(nt); OQ = np.zeros((n, len(ALPHAS))); TQ = np.zeros((nt, len(ALPHAS)))
 t0 = time.time()
 for k, (tr, va) in enumerate(F):
+    if a.frac < 1: tr = tr[np.random.RandomState(k).rand(len(tr)) < a.frac]
     Xa, ya = X.iloc[tr], y[tr]; pa = (ya > 0).astype(int)
     if not a.skip_clf:
         c = fit(lgb.LGBMClassifier(**P("binary")), Xa, pa, strat=pa)

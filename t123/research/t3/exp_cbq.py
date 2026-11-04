@@ -11,6 +11,7 @@ ap.add_argument("--alphas", default="0.02,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.
 ap.add_argument("--l2", type=float, default=3); ap.add_argument("--border", type=int, default=254)
 ap.add_argument("--rs", type=float, default=1.0, help="random_strength")
 ap.add_argument("--ratio", action="store_true", help="add features in ratio space relative to prev_month")
+ap.add_argument("--frac", type=float, default=1.0, help="learning curve: fraction of training-fold payers used")
 ap.add_argument("--p_avg", action="store_true", help="score with 3-seed p (lgbh_log, clf_s1, clf_s2)")
 a = ap.parse_args()
 ALPHAS = np.array([float(x) for x in a.alphas.split(",")])
@@ -29,6 +30,8 @@ OQ = np.zeros((n, len(ALPHAS))); TQ = np.zeros((len(Xt), len(ALPHAS))); t0 = tim
 loss = "MultiQuantile:alpha=" + ",".join(str(x) for x in ALPHAS)
 for k, (tr, va) in enumerate(F):
     Xa, ya = X.iloc[tr], y[tr]; pos = ya > 0; Xp = Xa[pos]; r = np.log(ya[pos]) - prev_offset(Xp)
+    if a.frac < 1:
+        keep = np.random.RandomState(a.seed + k).rand(len(r)) < a.frac; Xp, r = Xp[keep], r[keep]
     i, j = train_test_split(np.arange(len(r)), test_size=0.1, random_state=a.seed)
     m = CatBoostRegressor(loss_function=loss, iterations=20000, learning_rate=a.lr, depth=a.depth, l2_leaf_reg=a.l2, border_count=a.border, random_strength=a.rs,
                           od_type="Iter", od_wait=200, random_seed=a.seed, thread_count=NT, verbose=False)

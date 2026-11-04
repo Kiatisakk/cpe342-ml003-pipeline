@@ -12,6 +12,7 @@ prior estimate in §A, computed from the model's **test predictions only**.
 | `t4_test_proba_{ts,bcts}_em.npy` | EM-corrected test probabilities (kept for reference; **not recommended**) |
 | `task4_kaggle_v4.py` | §B: improved Kaggle GPU training script (not run here) |
 | `t4_blend_runs.py` | §B: blends v3 + v4 runs on OOF (nested-CV weights) → test proba + csv |
+| `t4_test_diagnostics.py`, `results_diagnostics.json`, `log_diagnostics.txt` | §D: label-free test-difficulty estimates, fold disagreement, uncertainty pairs, expected-F1 decoding |
 | `t4_make_label_csv.py` | §C: builds the two string-label files below |
 | `t4_test_str.csv` | §C: `id,pred`, labels exactly as in train.csv (`7-11k`) |
 | `t4_test_str_711K.csv` | §C: same, `7-11K` (capital K, slide page 30) |
@@ -128,7 +129,75 @@ Expected gain: v3 makes ~350 OOF errors out of 31.5k, so realistically +0.001–
   Slide page 36 (the sample submission) shows string labels (`freefried`, `fiveN`) in the task4 column, so the private LB may expect strings. Which spelling of 7-11k it expects is unknown.
   The public LB ignores T4, so this cannot be probed. Keep both files for the final pick.
 
+## D. Follow-up research ("Research More", `t4_test_diagnostics.py`, `results_diagnostics.json`)
+Run: `python t123/research/t4/t4_test_diagnostics.py --reps 100` (~6 min CPU). As before, it uses test **predictions only**.
+
+### D1. The test is much harder than the OOF: the main T4 finding
+| label-free signal | in-distribution (OOF) | test |
+|---|---|---|
+| all 5 fold models give the same label | ≈ 0.98 expected (OOF error 1.1%) | **0.834** |
+| mean pairwise agreement of fold models | ≥ 0.978 expected | **0.913** |
+| rows with max-prob < 0.6 | 0.5% | **8.6%** |
+
+- **Lower bound (no assumptions):** for two models, error_i + error_j ≥ disagreement_ij. With a mean pairwise disagreement of 8.66%, the average **single-fold model is wrong on ≥ 4.3% of test rows**, versus 1.1% on OOF.
+- **Generalization-Disagreement Equality** (Jiang et al., ICLR 2022): the disagreement between independently trained models ≈ test error. That gives ≈ 8.7% single-model test error.
+- **Label-free accuracy estimators**, first validated on OOF resamples with known truth:
+
+| estimator | bias, label-shift sim | bias, label-shift + low-conf sim | **estimate on test** |
+|---|---|---|---|
+| ATC (Garg et al., ICLR 2022) | +0.001 | **−0.005** (best) | **0.867** |
+| calibrated confidence (TS) | +0.005 | +0.020 | 0.957 |
+| posterior sampling (TS + EM), macro-F1 | −0.003 | +0.011 | 0.944 |
+| DoC | +0.032 | +0.039 | 0.958 (biased, ignore) |
+
+  Confidence-based estimators are over-optimistic as soon as the test is harder. ATC was the only one accurate under the stress test.
+- **Best guess for the v3_5f ensemble on test:** accuracy / macro-F1 ≈ **0.87–0.94**, not 0.989.
+  The ensemble is better than a single fold, so it lands between the ATC number and the ~0.91–0.95 implied by GDE.
+  T4 therefore has real headroom on the **private** LB (the public LB ignores T4), worth about +0.05 T4-F1 × T4 weight.
+- **Image-size check:** I checked one train and one test image from the team dataset (`kiatisakkk/task4-image-classification`; only the size was read, then the files were deleted). Both are **230×120**.
+  The "200×100" on the Kaggle data page is stale, so a resolution mismatch is ruled out as the cause. The shift is in the image content: other maps, modes or sources.
+
+### D2. Where the test uncertainty is (what v4 should fix)
+| | top pairs |
+|---|---|
+| OOF errors (296) | 7-11k/roblock .15 · 7-11k/fiveN .14 · freefried/pube .14 · pube/roblock .11 |
+| uncertain test rows (max-prob < 0.6) | **freefried/pube .17 · fiveN/freefried .15 · fiveN/pube .14 · fiveN/roblock .13** · 7-11k/* ≤ .09 |
+| fold disagreement by predicted class | 7-11k .09 · pube .14 · roblock .18 · fiveN .20 · **freefried .23** |
+
+7-11k (39% of train) is stable on test. The shifted classes are **freefried, fiveN and pube**, and their test images often fall *between* those three classes.
+This pattern is not visible in the OOF errors. It points to test screenshots of those games that look unlike the training ones.
+Consequences for v4: robustness and diversity matter more than OOF decimals. That means the milder geometry (keep the HUD), degradation augmentation, a second architecture family (EVA02) and the TTA views.
+The script now prints test pairwise fold disagreement (v3_5f 0.0866) as a **diagnostic** to compare runs.
+Do not tune on it: it is computed on test images, and the rules say "no test usage for training purposes". Ask the TA before using it for model choice.
+
+### D3. Fold ensemble: arithmetic vs geometric mean
+Single fold models agree with the ensemble on 94.4–95.1% of test rows. Geometric instead of arithmetic averaging changes 142 test labels.
+This cannot be validated on OOF (each OOF row comes from one model), so keep the arithmetic mean.
+
+### D4. Expected-macro-F1-optimal decoding: not adopted
+I chose per-class log-weights to maximise the posterior-*expected* macro-F1 on the unlabelled set, with TS posteriors or TS + EM posteriors, and used the same honest OOF simulation (100 reps).
+- Δ vs raw argmax, label shift: TS +0.00003 ± 0.0001 (P>0 .51); EM +0.00008 ± 0.0003 (P .64).
+- Δ vs raw argmax, label shift + low-conf: TS −0.00015 (P .00); EM −0.0001 ± 0.0007.
+- On the real test it changes 0 labels (TS) or the same 464 as EM (EM).
+
+No gain, the same conclusion as §A. With this model, the decision rule is not where the error comes from.
+
+### D5. Competition pages (read through the Kaggle connector, read-only)
+- The Overview defines T4 as 0 PUBE, 1 Free Fried, 2 FiveN, 3 Roblock, 4 7-Eleven Knight. That matches v6's numeric column.
+- The local `sample_submission.csv` has numeric example values in `task4` (0.0/1.0/2.0) in only 4 rows; the other rows are blank. Slide 36 shows strings. So the format is still ambiguous, and keeping v6 numeric plus the string files (§C) as alternatives remains right.
+- The data page also says "pipe-separated" (`id|task1|…`), which contradicts the comma format that is known to work. Ignore it.
+- Rules §5 say "**No test set probing**: do not attempt to reverse-engineer or obtain test set labels". The team should keep this in mind for the leave-one-task-out LB probes planned in CLAUDE.md §5.
+- There are no discussion topics in the forum.
+
+### D6. Literature behind the choices
+- **Saerens et al. 2002 (EM); Lipton et al. 2018 (BBSE); Alexandari, Kundaje & Shrikumar, ICML 2020:** EM with bias-corrected calibration is hard to beat for label shift. So our "no gain" is a strong negative result, not a weak method. It also explains why EM on uncalibrated probabilities failed (§A3).
+- **Garg et al., ICLR 2022 (ATC):** used in D1.
+- **Jiang, Nagarajan, Baek & Kolter, ICLR 2022 (Generalization-Disagreement Equality):** used in D1. Kirsch & Gal (TMLR 2022) note that it relies on ensemble calibration, which degrades as disagreement grows. Hence it is shown as an estimate, next to the assumption-free lower bound.
+
+---
+
 ## Recommendation
+0. **Expect T4 on the private LB to be ≈ 0.87–0.94, not 0.989 (§D1).** The test is shifted in image content, mainly freefried / fiveN / pube. That is why the v4 robustness run plus a second backbone is the most valuable T4 work left, more than any post-processing.
 1. T4 final = **v3_5f plain argmax** (`t4_test_str.csv` strings, or v6's numeric column), with **no prior-shift correction and no logit bias**.
 2. If GPU time allows, run `task4_kaggle_v4.py` for `eva02_s` and `cnxt_s_d3`. Blend with `t4_blend_runs.py` and switch only if the nested/equal-weight OOF beats 0.9889 and the per-view numbers look sane.
 3. For the string-vs-number question: the slide's sample submission uses strings in the task4 column.

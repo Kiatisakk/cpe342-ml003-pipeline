@@ -233,7 +233,13 @@ print(classification_report(y[m], OOF[m].argmax(1), target_names=CLASSES, digits
 print(pd.DataFrame(confusion_matrix(y[m], OOF[m].argmax(1)), index=CLASSES, columns=CLASSES))
 tf = [f"{OUT}/preds/{RUN_TAG}_test_fold{k}.npy" for k in range(N_FOLDS) if os.path.exists(f"{OUT}/preds/{RUN_TAG}_test_fold{k}.npy")]
 if len(tf) == N_FOLDS:
-    P = np.mean([np.load(f) for f in tf], 0); np.save(f"{OUT}/preds/task4_{RUN_TAG}_test_proba.npy", P)
+    TFk = [np.load(f) for f in tf]; P = np.mean(TFk, 0); np.save(f"{OUT}/preds/task4_{RUN_TAG}_test_proba.npy", P)
+    # label-free robustness DIAGNOSTIC (Generalization-Disagreement Equality, Jiang et al. 2022): mean pairwise
+    # disagreement of fold models on test ~ single-model test error. v3_5f: 0.0866 (OOF error 0.011). Report it to
+    # compare runs; do NOT tune hyper-parameters on it (it is computed on test images).
+    dis = np.mean([(TFk[i].argmax(1) != TFk[j].argmax(1)).mean() for i in range(N_FOLDS) for j in range(i + 1, N_FOLDS)])
+    print(f"test pairwise fold disagreement {dis:.4f} (v3_5f 0.0866) | all-5-agree {np.mean([(np.stack([t.argmax(1) for t in TFk]) == TFk[0].argmax(1)).all(0)]):.4f} (v3_5f 0.8337)")
+    log["test_pairwise_fold_disagreement"] = round(float(dis), 4); json.dump(log, open(f"{OUT}/preds/{RUN_TAG}_log.json", "w"), indent=1)
     print("test predicted class share:", dict(zip(CLASSES, (np.bincount(P.argmax(1), minlength=K) / len(P)).round(3))))
     res = pd.DataFrame({"id_img": test["id"], "pred_num": P.argmax(1), "pred_str": [CLASSES[i] for i in P.argmax(1)]})
     if SAMPLE:

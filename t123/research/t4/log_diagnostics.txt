@@ -1,0 +1,54 @@
+[validate label_shift] mean,sd: {'ATC_acc': [np.float64(0.9901), np.float64(0.0007)], 'DoC_acc': [np.float64(1.0205), np.float64(0.0009)], 'TS_conf_acc': [np.float64(0.9939), np.float64(0.0004)], 'posterior_macroF1': [np.float64(0.9852), np.float64(0.0012)], 'posterior_acc': [np.float64(0.9867), np.float64(0.001)], 'true_acc': [np.float64(0.9889), np.float64(0.0017)], 'true_macroF1': [np.float64(0.9885), np.float64(0.0018)], 'bias_vs_truth': {'ATC_acc': np.float64(0.0012), 'DoC_acc': np.float64(0.0316), 'TS_conf_acc': np.float64(0.005), 'posterior_acc': np.float64(-0.0022), 'posterior_macroF1': np.float64(-0.0033)}}
+[validate label_shift+conf] mean,sd: {'ATC_acc': [np.float64(0.9615), np.float64(0.0014)], 'DoC_acc': [np.float64(1.005), np.float64(0.0006)], 'TS_conf_acc': [np.float64(0.9862), np.float64(0.0005)], 'posterior_macroF1': [np.float64(0.9752), np.float64(0.0011)], 'posterior_acc': [np.float64(0.9773), np.float64(0.0008)], 'true_acc': [np.float64(0.9664), np.float64(0.0052)], 'true_macroF1': [np.float64(0.9645), np.float64(0.0059)], 'bias_vs_truth': {'ATC_acc': np.float64(-0.005), 'DoC_acc': np.float64(0.0385), 'TS_conf_acc': np.float64(0.0198), 'posterior_acc': np.float64(0.0109), 'posterior_macroF1': np.float64(0.0107)}}
+[test] label-free estimates: {'ATC_acc': 0.8667, 'DoC_acc': 0.9581, 'TS_conf_acc': 0.9574, 'posterior_macroF1': 0.9444, 'posterior_acc': 0.9472}
+[test folds] {'all5_agree': np.float64(0.8337), 'single_fold_vs_ens_agreement': [np.float64(0.9461), np.float64(0.9507), np.float64(0.9478), np.float64(0.9436), np.float64(0.9435)], 'rows_by_votes_for_ens_label': {1: 35, 2: 500, 3: 1537, 4: 2234, 5: 21583}, 'geo_vs_arith_label_changes': 142, 'pairwise_fold_agreement_mean': np.float64(0.9134)}
+[uncertainty] {
+ "oof_n_errors": 296,
+ "oof_error_pairs_share": {
+  "7-11k / roblock": 0.149,
+  "7-11k / fiveN": 0.139,
+  "freefried / pube": 0.135,
+  "pube / roblock": 0.108,
+  "7-11k / freefried": 0.098,
+  "7-11k / pube": 0.098,
+  "fiveN / roblock": 0.098,
+  "fiveN / pube": 0.084
+ },
+ "oof_share_maxprob_lt_0.6": 0.0054,
+ "test_share_maxprob_lt_0.6": 0.0856,
+ "test_uncertain_top2_pairs_share": {
+  "freefried / pube": 0.17,
+  "fiveN / freefried": 0.154,
+  "fiveN / pube": 0.143,
+  "fiveN / roblock": 0.131,
+  "pube / roblock": 0.1,
+  "7-11k / fiveN": 0.09,
+  "7-11k / roblock": 0.079,
+  "7-11k / freefried": 0.057
+ },
+ "test_uncertain_by_pred_class": {
+  "7-11k": 0.0739,
+  "fiveN": 0.0937,
+  "freefried": 0.1192,
+  "pube": 0.0692,
+  "roblock": 0.0792
+ },
+ "oof_uncertain_by_true_class": {
+  "7-11k": 0.0039,
+  "fiveN": 0.0059,
+  "freefried": 0.0052,
+  "pube": 0.0073,
+  "roblock": 0.0072
+ },
+ "test_fold_disagree_by_pred_class": {
+  "7-11k": 0.0877,
+  "fiveN": 0.1959,
+  "freefried": 0.2269,
+  "pube": 0.1379,
+  "roblock": 0.1799
+ }
+}
+[expF1 decoding label_shift] delta vs raw argmax [mean, sd, P(>0)]: {'EM+expF1': [np.float64(8e-05), np.float64(0.00027), np.float64(0.64)], 'TS+expF1': [np.float64(3e-05), np.float64(9e-05), np.float64(0.51)]}
+[expF1 decoding label_shift+conf] delta vs raw argmax [mean, sd, P(>0)]: {'EM+expF1': [np.float64(-0.0001), np.float64(0.00068), np.float64(0.47)], 'TS+expF1': [np.float64(-0.00015), np.float64(0.00017), np.float64(0.0)]}
+[test] labels changed by expF1 decoding: {'TS+expF1': 0, 'EM+expF1': 464}
+wrote results_diagnostics.json

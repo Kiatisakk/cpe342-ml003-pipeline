@@ -30,3 +30,4 @@ E27 | arithmetic mean of the 6 models' hurdle predictions (instead of geo-mean o
 E28 | nested LAD over family bags (CB3, XQ3, LGB-offset, linfull) | 0.79485 | 0.79490 +- 0.0077 | discard | = E24; equal weights are as good and need no tuning
 E29 | CatBoost-q offset depth 6 lr .04 (single seed) | 0.79497 | 0.79502 +- 0.0076 | KEEP | +0.0004 vs d8 singles; shallower better again (d10 run aborted)
 E30 | CatBoost-q offset depth 4 lr .05 (single seed) | 0.79505 | 0.79510 +- 0.0076 | KEEP | best single; d4 >= d6 > d8
+E31 | CatBoost-q d6 bag of 3 seeds | 0.79508 | 0.79513 +- 0.0076 | KEEP | singles 0.79482-0.79497

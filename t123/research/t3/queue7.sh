@@ -8,3 +8,4 @@ run cbq_d6s2  exp_cbq.py cbq_d6s2 --depth 6 --lr 0.04 --seed 2
 run cbq_d3    exp_cbq.py cbq_d3 --depth 3 --lr 0.06
 run cbq_d4s1  exp_cbq.py cbq_d4s1 --depth 4 --lr 0.05 --seed 1
 run cbq_d4s2  exp_cbq.py cbq_d4s2 --depth 4 --lr 0.05 --seed 2
+run xq_d3 exp_xgbq.py xq_d3 --offset prev --extra --depth 3

@@ -112,3 +112,10 @@ The feature-only track is now within ≈ 0.001–0.002 of its learning-curve cei
 * `swap_t2.py <sub_v6.csv> <sub_v7.csv>` puts it into an existing 5-task file (checks ids / row count). It changes about 21% of T2 rows vs `t2_nb.csv`.
 * Expected public-LB change ≈ w_T2 × (0.968 − 0.756) ≈ +0.05 if w_T2 ≈ 0.25.
 * Disclose in the report that T2 uses the player_id ordering (a data-generation artefact). No test rows are used for training.
+
+## 7. Can T2 go above 0.968? (user asked for 0.98)
+No, not on noisy labels. A LightGBM "flip detector" on all 44 columns + id + position in block + NB p(block class)
+reaches AUC 0.4992 (chance). NB's p(block class) alone gives AUC 0.506. The flipped label's rank among the 3 wrong
+classes by NB is 0.344 / 0.333 / 0.323 (uniform). The flips are generated independently of everything in the data,
+so the CV ceiling is 0.968. The only unknown is whether Kaggle's *test* labels also carry the flips. If they are clean,
+the block rule already scores ≈ 1.0 there.

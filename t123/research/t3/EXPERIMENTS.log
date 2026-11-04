@@ -20,3 +20,5 @@ E17 | direct log-link MAE on raw y, all rows, offset log prev (custom XGB obj) |
 E18 | CatBoost-q offset, lr .03 | 0.79449 | 0.79454 +- 0.0076 | KEEP (best single) | +0.00015 vs lr .06 (noise)
 E19 | E15 with classifier p averaged over 3 LGB seeds | 0.79429 | 0.79434 +- 0.0076 | neutral | +0.00005 (noise); 3-seed p used from here (harmless)
 E20 | XGB-q d5 offset, 3 seeds bagged (geo-mean quantiles) + 3-seed p | 0.79446 | 0.79451 +- 0.0076 | KEEP | +0.0002 over single seeds (0.79416-0.79431); variance reduction
+E21 | CatBoost-q offset bag of 4 (seeds 0,1,2 lr .06 + lr .03) | 0.79472 | 0.79476 +- 0.0076 | KEEP | +0.0002 over best single CB
+E22 | equal-weight geo-mean of 7 quantile models (4 CB + 3 XGB d5) + 3-seed p | 0.79490 | 0.79495 +- 0.0076 | KEEP (BEST) | no tuning -> no nesting needed

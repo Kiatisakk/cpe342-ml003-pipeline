@@ -186,3 +186,35 @@ Final recipe trained on 90% of all labeled rows (10% used for early stopping):
 The in-sample numbers are inflated by overfitting.
 - Without augmentation the in-sample score is even higher (F2m 0.825), while the holdout score is the same. Augmentation acts as a regularizer.
 - The single 10% holdout is optimistic: it chose the stopping round and its own threshold, and it is small. Use the OOF row.
+
+## Training aimed at BINARY F2 (round 7, `exp22_binary_f2.py`)
+**Operating point** of binary F2 on the final model: about 63% predicted positive, recall 0.974, precision 0.541. Only 2.6% of cheaters may be missed, so what matters is the **high-recall tail** of the ranking: which ~37% of rows are "surely legit". Proxy metric: pAUC_hr = standardised partial AUC for TPR ≥ 0.9.
+
+Existing models ranked by binary F2 (nested, 3 seeds):
+
+| model | pAUC_hr | binary F2 nested |
+|---|---|---|
+| **final v2** (fe_v2 + masking aug + LGB lr 0.02 bag 3) | **0.78601** | **0.83910 ± 0.0003** (3-seed averaged OOF: 0.83911) |
+| round-1 final (no aug) | 0.78564 | 0.83877 |
+| LGB bag 5 lr 0.05 | 0.78558 | 0.83886 |
+| XGB tuned (exp20 top1) | 0.78474 | 0.83893 |
+| LGB lr 0.05 (exp03) | 0.78475 | 0.83798 |
+| CatBoost | 0.78370 | 0.83774 |
+| MLP | 0.77643 | 0.83393 |
+
+Binary-F2-oriented training. Base = LGB fe_v2 lr 0.05; differences are paired against it.
+
+| variant | binary F2 nested | pAUC_hr | verdict |
+|---|---|---|---|
+| base (AUC early stopping) | 0.83798 ± 0.0003 | 0.78475 | ref |
+| scale_pos_weight 3 | 0.83831 ± 0.0007 | 0.78525 | +0.0003, noise |
+| scale_pos_weight 6 | 0.83681 | 0.77884 | ✗ hurts (AUC 0.859) |
+| early stopping on pAUC_hr | 0.83746 | 0.78427 | ✗ |
+| spw 3 + early stopping on pAUC_hr | 0.83851 ± 0.0003 | 0.78479 | +0.0005, noise |
+| focal loss (γ 1.5, α 0.75) | 0.83833 ± 0.0005 | 0.78487 | +0.0004, noise |
+| nested blends of final v2 + spw3 / focal / spw3_es / tuned XGB (rank, AUC weights, LR stack) | 0.83883 – 0.83927 | – | vs final alone 0.83910: noise |
+
+- **Conclusion:** binary F2 tops out at about 0.839 as well.
+- The model that is best for F2-macro (final v2) is also the best for binary F2. Only the cut differs: 63% positive instead of 41%.
+- Recall-oriented losses and weights move the score by < 0.001.
+- **Binary F2 deliverable:** `t1_best_test_binaryF2.csv` (final v2, 63.0% predicted cheaters, nested 0.8391).

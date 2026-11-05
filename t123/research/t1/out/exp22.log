@@ -1,0 +1,30 @@
+{"name": "exp22 lgb fe_v2 base (binary-F2 oriented) [seed 42]", "auc": 0.89304, "f2m": 0.78088, "f2m_nested": 0.78041, "f2b": 0.83866, "f2b_nested": 0.83814, "pos_rate_m": 0.4125, "pos_rate_b": 0.6323, "time": "0.4m"}
+{"name": "exp22 lgb fe_v2 base (binary-F2 oriented) [seed 7]", "auc": 0.89302, "f2m": 0.7811, "f2m_nested": 0.78109, "f2b": 0.83839, "f2b_nested": 0.83765, "pos_rate_m": 0.4125, "pos_rate_b": 0.6404, "time": "0.4m"}
+{"name": "exp22 lgb fe_v2 base (binary-F2 oriented) [seed 2024]", "auc": 0.8934, "f2m": 0.78187, "f2m_nested": 0.78174, "f2b": 0.83814, "f2b_nested": 0.83815, "pos_rate_m": 0.395, "pos_rate_b": 0.6215, "time": "0.3m"}
+AGG {"name": "exp22 lgb fe_v2 base (binary-F2 oriented)", "seeds": [42, 7, 2024], "auc": 0.89315, "auc_sd": 0.00021, "f2m": 0.78128, "f2m_sd": 0.00052, "f2m_nested": 0.78108, "f2m_nested_sd": 0.00067, "f2b": 0.8384, "f2b_sd": 0.00026, "f2b_nested": 0.83798, "f2b_nested_sd": 0.00029}
+   pAUC_hr 0.78475 +- 0.00011
+{"name": "exp22 lgb fe_v2 spw3 (binary-F2 oriented) [seed 42]", "auc": 0.89322, "f2m": 0.78087, "f2m_nested": 0.78068, "f2b": 0.83906, "f2b_nested": 0.8385, "pos_rate_m": 0.4275, "pos_rate_b": 0.6431, "time": "0.3m"}
+{"name": "exp22 lgb fe_v2 spw3 (binary-F2 oriented) [seed 7]", "auc": 0.89337, "f2m": 0.78137, "f2m_nested": 0.78119, "f2b": 0.83907, "f2b_nested": 0.83885, "pos_rate_m": 0.3975, "pos_rate_b": 0.6323, "time": "0.4m"}
+{"name": "exp22 lgb fe_v2 spw3 (binary-F2 oriented) [seed 2024]", "auc": 0.89343, "f2m": 0.78141, "f2m_nested": 0.78113, "f2b": 0.83836, "f2b_nested": 0.83759, "pos_rate_m": 0.3925, "pos_rate_b": 0.6377, "time": "0.3m"}
+AGG {"name": "exp22 lgb fe_v2 spw3 (binary-F2 oriented)", "seeds": [42, 7, 2024], "auc": 0.89334, "auc_sd": 0.00011, "f2m": 0.78122, "f2m_sd": 0.0003, "f2m_nested": 0.781, "f2m_nested_sd": 0.00028, "f2b": 0.83883, "f2b_sd": 0.00041, "f2b_nested": 0.83831, "f2b_nested_sd": 0.00065}
+   pAUC_hr 0.78525 +- 0.00025
+{"name": "exp22 lgb fe_v2 spw6 (binary-F2 oriented) [seed 42]", "auc": 0.86132, "f2m": 0.76564, "f2m_nested": 0.76212, "f2b": 0.83761, "f2b_nested": 0.83716, "pos_rate_m": 0.4325, "pos_rate_b": 0.6431, "time": "0.2m"}
+{"name": "exp22 lgb fe_v2 spw6 (binary-F2 oriented) [seed 7]", "auc": 0.85916, "f2m": 0.76582, "f2m_nested": 0.76437, "f2b": 0.83685, "f2b_nested": 0.83676, "pos_rate_m": 0.43, "pos_rate_b": 0.6485, "time": "0.2m"}
+{"name": "exp22 lgb fe_v2 spw6 (binary-F2 oriented) [seed 2024]", "auc": 0.85785, "f2m": 0.76673, "f2m_nested": 0.76547, "f2b": 0.83693, "f2b_nested": 0.8365, "pos_rate_m": 0.415, "pos_rate_b": 0.6404, "time": "0.2m"}
+AGG {"name": "exp22 lgb fe_v2 spw6 (binary-F2 oriented)", "seeds": [42, 7, 2024], "auc": 0.85944, "auc_sd": 0.00175, "f2m": 0.76606, "f2m_sd": 0.00058, "f2m_nested": 0.76399, "f2m_nested_sd": 0.00171, "f2b": 0.83713, "f2b_sd": 0.00042, "f2b_nested": 0.83681, "f2b_nested_sd": 0.00033}
+   pAUC_hr 0.77884 +- 0.0007
+{"name": "exp22 lgb fe_v2 es_hr (binary-F2 oriented) [seed 42]", "auc": 0.8924, "f2m": 0.78018, "f2m_nested": 0.77952, "f2b": 0.83817, "f2b_nested": 0.83803, "pos_rate_m": 0.4, "pos_rate_b": 0.6377, "time": "0.5m"}
+{"name": "exp22 lgb fe_v2 es_hr (binary-F2 oriented) [seed 7]", "auc": 0.89308, "f2m": 0.78086, "f2m_nested": 0.78013, "f2b": 0.83834, "f2b_nested": 0.83746, "pos_rate_m": 0.415, "pos_rate_b": 0.6404, "time": "0.5m"}
+{"name": "exp22 lgb fe_v2 es_hr (binary-F2 oriented) [seed 2024]", "auc": 0.89303, "f2m": 0.78128, "f2m_nested": 0.78074, "f2b": 0.83796, "f2b_nested": 0.8369, "pos_rate_m": 0.4025, "pos_rate_b": 0.6296, "time": "0.4m"}
+AGG {"name": "exp22 lgb fe_v2 es_hr (binary-F2 oriented)", "seeds": [42, 7, 2024], "auc": 0.89284, "auc_sd": 0.00038, "f2m": 0.78077, "f2m_sd": 0.00056, "f2m_nested": 0.78013, "f2m_nested_sd": 0.00061, "f2b": 0.83816, "f2b_sd": 0.00019, "f2b_nested": 0.83746, "f2b_nested_sd": 0.00057}
+   pAUC_hr 0.78427 +- 0.00043
+{"name": "exp22 lgb fe_v2 spw3_es (binary-F2 oriented) [seed 42]", "auc": 0.89258, "f2m": 0.77964, "f2m_nested": 0.77881, "f2b": 0.83888, "f2b_nested": 0.83843, "pos_rate_m": 0.43, "pos_rate_b": 0.6458, "time": "0.5m"}
+{"name": "exp22 lgb fe_v2 spw3_es (binary-F2 oriented) [seed 7]", "auc": 0.89304, "f2m": 0.78145, "f2m_nested": 0.78091, "f2b": 0.83888, "f2b_nested": 0.83882, "pos_rate_m": 0.4075, "pos_rate_b": 0.635, "time": "0.4m"}
+{"name": "exp22 lgb fe_v2 spw3_es (binary-F2 oriented) [seed 2024]", "auc": 0.89322, "f2m": 0.78132, "f2m_nested": 0.78049, "f2b": 0.83833, "f2b_nested": 0.83828, "pos_rate_m": 0.3825, "pos_rate_b": 0.6269, "time": "0.4m"}
+AGG {"name": "exp22 lgb fe_v2 spw3_es (binary-F2 oriented)", "seeds": [42, 7, 2024], "auc": 0.89295, "auc_sd": 0.00033, "f2m": 0.7808, "f2m_sd": 0.00101, "f2m_nested": 0.78007, "f2m_nested_sd": 0.00111, "f2b": 0.8387, "f2b_sd": 0.00032, "f2b_nested": 0.83851, "f2b_nested_sd": 0.00028}
+   pAUC_hr 0.78479 +- 0.00023
+{"name": "exp22 lgb fe_v2 focal (binary-F2 oriented) [seed 42]", "auc": 0.89325, "f2m": 0.78088, "f2m_nested": 0.78045, "f2b": 0.83879, "f2b_nested": 0.83809, "pos_rate_m": 0.41, "pos_rate_b": 0.6323, "time": "0.6m"}
+{"name": "exp22 lgb fe_v2 focal (binary-F2 oriented) [seed 7]", "auc": 0.8932, "f2m": 0.78126, "f2m_nested": 0.7808, "f2b": 0.83879, "f2b_nested": 0.83889, "pos_rate_m": 0.3925, "pos_rate_b": 0.6431, "time": "0.6m"}
+{"name": "exp22 lgb fe_v2 focal (binary-F2 oriented) [seed 2024]", "auc": 0.89296, "f2m": 0.78118, "f2m_nested": 0.78035, "f2b": 0.83841, "f2b_nested": 0.83802, "pos_rate_m": 0.42, "pos_rate_b": 0.6215, "time": "0.5m"}
+AGG {"name": "exp22 lgb fe_v2 focal (binary-F2 oriented)", "seeds": [42, 7, 2024], "auc": 0.89314, "auc_sd": 0.00016, "f2m": 0.78111, "f2m_sd": 0.0002, "f2m_nested": 0.78053, "f2m_nested_sd": 0.00024, "f2b": 0.83866, "f2b_sd": 0.00022, "f2b_nested": 0.83833, "f2b_nested_sd": 0.00048}
+   pAUC_hr 0.78487 +- 0.00042

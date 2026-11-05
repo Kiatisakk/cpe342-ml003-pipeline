@@ -97,6 +97,14 @@ single algorithm/config.
   The train/OOF gap (~0.008) is a mild overfit, and even on the data it was trained on the model reaches only ~0.80, which again
   shows that the target noise, not the model, limits the score.
 
+## Round 7: find noisy rows and remove them from training (`exp_denoise.py`, nested)
+Noisy rows were identified inside each outer training fold only (3-fold inner CV → inner-OOF median → |log residual|);
+validation folds keep every row, as the test set will. Dropping the worst 1/3/5/10 % or Cauchy down-weighting gives
+−0.00001 / −0.00011 / −0.00031 / −0.00031 / −0.00018 vs the same-code control (0.79512) — monotonically worse.
+Why: the inner residuals are homogeneous (robust sd 0.17 in log, q99 0.43, only ~0.65 % beyond 4 sd) — the noise is spread
+over every row rather than concentrated in a few bad labels, and the quantile (pinball) loss is already robust to outliers.
+Removing large residuals throws away genuine tail information that the q≈0.46 quantile needs. Not applied.
+
 ## Every experiment
 | id | experiment | OOF NMAE | fold mean ± sd | decision | note |
 |---|---|---|---|---|---|
@@ -169,9 +177,16 @@ single algorithm/config.
 | R6-02 | Optuna trial 20 (d3, l2 5.7, rs .05, bt .27, rsm .75, border 128): full 5-fold OOF, 1 seed | 0.79509 | 0.79514 +- 0.0074 | discard | vs current d4 1 seed: folds 0-1 +0.00013, HELD-OUT folds 2-4 -0.00013 -> tuning gain does not transfer |
 | R6-03 | Optuna trial 29 (d3, l2 8.7, rs .22, bt .33, rsm .91): full OOF, 1 seed | 0.79515 | 0.79520 +- 0.0074 | discard | folds 0-1 +0.00015, HELD-OUT folds 2-4 -0.00004 (noise) |
 | R6-04 | IN-SAMPLE train score (fit on all train, predict same rows; optimistic) | final d4 0.80356 / optuna d3 0.80299 | - | info | vs OOF 0.7951: gap ~0.008 = mild overfit; even in-sample the model only reaches ~0.80 -> target noise dominates |
+| R7-00 | analysis: nested inner-OOF log residuals of training payers (CB d4) | robust sd 0.17, q99 0.43 | - | info | only ~0.65% beyond 4 sd -> noise is homogeneous (near-Gaussian), no separable outlier group |
+| R7-01 | noise removal control: same code path, drop 0% (validation folds untouched) | 0.79512 | 0.79516 +- 0.0075 | ref | = current single seed |
+| R7-02 | drop top 1% |inner residual| from training fold | 0.79511 | 0.79515 +- 0.0075 | discard | paired -0.00001 +- 0.00014 |
+| R7-03 | drop top 3% | 0.79501 | 0.79505 +- 0.0076 | discard | paired -0.00011 +- 0.00014 |
+| R7-04 | drop top 5% | 0.79480 | 0.79485 +- 0.0076 | discard | paired -0.00031 +- 0.00031 |
+| R7-05 | drop top 10% | 0.79480 | 0.79485 +- 0.0076 | discard | paired -0.00031 +- 0.00019 |
+| R7-06 | Cauchy down-weighting w = 1/(1+(res/2sd)^2) | 0.79493 | 0.79498 +- 0.0076 | discard | paired -0.00018 +- 0.00017 |
 
 ## Scripts
 `common.py` (data, folds, metric, hurdle median), `exp_lgb_hurdle.py` (LGB clf + per-alpha quantiles), `exp_xgbq.py` (XGB multi-quantile, offsets,
 weights, whale subset, seed bag), `exp_cbq.py` (CatBoost MultiQuantile), `exp_direct.py` (direct log-link MAE), `calib_nested.py`, `mix_whale.py`, `exp_nnq.py` (from-scratch NN),
-`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `blend_nested.py` (nested weight blending), `tune_cb.py` (Optuna), `insample.py`, `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
+`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `blend_nested.py` (nested weight blending), `tune_cb.py` (Optuna), `insample.py`, `exp_denoise.py` (noise removal), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
 OOF/test arrays are written to `oof/` (git-ignored, regenerate with the scripts); data cache in `cache/` (git-ignored).

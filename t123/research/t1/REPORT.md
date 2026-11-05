@@ -218,3 +218,19 @@ Binary-F2-oriented training. Base = LGB fe_v2 lr 0.05; differences are paired ag
 - The model that is best for F2-macro (final v2) is also the best for binary F2. Only the cut differs: 63% positive instead of 41%.
 - Recall-oriented losses and weights move the score by < 0.001.
 - **Binary F2 deliverable:** `t1_best_test_binaryF2.csv` (final v2, 63.0% predicted cheaters, nested 0.8391).
+
+## Noise removal (round 8, `exp23_denoise.py`)
+Everything is done inside the outer fold's training rows; the held-out fold is untouched. LGB fe_v2, lr 0.05, 3 seeds. The base is the same model without cleaning: AUC 0.89315, F2m 0.78108, binary F2 0.83798.
+
+| variant | removed | AUC | F2m nested | binary F2 nested | verdict |
+|---|---|---|---|---|---|
+| drop the 2% rows with lowest inner-OOF p(given label) | 2% | 0.89217 | 0.78043 | 0.83642 | ✗ |
+| drop 5% | 5% | 0.88904 | 0.77920 | 0.82962 | ✗ |
+| drop 10% | 10% | 0.88214 | 0.77631 | 0.82020 | ✗ worse with more removal |
+| confident-learning threshold (p(label) < 0.1) | 0.12% | 0.89311 | 0.78112 | 0.83802 | = base |
+| re-weight rows by sqrt p(given label) | – | 0.89317 | 0.78092 | 0.83766 | ✗ |
+| null-importance feature selection (drop features below shuffled-column importance) | ~21 of 56 features | 0.89313 | 0.78029 | 0.83848 | = base (simpler model, same score) |
+
+- The 16 raw noise columns were already removed (exp01/02). Within the remaining 56 features, about 21 are redundant: removing them leaves AUC unchanged, but nothing improves.
+- Label noise is essentially absent. Only 0.12% of rows contradict a confident inner prediction.
+- The "hard" rows are the genuine class overlap (Bayes error), not mislabeled rows. Removing them makes the model over-confident in the overlapping core, so both F2 scores drop. Binary F2 drops fastest, because its high-recall cut lives exactly in that region.

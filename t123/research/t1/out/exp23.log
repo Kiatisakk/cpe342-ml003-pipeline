@@ -1,0 +1,10 @@
+  dropped by null importance (fold0): ['acc_x_cross', 'accuracy_score', 'age_hi', 'age_segment', 'aiming_smoothness', 'kill_consistency', 'level_per_100d', 'level_progression_speed', 'log_level_progression_speed', 'lv_hi', 'lv_lo', 'lvl_post_mean', 'n_missing', 'na_account_age_days', 'na_crosshair_placement', 'na_friend_network_size', 'na_level', 'na_reports_received', 'pa_cheat_110_120', 'pa_legit_180_200', 'pa_legit_lt15', 'pl_cheat_lt28', 'pl_legit_gt96', 'r_hat', 'reaction_time_ms', 'skill_z_std', 'spray_control_score']
+seed 42 {'drop2': (0.78105, 0.83632, 0.89218), 'drop5': (0.77879, 0.83006, 0.8888), 'drop10': (0.77594, 0.81921, 0.88157), 'cl_thr': (0.78023, 0.83854, 0.8929), 'reweight': (0.7822, 0.83755, 0.89325), 'nullimp': (0.7802, 0.83875, 0.89311)}
+seed 7 {'drop2': (0.77948, 0.8364, 0.89198), 'drop5': (0.77954, 0.82881, 0.88905), 'drop10': (0.77666, 0.82024, 0.88257), 'cl_thr': (0.78108, 0.83821, 0.89317), 'reweight': (0.78073, 0.83782, 0.89306), 'nullimp': (0.78054, 0.83856, 0.89295)}
+seed 2024 {'drop2': (0.78075, 0.83653, 0.89234), 'drop5': (0.77927, 0.83, 0.88927), 'drop10': (0.77633, 0.82114, 0.88228), 'cl_thr': (0.78204, 0.83732, 0.89325), 'reweight': (0.77982, 0.83762, 0.89321), 'nullimp': (0.78012, 0.83814, 0.89333)}
+AGG {"name": "exp23 lgb fe_v2 drop2", "f2m_nested": 0.78043, "f2m_nested_sd": 0.00083, "f2b_nested": 0.83642, "auc": 0.89217, "removed": "0.02"}
+AGG {"name": "exp23 lgb fe_v2 drop5", "f2m_nested": 0.7792, "f2m_nested_sd": 0.00038, "f2b_nested": 0.82962, "auc": 0.88904, "removed": "0.05"}
+AGG {"name": "exp23 lgb fe_v2 drop10", "f2m_nested": 0.77631, "f2m_nested_sd": 0.00036, "f2b_nested": 0.8202, "auc": 0.88214, "removed": "0.1"}
+AGG {"name": "exp23 lgb fe_v2 cl_thr", "f2m_nested": 0.78112, "f2m_nested_sd": 0.00091, "f2b_nested": 0.83802, "auc": 0.89311, "removed": "0.001193"}
+AGG {"name": "exp23 lgb fe_v2 reweight", "f2m_nested": 0.78092, "f2m_nested_sd": 0.0012, "f2b_nested": 0.83766, "auc": 0.89317, "removed": "-"}
+AGG {"name": "exp23 lgb fe_v2 nullimp", "f2m_nested": 0.78029, "f2m_nested_sd": 0.00023, "f2b_nested": 0.83848, "auc": 0.89313, "removed": "20.67"}

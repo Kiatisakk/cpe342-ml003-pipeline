@@ -74,3 +74,9 @@
 {"name": "blend[final+xgbT+spw3es+focal] rank_avg", "auc": 0.89406, "auc_sd": 0.0001, "f2m": 0.78214, "f2m_sd": 0.00016, "f2m_nested": 0.78173, "f2m_nested_sd": 0.00035, "f2b": 0.83923, "f2b_sd": 0.00029, "f2b_nested": 0.83883, "f2b_nested_sd": 0.00032}
 {"name": "blend[final+xgbT+spw3es+focal] w_auc", "auc": 0.89453, "auc_sd": 6e-05, "f2m": 0.78248, "f2m_sd": 0.00038, "f2m_nested": 0.78199, "f2m_nested_sd": 0.00067, "f2b": 0.83943, "f2b_sd": 0.0002, "f2b_nested": 0.83902, "f2b_nested_sd": 0.00011}
 {"name": "blend[final+xgbT+spw3es+focal] lr_stack", "auc": 0.89452, "auc_sd": 6e-05, "f2m": 0.78251, "f2m_sd": 0.00046, "f2m_nested": 0.78195, "f2m_nested_sd": 0.00077, "f2b": 0.83946, "f2b_sd": 0.00021, "f2b_nested": 0.83927, "f2b_nested_sd": 0.00023}
+{"name": "exp23 lgb fe_v2 drop2", "f2m_nested": 0.78043, "f2m_nested_sd": 0.00083, "f2b_nested": 0.83642, "auc": 0.89217, "removed": "0.02"}
+{"name": "exp23 lgb fe_v2 drop5", "f2m_nested": 0.7792, "f2m_nested_sd": 0.00038, "f2b_nested": 0.82962, "auc": 0.88904, "removed": "0.05"}
+{"name": "exp23 lgb fe_v2 drop10", "f2m_nested": 0.77631, "f2m_nested_sd": 0.00036, "f2b_nested": 0.8202, "auc": 0.88214, "removed": "0.1"}
+{"name": "exp23 lgb fe_v2 cl_thr", "f2m_nested": 0.78112, "f2m_nested_sd": 0.00091, "f2b_nested": 0.83802, "auc": 0.89311, "removed": "0.001193"}
+{"name": "exp23 lgb fe_v2 reweight", "f2m_nested": 0.78092, "f2m_nested_sd": 0.0012, "f2b_nested": 0.83766, "auc": 0.89317, "removed": "-"}
+{"name": "exp23 lgb fe_v2 nullimp", "f2m_nested": 0.78029, "f2m_nested_sd": 0.00023, "f2b_nested": 0.83848, "auc": 0.89313, "removed": "20.67"}

@@ -105,6 +105,16 @@ Why: the inner residuals are homogeneous (robust sd 0.17 in log, q99 0.43, only 
 over every row rather than concentrated in a few bad labels, and the quantile (pinball) loss is already robust to outliers.
 Removing large residuals throws away genuine tail information that the q≈0.46 quantile needs. Not applied.
 
+## Round 8: unsupervised view — outlier removal and noise dimensions (`exp_unsup.py`, nested, train-fold only)
+* Outlier removal without the target: IsolationForest drop 1/3/5 % → +0.00013 / −0.00016 / −0.00024; Mahalanobis (PCA space) drop 3 %
+  → −0.00008. The only positive one (1 %) is below the 0.0005 noise bar, positive in 3 of 5 folds and not monotone in the drop rate → noise.
+  Payers that look unusual in feature space are real players, not noise; removing them only loses data.
+* Noise dimensions: CatBoost importance < 0.5 % flags 36 of 49 features in every fold; refitting on the remaining 13
+  (event_participation_rate, historical_spending, total_transactions, vip_status, is_premium_member, games_played,
+  days_since_last_purchase, purchase_frequency, seasonal_spending_pattern, segment, prev_vs_hist, p_whale, lprev_minus_lhist)
+  gives the same score (+0.00008 ± 0.00039). So most columns are noise dimensions, but the tree model already ignores them.
+* Adding 8 PCA components as features: −0.00007. Nothing applied; final files unchanged.
+
 ## Every experiment
 | id | experiment | OOF NMAE | fold mean ± sd | decision | note |
 |---|---|---|---|---|---|
@@ -184,9 +194,16 @@ Removing large residuals throws away genuine tail information that the q≈0.46 
 | R7-04 | drop top 5% | 0.79480 | 0.79485 +- 0.0076 | discard | paired -0.00031 +- 0.00031 |
 | R7-05 | drop top 10% | 0.79480 | 0.79485 +- 0.0076 | discard | paired -0.00031 +- 0.00019 |
 | R7-06 | Cauchy down-weighting w = 1/(1+(res/2sd)^2) | 0.79493 | 0.79498 +- 0.0076 | discard | paired -0.00018 +- 0.00017 |
+| R8-00 | unsupervised control (same code path, nothing removed) | 0.79512 | 0.79516 +- 0.0075 | ref | |
+| R8-01 | IsolationForest (fit on training-fold payers, standardized median-imputed feats) drop 1% most anomalous | 0.79524 | 0.79529 +- 0.0076 | discard | paired +0.00013 +- 0.00015 (folds -0.00002/+0.00013/+0.00030/+0.00027/-0.00006) < 0.0005 noise bar; not monotone |
+| R8-02 | IsolationForest drop 3% | 0.79495 | 0.79500 +- 0.0075 | discard | paired -0.00016 +- 0.00013 |
+| R8-03 | IsolationForest drop 5% | 0.79488 | 0.79493 +- 0.0071 | discard | paired -0.00024 +- 0.00061 |
+| R8-04 | Mahalanobis distance in PCA(95% var) space, drop 3% farthest | 0.79503 | 0.79508 +- 0.0077 | discard | paired -0.00008 +- 0.00035 |
+| R8-05 | drop low-importance dimensions (CatBoost importance < 0.5%): 36 of 49 features removed, 13 kept | 0.79519 | 0.79524 +- 0.0078 | neutral | paired +0.00008 +- 0.00039 (folds alternate +-0.0004); same accuracy with 13 features |
+| R8-06 | add 8 PCA components (fit on training fold) as features | 0.79504 | 0.79509 +- 0.0076 | discard | paired -0.00007 +- 0.00014 |
 
 ## Scripts
 `common.py` (data, folds, metric, hurdle median), `exp_lgb_hurdle.py` (LGB clf + per-alpha quantiles), `exp_xgbq.py` (XGB multi-quantile, offsets,
 weights, whale subset, seed bag), `exp_cbq.py` (CatBoost MultiQuantile), `exp_direct.py` (direct log-link MAE), `calib_nested.py`, `mix_whale.py`, `exp_nnq.py` (from-scratch NN),
-`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `blend_nested.py` (nested weight blending), `tune_cb.py` (Optuna), `insample.py`, `exp_denoise.py` (noise removal), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
+`avg_q.py` (bagging + hurdle), `exp_clf.py` (alt. classifiers), `blend_nested.py` (nested weight blending), `tune_cb.py` (Optuna), `insample.py`, `exp_denoise.py` (noise removal), `exp_unsup.py` (unsupervised outliers / dimensions), `postproc.py` (nested post-processing), `stack_lad.py` (nested LAD blend via LP), `write_best.py`, `queue*.sh` (the exact run order used), `run_all.sh`.
 OOF/test arrays are written to `oof/` (git-ignored, regenerate with the scripts); data cache in `cache/` (git-ignored).

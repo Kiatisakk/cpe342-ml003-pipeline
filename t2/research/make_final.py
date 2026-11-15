@@ -1,0 +1,60 @@
+"""Write the deliverables.
+Feature-only (rule-safe, no player_id):  best_oof_proba.npy, best_test_proba.npy, t2_best_test.csv
+   = E14 g2+EM: per-feature (nbins, sigma) chosen by 4-fold CV univariate-posterior log-loss on ALL train rows
+     (grid bins {64,128,256} x sigma {3,4,6,8,12}), then label-noise-aware EM Naive Bayes (e06) refit on all train rows.
+     OOF = seed-42 nested OOF of the same recipe (P(observed label | x)).
+ID-leak variant (see REPORT.md, team decision): idleak_oof_proba.npy, idleak_test_proba.npy, t2_idleak_test.csv
+   = player_id block rule with NB tie-break inside the (tiny) boundary gaps, cut points fitted on all train rows.
+usage: python t2/research/make_final.py"""
+import sys; sys.argv = sys.argv[:1] + ['15', 'opt', 'em', '1.0']
+sys.path.insert(0, 't2/research')
+from runner import *
+import e06_emnb as E
+import e10_idblock as I
+
+ids = [f'ANS{i:05d}' for i in range(1, NT + 1)]
+
+# ---- feature-only best: LL-selected densities + EM-NB, refit on all train
+a = np.arange(N)
+GNB, GSM = [64, 128, 256], [3.0, 4.0, 6.0, 8.0, 12.0]
+inner = list(StratifiedKFold(4, shuffle=True, random_state=0).split(a, y))
+cfg = {}
+for c in CONT:
+    best = None
+    for nb_ in GNB:
+        for sm in GSM:
+            ll = 0
+            for ia, ib in inner:
+                L = loglik_block(c, ia, nb_, sm, 1.0)[0][ib] + logprior(ia)
+                ll += np.mean(np.log(softmax(L)[np.arange(len(ib)), y[ib]]))
+            if best is None or ll > best[0]: best = (ll, nb_, sm)
+    cfg[c] = best[1:]
+json.dump({c: list(v) for c, v in cfg.items()}, open(f'{OUT}/best_cfg.json', 'w'), indent=1)
+print('selected cfg:', cfg)
+B = E.binned(a, cfg); tabs, pi, eps = E.fit(a, B)
+M = np.full((K, K), eps / 3); np.fill_diagonal(M, 1 - eps)
+Pte = softmax(E.loglik(B, tabs, test=True) + np.log(pi)) @ M
+oof = load('nb_llsel_g2_em1')[0][0]
+print('EM-NB eps(full train) =', round(eps, 4), '| seed-42 OOF F1', round(f1m(y, oof), 4))
+np.save(f'{OUT}/best_oof_proba.npy', oof.astype(np.float32)); np.save(f'{OUT}/best_test_proba.npy', Pte.astype(np.float32))
+pd.DataFrame({'id': ids, 'pred': Pte.argmax(1)}).to_csv(f'{OUT}/t2_best_test.csv', index=False, lineterminator='\n')
+
+# agreement with the existing submission file
+old = pd.read_csv('t2/preds/t2_nb.csv')
+print('agreement with t2/preds/t2_nb.csv:', round((old.pred.values == Pte.argmax(1)).mean(), 4))
+print('test class share:', np.bincount(Pte.argmax(1), minlength=K) / NT)
+
+# ---- ID-leak variant
+S_te_full = E.loglik(B, tabs, test=True) + np.log(pi)          # NB scores for gap tie-breaks
+cs, gaps = I.cuts(a)
+blk = np.digitize(I.IDT, cs); P = np.full((NT, K), 0.01); P[np.arange(NT), blk] = 0.97
+ng = 0
+for k, (lo, hi) in enumerate(gaps):
+    g = (I.IDT > lo) & (I.IDT < hi); ng += g.sum()
+    if g.any():
+        s2 = softmax(S_te_full[g][:, [k, k + 1]]); P[g] = 0.01; P[g, k] = 0.01 + 0.96 * s2[:, 0]; P[g, k + 1] = 0.01 + 0.96 * s2[:, 1]
+print('ID cuts', cs, 'test rows inside gaps:', ng)
+np.save(f'{OUT}/idleak_oof_proba.npy', load('idblock')[0][0]); np.save(f'{OUT}/idleak_test_proba.npy', P.astype(np.float32))
+pd.DataFrame({'id': ids, 'pred': P.argmax(1)}).to_csv(f'{OUT}/t2_idleak_test.csv', index=False, lineterminator='\n')
+print('ID-leak vs feature-only test agreement:', round((P.argmax(1) == Pte.argmax(1)).mean(), 4),
+      '(expected ~ NB accuracy vs true class 0.79)')

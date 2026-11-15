@@ -13,8 +13,8 @@ IMAGE DATA:
 
 1. id (object)
    Unique identifier linking to image files
-   File mapping: train.csv → tasks/04_image_classification/data/train/{id}.jpg
-                test.csv  → tasks/04_image_classification/data/test/{id}.jpg
+   File mapping: train.csv → task4/train/{id}.jpg
+                test.csv → task4/test/{id}.jpg
 
 2. Image Files (RGB array)
    Gameplay screenshot images from live streams, player submissions, community forums and support tickets.

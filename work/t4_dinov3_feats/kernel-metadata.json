@@ -1,0 +1,23 @@
+{
+ "id": "kiatisakkk/task4-5fold-ensemble",
+ "title": "task4-5fold-ensemble",
+ "code_file": "task4-5fold-ensemble.py",
+ "language": "python",
+ "kernel_type": "script",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_tpu": false,
+ "enable_internet": true,
+ "keywords": [
+  "gpu"
+ ],
+ "dataset_sources": [
+  "kiatisakkk/task4-image-classification"
+ ],
+ "kernel_sources": [],
+ "competition_sources": [
+  "player-intelligence-system-cpe-342-ml"
+ ],
+ "model_sources": [],
+ "machine_shape": "NvidiaTeslaT4"
+}

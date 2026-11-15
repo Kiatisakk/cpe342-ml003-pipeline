@@ -1,0 +1,15 @@
+{
+  "id": "kiatisakkk/task4-v4-eva02s-coloraug",
+  "title": "task4-v4-eva02s-coloraug",
+  "code_file": "task4_v4_eva02s_coloraug.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": ["kiatisakkk/task4-image-classification"],
+  "competition_sources": ["player-intelligence-system-cpe-342-ml"],
+  "kernel_sources": [],
+  "model_sources": []
+}

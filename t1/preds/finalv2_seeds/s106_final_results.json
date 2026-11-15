@@ -1,0 +1,45 @@
+{
+ "recipe": {
+  "NC": 4,
+  "RATE": 1.0,
+  "LR": 0.02,
+  "N_BAG": 3
+ },
+ "summary_mean_sd": {
+  "auc": [
+   0.89468,
+   0.0001
+  ],
+  "f2m": [
+   0.78289,
+   0.00028
+  ],
+  "f2m_nested": [
+   0.78253,
+   0.00047
+  ],
+  "f2b": [
+   0.83933,
+   0.00021
+  ],
+  "f2b_nested": [
+   0.83876,
+   0.00017
+  ]
+ },
+ "macro": {
+  "threshold_prob": 0.38704,
+  "oof_pos_rate": 0.4065,
+  "test_pos_rate": 0.4065,
+  "test_pos_rate_if_prob_cut": 0.4069,
+  "oof_score_seed42": 0.7825
+ },
+ "binary": {
+  "threshold_prob": 0.18585,
+  "oof_pos_rate": 0.6328,
+  "test_pos_rate": 0.6329,
+  "test_pos_rate_if_prob_cut": 0.6026,
+  "oof_score_seed42": 0.83923
+ },
+ "time": "30.7m"
+}

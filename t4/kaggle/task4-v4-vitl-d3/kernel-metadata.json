@@ -1,0 +1,19 @@
+{
+ "id": "kiatisakkk/task4-v4-vitl-d3",
+ "title": "task4-v4-vitl-d3",
+ "code_file": "task4_v4_vitl_d3.py",
+ "language": "python",
+ "kernel_type": "script",
+ "is_private": true,
+ "enable_gpu": false,
+ "enable_tpu": false,
+ "enable_internet": true,
+ "dataset_sources": [
+  "kiatisakkk/task4-image-classification"
+ ],
+ "competition_sources": [
+  "player-intelligence-system-cpe-342-ml"
+ ],
+ "kernel_sources": [],
+ "model_sources": []
+}

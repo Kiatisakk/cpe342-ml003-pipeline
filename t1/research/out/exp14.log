@@ -1,0 +1,13 @@
+  fold 0 knn100 auc 0.7952
+  fold 1 knn100 auc 0.7972
+  fold 2 knn100 auc 0.7929
+  fold 3 knn100 auc 0.7915
+  fold 4 knn100 auc 0.7952
+{"name": "exp14 lgb fe_v2 + nested OOF kNN rates (k 25/100/400) [seed 42]", "auc": 0.89261, "f2m": 0.78036, "f2m_nested": 0.77991, "f2b": 0.83801, "f2b_nested": 0.83787, "pos_rate_m": 0.4225, "pos_rate_b": 0.6458, "time": "13.8m"}
+  fold 0 knn100 auc 0.7957
+  fold 1 knn100 auc 0.7958
+  fold 2 knn100 auc 0.7965
+  fold 3 knn100 auc 0.7907
+  fold 4 knn100 auc 0.7947
+{"name": "exp14 lgb fe_v2 + nested OOF kNN rates (k 25/100/400) [seed 7]", "auc": 0.89238, "f2m": 0.77966, "f2m_nested": 0.77945, "f2b": 0.83825, "f2b_nested": 0.83819, "pos_rate_m": 0.42, "pos_rate_b": 0.6377, "time": "13.6m"}
+  fold 0 knn100 auc 0.7951

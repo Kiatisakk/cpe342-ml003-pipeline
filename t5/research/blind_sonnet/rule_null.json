@@ -1,0 +1,152 @@
+{
+ "real": {
+  "takeover_A_vpn_geo3_purchase": 207,
+  "takeover_B_pwchange_geo4_play": 310,
+  "perf_spike_C": 310,
+  "bot_lowvariance": 207,
+  "low_comm": 237,
+  "low_activity": 266,
+  "low_behavior_stability": 274
+ },
+ "colshuffle": [
+  {
+   "takeover_A_vpn_geo3_purchase": 23840,
+   "takeover_B_pwchange_geo4_play": 1393,
+   "perf_spike_C": 4876,
+   "bot_lowvariance": 25,
+   "low_comm": 4,
+   "low_activity": 6,
+   "low_behavior_stability": 274
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 23854,
+   "takeover_B_pwchange_geo4_play": 1367,
+   "perf_spike_C": 4967,
+   "bot_lowvariance": 35,
+   "low_comm": 1,
+   "low_activity": 9,
+   "low_behavior_stability": 274
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 23816,
+   "takeover_B_pwchange_geo4_play": 1392,
+   "perf_spike_C": 4992,
+   "bot_lowvariance": 26,
+   "low_comm": 1,
+   "low_activity": 3,
+   "low_behavior_stability": 274
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 23817,
+   "takeover_B_pwchange_geo4_play": 1408,
+   "perf_spike_C": 4936,
+   "bot_lowvariance": 31,
+   "low_comm": 4,
+   "low_activity": 7,
+   "low_behavior_stability": 274
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 23840,
+   "takeover_B_pwchange_geo4_play": 1371,
+   "perf_spike_C": 5008,
+   "bot_lowvariance": 32,
+   "low_comm": 2,
+   "low_activity": 0,
+   "low_behavior_stability": 274
+  }
+ ],
+ "blockshuffle": [
+  {
+   "takeover_A_vpn_geo3_purchase": 191,
+   "takeover_B_pwchange_geo4_play": 583,
+   "perf_spike_C": 588,
+   "bot_lowvariance": 818,
+   "low_comm": 237,
+   "low_activity": 266,
+   "low_behavior_stability": 274
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 195,
+   "takeover_B_pwchange_geo4_play": 579,
+   "perf_spike_C": 586,
+   "bot_lowvariance": 819,
+   "low_comm": 237,
+   "low_activity": 266,
+   "low_behavior_stability": 274
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 195,
+   "takeover_B_pwchange_geo4_play": 587,
+   "perf_spike_C": 589,
+   "bot_lowvariance": 813,
+   "low_comm": 237,
+   "low_activity": 266,
+   "low_behavior_stability": 274
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 191,
+   "takeover_B_pwchange_geo4_play": 581,
+   "perf_spike_C": 589,
+   "bot_lowvariance": 814,
+   "low_comm": 237,
+   "low_activity": 266,
+   "low_behavior_stability": 274
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 197,
+   "takeover_B_pwchange_geo4_play": 576,
+   "perf_spike_C": 588,
+   "bot_lowvariance": 819,
+   "low_comm": 237,
+   "low_activity": 266,
+   "low_behavior_stability": 274
+  }
+ ],
+ "half_x2": [
+  {
+   "takeover_A_vpn_geo3_purchase": 208,
+   "takeover_B_pwchange_geo4_play": 312,
+   "perf_spike_C": 310,
+   "bot_lowvariance": 220,
+   "low_comm": 242,
+   "low_activity": 280,
+   "low_behavior_stability": 278
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 204,
+   "takeover_B_pwchange_geo4_play": 322,
+   "perf_spike_C": 280,
+   "bot_lowvariance": 208,
+   "low_comm": 242,
+   "low_activity": 286,
+   "low_behavior_stability": 286
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 220,
+   "takeover_B_pwchange_geo4_play": 290,
+   "perf_spike_C": 296,
+   "bot_lowvariance": 188,
+   "low_comm": 238,
+   "low_activity": 266,
+   "low_behavior_stability": 276
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 202,
+   "takeover_B_pwchange_geo4_play": 322,
+   "perf_spike_C": 330,
+   "bot_lowvariance": 214,
+   "low_comm": 232,
+   "low_activity": 280,
+   "low_behavior_stability": 268
+  },
+  {
+   "takeover_A_vpn_geo3_purchase": 210,
+   "takeover_B_pwchange_geo4_play": 314,
+   "perf_spike_C": 306,
+   "bot_lowvariance": 222,
+   "low_comm": 246,
+   "low_activity": 250,
+   "low_behavior_stability": 294
+  }
+ ]
+}

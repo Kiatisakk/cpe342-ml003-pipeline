@@ -1,0 +1,30 @@
+[lgb] trial 0 AUC 0.89165 | best 0.89165 | 0.2m
+[lgb] trial 10 AUC 0.89094 | best 0.89165 | 1.9m
+[lgb] trial 20 AUC 0.89146 | best 0.89199 | 3.6m
+[lgb] trial 30 AUC 0.89177 | best 0.89199 | 4.9m
+[lgb] trial 40 AUC 0.89193 | best 0.89202 | 5.9m
+[lgb] trial 50 AUC 0.89171 | best 0.89205 | 6.9m
+[lgb] trial 60 AUC 0.89198 | best 0.89221 | 7.7m
+[lgb] trial 70 AUC 0.89198 | best 0.89221 | 8.6m
+[lgb] trial 80 AUC 0.89165 | best 0.89221 | 9.5m
+[lgb] trial 90 AUC 0.89176 | best 0.89221 | 10.4m
+[lgb] trial 100 AUC 0.89207 | best 0.89221 | 11.3m
+[lgb] trial 110 AUC 0.89206 | best 0.89231 | 12.1m
+[lgb] tuning done 12.8m: baseline-params trial 0.89165, best 0.89231
+{"name": "exp20 lgb baseline lr0.05 [seed 42]", "auc": 0.89304, "f2m": 0.78088, "f2m_nested": 0.78041, "f2b": 0.83866, "f2b_nested": 0.83814, "pos_rate_m": 0.4125, "pos_rate_b": 0.6323, "time": "0.3m"}
+{"name": "exp20 lgb baseline lr0.05 [seed 7]", "auc": 0.89302, "f2m": 0.7811, "f2m_nested": 0.78109, "f2b": 0.83839, "f2b_nested": 0.83765, "pos_rate_m": 0.4125, "pos_rate_b": 0.6404, "time": "0.4m"}
+{"name": "exp20 lgb baseline lr0.05 [seed 2024]", "auc": 0.8934, "f2m": 0.78187, "f2m_nested": 0.78174, "f2b": 0.83814, "f2b_nested": 0.83815, "pos_rate_m": 0.395, "pos_rate_b": 0.6215, "time": "0.3m"}
+AGG {"name": "exp20 lgb baseline lr0.05", "seeds": [42, 7, 2024], "auc": 0.89315, "auc_sd": 0.00021, "f2m": 0.78128, "f2m_sd": 0.00052, "f2m_nested": 0.78108, "f2m_nested_sd": 0.00067, "f2b": 0.8384, "f2b_sd": 0.00026, "f2b_nested": 0.83798, "f2b_nested_sd": 0.00029, "tune_auc": null}
+{"name": "exp20 lgb top1(t108) lr0.05 [seed 42]", "auc": 0.89269, "f2m": 0.78059, "f2m_nested": 0.78014, "f2b": 0.83898, "f2b_nested": 0.83866, "pos_rate_m": 0.4075, "pos_rate_b": 0.6404, "time": "0.3m"}
+{"name": "exp20 lgb top1(t108) lr0.05 [seed 7]", "auc": 0.8927, "f2m": 0.7812, "f2m_nested": 0.78068, "f2b": 0.83882, "f2b_nested": 0.83867, "pos_rate_m": 0.405, "pos_rate_b": 0.6377, "time": "0.3m"}
+{"name": "exp20 lgb top1(t108) lr0.05 [seed 2024]", "auc": 0.89299, "f2m": 0.78049, "f2m_nested": 0.77934, "f2b": 0.83852, "f2b_nested": 0.83847, "pos_rate_m": 0.4025, "pos_rate_b": 0.6215, "time": "0.3m"}
+AGG {"name": "exp20 lgb top1(t108) lr0.05", "seeds": [42, 7, 2024], "auc": 0.89279, "auc_sd": 0.00017, "f2m": 0.78076, "f2m_sd": 0.00038, "f2m_nested": 0.78005, "f2m_nested_sd": 0.00067, "f2b": 0.83877, "f2b_sd": 0.00023, "f2b_nested": 0.8386, "f2b_nested_sd": 0.00011, "tune_auc": 0.89231}
+{"name": "exp20 lgb top2(t118) lr0.05 [seed 42]", "auc": 0.89248, "f2m": 0.78055, "f2m_nested": 0.78032, "f2b": 0.83915, "f2b_nested": 0.83887, "pos_rate_m": 0.415, "pos_rate_b": 0.635, "time": "0.3m"}
+{"name": "exp20 lgb top2(t118) lr0.05 [seed 7]", "auc": 0.89285, "f2m": 0.7805, "f2m_nested": 0.77981, "f2b": 0.83861, "f2b_nested": 0.83856, "pos_rate_m": 0.405, "pos_rate_b": 0.6296, "time": "0.3m"}
+{"name": "exp20 lgb top2(t118) lr0.05 [seed 2024]", "auc": 0.89295, "f2m": 0.78108, "f2m_nested": 0.78054, "f2b": 0.83806, "f2b_nested": 0.83752, "pos_rate_m": 0.4, "pos_rate_b": 0.6377, "time": "0.3m"}
+AGG {"name": "exp20 lgb top2(t118) lr0.05", "seeds": [42, 7, 2024], "auc": 0.89276, "auc_sd": 0.00025, "f2m": 0.78071, "f2m_sd": 0.00032, "f2m_nested": 0.78022, "f2m_nested_sd": 0.00037, "f2b": 0.83861, "f2b_sd": 0.00055, "f2b_nested": 0.83832, "f2b_nested_sd": 0.00071, "tune_auc": 0.8923}
+{"name": "exp20 lgb top3(t113) lr0.05 [seed 42]", "auc": 0.89236, "f2m": 0.78024, "f2m_nested": 0.78004, "f2b": 0.8386, "f2b_nested": 0.83841, "pos_rate_m": 0.3975, "pos_rate_b": 0.6323, "time": "0.4m"}
+{"name": "exp20 lgb top3(t113) lr0.05 [seed 7]", "auc": 0.89252, "f2m": 0.78001, "f2m_nested": 0.77846, "f2b": 0.83844, "f2b_nested": 0.83849, "pos_rate_m": 0.4075, "pos_rate_b": 0.6404, "time": "0.4m"}
+{"name": "exp20 lgb top3(t113) lr0.05 [seed 2024]", "auc": 0.89286, "f2m": 0.78116, "f2m_nested": 0.78044, "f2b": 0.8382, "f2b_nested": 0.83817, "pos_rate_m": 0.42, "pos_rate_b": 0.6485, "time": "0.3m"}
+AGG {"name": "exp20 lgb top3(t113) lr0.05", "seeds": [42, 7, 2024], "auc": 0.89258, "auc_sd": 0.00026, "f2m": 0.78047, "f2m_sd": 0.00061, "f2m_nested": 0.77965, "f2m_nested_sd": 0.00105, "f2b": 0.83841, "f2b_sd": 0.0002, "f2b_nested": 0.83836, "f2b_nested_sd": 0.00017, "tune_auc": 0.89223}
+done 16.8m

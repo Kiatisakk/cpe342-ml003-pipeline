@@ -1,0 +1,8 @@
+{"name": "exp16 lgb fe_v2 + MCAR mask augmentation (NC2_rate1.0_w1.0_lr0.05) [seed 42]", "auc": 0.89355, "f2m": 0.78192, "f2m_nested": 0.78125, "f2b": 0.83888, "f2b_nested": 0.83872, "pos_rate_m": 0.4025, "pos_rate_b": 0.635, "time": "1.4m"}
+{"name": "exp16 lgb fe_v2 + MCAR mask augmentation (NC2_rate1.0_w1.0_lr0.05) [seed 7]", "auc": 0.89394, "f2m": 0.78254, "f2m_nested": 0.78255, "f2b": 0.83869, "f2b_nested": 0.83848, "pos_rate_m": 0.42, "pos_rate_b": 0.6242, "time": "1.4m"}
+{"name": "exp16 lgb fe_v2 + MCAR mask augmentation (NC2_rate1.0_w1.0_lr0.05) [seed 2024]", "auc": 0.89379, "f2m": 0.78169, "f2m_nested": 0.78052, "f2b": 0.83871, "f2b_nested": 0.83776, "pos_rate_m": 0.415, "pos_rate_b": 0.6269, "time": "1.3m"}
+AGG {"name": "exp16 lgb fe_v2 + MCAR mask augmentation (NC2_rate1.0_w1.0_lr0.05)", "seeds": [42, 7, 2024], "auc": 0.89376, "auc_sd": 0.0002, "f2m": 0.78205, "f2m_sd": 0.00044, "f2m_nested": 0.78144, "f2m_nested_sd": 0.00103, "f2b": 0.83876, "f2b_sd": 0.0001, "f2b_nested": 0.83832, "f2b_nested_sd": 0.0005}
+reports_received AUC on rows missing it (seed42): 0.8544
+friend_network_size AUC on rows missing it (seed42): 0.8568
+account_age_days AUC on rows missing it (seed42): 0.8587
+crosshair_placement AUC on rows missing it (seed42): 0.8628

@@ -1,0 +1,19 @@
+{
+ "id": "kiatisakkk/task4-wiseft-cnxts",
+ "title": "task4-wiseft-cnxts",
+ "code_file": "task4_wiseft_cnxts.py",
+ "language": "python",
+ "kernel_type": "script",
+ "is_private": true,
+ "enable_gpu": true,
+ "enable_tpu": false,
+ "enable_internet": true,
+ "dataset_sources": [
+  "kiatisakkk/task4-image-classification"
+ ],
+ "competition_sources": [
+  "player-intelligence-system-cpe-342-ml"
+ ],
+ "kernel_sources": [],
+ "model_sources": []
+}

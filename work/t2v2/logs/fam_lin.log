@@ -1,0 +1,3 @@
+RESULT lda_A 0.7337 +- 0.0043  64s
+RESULT qda_A 0.6754 +- 0.0018  22s
+RESULT logreg_spline_A 0.7547 +- 0.0021  1368s

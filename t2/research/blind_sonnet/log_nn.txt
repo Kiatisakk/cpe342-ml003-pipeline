@@ -1,0 +1,1 @@
+RESULT mlp_torch_A 0.7511 +- 0.0030  129s

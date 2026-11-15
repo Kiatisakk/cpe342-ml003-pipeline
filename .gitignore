@@ -2,17 +2,28 @@
 kaggle.json
 *.env
 .env*
-# not needed for T1-T3 research
+# large / regenerable
 cpe342-kaggle-main/04_image_classification/train/
 cpe342-kaggle-main/04_image_classification/test/
-task4/preds/
-masking/probes/
-masking/tmlp_work/
+t4/preds/v3a/
+t5/probes/
+t5/preds/tmlp_work/
+shared/cache/
+# T4 frozen backbone features (9 GB, regenerable: kaggle kernels output <slug> -p t4/preds/<dir>)
+t4/preds/frozen_*/
+t4/preds/dinov3_feats/
+# raw data copies and downloads (get from Kaggle instead)
+data_v2/
+data_v1_backup/
+*.zip
 submissions/**/*.csv
-!submissions/probes_t5/t5_groups.csv
-t123/work/
+!submissions/probes/probes_t5/t5_groups.csv
 **/catboost_info/
 __pycache__/
 *.pyc
 .claude/
-research_in/
+t*/research/blind_sonnet/*.npy
+# raw per-seed outputs (regenerable from Kaggle kernels; final blends are kept)
+t3/preds/seedbag10/
+t3/preds/cbd3_bag/
+work/t2v2/blind/data/

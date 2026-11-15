@@ -1,0 +1,17 @@
+variant  n_eff  p>0.1  p>0.5  p>0.9  ambiguous(0.1-0.9)  expTP@0.1
+M3      237.2    294    251    155        139          234.3
+M4      228.6    273    234    177         96          226.4
+M6      215.1    253    224    163         90          212.9
+ENS     227.0    285    234    156        129          224.6
+
+Held-out calibration (frac = share of true cluster rows in the band, from a feature the model did not use)
+M3: core n=64
+   band (0.02,0.1] n=  48 mean posterior 0.05 | performance_stability~vol  0.12±0.11  accuracy_std~vol -0.25±0.21  behavior_stability -0.08±3.25
+   band (0.1,0.5] n=  43 mean posterior 0.26 | performance_stability~vol  0.12±0.12  accuracy_std~vol -0.29±0.19  behavior_stability  4.04±3.27
+   band (0.5,0.9] n=  96 mean posterior 0.77 | performance_stability~vol  1.01±0.10  accuracy_std~vol  1.23±0.18  behavior_stability  6.25±2.50
+   band (0.9,0.97] n=  91 mean posterior 0.94 | performance_stability~vol  1.01±0.07  accuracy_std~vol  1.04±0.18  behavior_stability -3.06±2.30
+M4: core n=117
+   band (0.02,0.1] n=  37 mean posterior 0.04 | accuracy_std~vol -0.42±0.21  behavior_stability -1.56±2.34
+   band (0.1,0.5] n=  39 mean posterior 0.27 | accuracy_std~vol  0.38±0.28  behavior_stability -3.59±2.39
+   band (0.5,0.9] n=  57 mean posterior 0.76 | accuracy_std~vol  0.98±0.20  behavior_stability -2.56±1.96
+   band (0.9,0.97] n=  60 mean posterior 0.94 | accuracy_std~vol  1.06±0.18  behavior_stability -2.06±1.96

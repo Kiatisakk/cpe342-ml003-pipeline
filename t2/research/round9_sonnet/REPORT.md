@@ -1,0 +1,7 @@
+# T2 round 9: id-block leak analysis (scripts a1..a4.py in this folder)
+- Block cuts verified exactly: 52000 / 84500 / 110500 are the unique (or tied-best) max-accuracy cuts; gain falls on both sides. No sub-blocks, no extra structure.
+- 3,117 / 104,000 train rows (3.00%) disagree with the block rule. Rate per block 3.1/2.9/2.8/2.9%; destinations uniform over the 3 other classes; no dependence on distance to boundary, id parity/mod, neighbouring mismatches (P(next mm|mm)=0.0298 = base), or any categorical/NaN rate.
+- Their features follow the BLOCK label, not the stated one (OOF NB: mean P(block)=0.69 vs P(stated)=0.10; argmax=block 78% vs stated 7%, same as clean rows 79%). So the stated label is pure random noise injected after the features: unpredictable.
+- Combined block prior + NB likelihood: NB never exceeds odds ~100:1, so the combined argmax equals the block rule 100% of the time (acc 0.9700, F1m 0.9677). Overriding the block when NB odds > T: T=5..80 all worse (0.915..0.9677); T>=160 identical. Class-wise tweaks cannot help since no override is ever right often enough.
+- Ceiling ~ 0.97 (1 - noise rate); F1 sd on a 25.9k subsample is ~0.0011, so the rival's edge is test-label noise luck or tiny differences, not a modelling gain.
+- Nothing beats 0.9677 by >0.002 in CV -> no new prediction file. Use t2/research/t2_idleak_test.csv (verified = pure block rule on test ids, 25,889 rows).

@@ -1,0 +1,22 @@
+zone rows 31055 (34.2%), core rows 59761; core cheater rate 0.419
+now: AUC 0.8948 | core AUC 0.7733 | F2m 0.7831 | binF2 0.8395
+
+(1) score improvement needed (logit + eps * label signal):
+  eps 0.00: AUC 0.8948 core AUC 0.7733 F2m 0.7831 binF2 0.8395
+  eps 0.05: AUC 0.9065 core AUC 0.7986 F2m 0.7996 binF2 0.8441
+  eps 0.10: AUC 0.9173 core AUC 0.8216 F2m 0.8162 binF2 0.8488
+  eps 0.15: AUC 0.9263 core AUC 0.8411 F2m 0.8292 binF2 0.8548
+  eps 0.20: AUC 0.9342 core AUC 0.8582 F2m 0.8408 binF2 0.8615
+  eps 0.30: AUC 0.9471 core AUC 0.8859 F2m 0.8618 binF2 0.8741
+  eps 0.40: AUC 0.9572 core AUC 0.9078 F2m 0.8786 binF2 0.8871
+  eps 0.50: AUC 0.9644 core AUC 0.9232 F2m 0.8892 binF2 0.8971
+
+(2) learning curve:
+  frac 0.10 (n_train ~7265): nested F2m 0.7625 +- 0.0061 | AUC 0.8705
+  frac 0.20 (n_train ~14530): nested F2m 0.7725 +- 0.0007 | AUC 0.8851
+  frac 0.35 (n_train ~25428): nested F2m 0.7767 +- 0.0003 | AUC 0.8894
+  frac 0.50 (n_train ~36326): nested F2m 0.7787 +- 0.0001 | AUC 0.8911
+  frac 0.70 (n_train ~50856): nested F2m 0.7796 +- 0.0007 | AUC 0.8921
+  frac 1.00 (n_train ~72652): nested F2m 0.7811 +- 0.0007 | AUC 0.8932
+  power-law F2m: s_inf 0.7833 | at 2x data 0.7820 | at 10x data 0.7830
+  power-law AUC: s_inf 0.8939 | at 2x data 0.8935 | at 10x data 0.8938

@@ -1,0 +1,10 @@
+seed 42 done 8.6m
+seed 7 done 17.3m
+seed 2024 done 25.8m
+{"name": "final_v2 (NC4 rate1.0 lr0.02 bag3) [seed 42]", "auc": 0.89446, "f2m": 0.78243, "f2m_nested": 0.78186, "f2b": 0.83955, "f2b_nested": 0.83922, "pos_rate_m": 0.4175, "pos_rate_b": 0.6323}
+{"name": "final_v2 (NC4 rate1.0 lr0.02 bag3) [seed 7]", "auc": 0.89455, "f2m": 0.78222, "f2m_nested": 0.78165, "f2b": 0.83945, "f2b_nested": 0.83929, "pos_rate_m": 0.3925, "pos_rate_b": 0.635}
+{"name": "final_v2 (NC4 rate1.0 lr0.02 bag3) [seed 2024]", "auc": 0.89457, "f2m": 0.78289, "f2m_nested": 0.78253, "f2b": 0.83915, "f2b_nested": 0.83881, "pos_rate_m": 0.405, "pos_rate_b": 0.6296}
+AGG {"auc": [0.89453, 6e-05], "f2m": [0.78251, 0.00034], "f2m_nested": [0.78201, 0.00046], "f2b": [0.83938, 0.00021], "f2b_nested": [0.83911, 0.00026]}
+macro {'threshold_prob': 0.3882, 'oof_pos_rate': 0.405, 'test_pos_rate': 0.405, 'test_pos_rate_if_prob_cut': 0.4059, 'oof_score_seed42': 0.78243}
+binary {'threshold_prob': 0.18627, 'oof_pos_rate': 0.6323, 'test_pos_rate': 0.6323, 'test_pos_rate_if_prob_cut': 0.6022, 'oof_score_seed42': 0.83955}
+done 25.8m - nothing submitted

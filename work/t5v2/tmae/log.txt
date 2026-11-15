@@ -1,0 +1,23 @@
+C:\Users\kiati\Documents\Kaggle-ML\t5\code\task5_tmae.py:29: RuntimeWarning: Mean of empty slice
+  hl = np.nanmean(lat[:, :2], 1, keepdims=True)
+C:\Users\kiati\Documents\Kaggle-ML\t5\code\task5_tmae.py:30: RuntimeWarning: Mean of empty slice
+  hn = np.degrees(np.arctan2(np.nanmean(np.sin(np.radians(lon[:, :2])), 1), np.nanmean(np.cos(np.radians(lon[:, :2])), 1)))[:, None]
+rows 25889 | metrics 27 | token feats 31 | static 6
+C:\Users\kiati\Documents\Kaggle-ML\t5\code\task5_tmae.py:49: UserWarning: enable_nested_tensor is True, but self.use_nested_tensor is False because encoder_layer.norm_first was True
+  s.enc = nn.TransformerEncoder(nn.TransformerEncoderLayer(D, 4, 4 * D, 0.1, batch_first=True, norm_first=True), 3)
+ep 0: loss 0.5354 (16s)
+ep 10: loss 0.2628 (218s)
+ep 20: loss 0.2487 (426s)
+ep 30: loss 0.2405 (622s)
+ep 40: loss 0.2332 (842s)
+ep 50: loss 0.2302 (1041s)
+ep 59: loss 0.2299 (1219s)
+C:\Users\kiati\Documents\Kaggle-ML\t5\code\task5_tmae.py:114: Pandas4Warning: Starting with pandas version 4.0 all arguments of sum will be keyword-only.
+  U = (Gp[["rule", "bot", "lowact", "lowcomm", "lowstab"]].sum(1) > 0).values
+
+recall of known groups inside TMAE top-N (no labels used in training):
+  top 1000: rule 229/827 | bot 4/207 | lowact 3/265 | lowcomm 7/263 | lowstab 10/246
+  top 1811: rule 234/827 | bot 10/207 | lowact 13/265 | lowcomm 16/263 | lowstab 13/246
+  top 2500: rule 271/827 | bot 18/207 | lowact 25/265 | lowcomm 30/263 | lowstab 22/246
+  AUC vs union-1811 proxy: 0.6715 | vs rule-827: 0.8239
+wrote work/t5v2/tmae | 1383s

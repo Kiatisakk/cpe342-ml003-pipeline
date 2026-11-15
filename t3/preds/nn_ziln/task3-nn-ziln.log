@@ -1,0 +1,44 @@
+[{"stream_name":"stdout","time":23.809037912,"data":"torch 2.11.0+cu130 | device cuda\n"}
+,{"stream_name":"stdout","time":25.082584155,"data":"(104000, 34) (25889, 33)\n"}
+,{"stream_name":"stdout","time":37.33866282,"data":"NN input: 28 numeric (PLR) + 73 one-hot + 27 NaN-flags\n"}
+,{"stream_name":"stdout","time":65.761278462,"data":"K=1 fold 0 seed 0: val loss 0.4547 | epochs 32 | 28s\n"}
+,{"stream_name":"stdout","time":82.434885186,"data":"K=1 fold 0 seed 1: val loss 0.4801 | epochs 29 | 45s\n"}
+,{"stream_name":"stdout","time":106.636452528,"data":"K=1 fold 1 seed 0: val loss 0.4511 | epochs 41 | 69s\n"}
+,{"stream_name":"stdout","time":122.687165052,"data":"K=1 fold 1 seed 1: val loss 0.4566 | epochs 27 | 85s\n"}
+,{"stream_name":"stdout","time":140.490767611,"data":"K=1 fold 2 seed 0: val loss 0.4572 | epochs 30 | 103s\n"}
+,{"stream_name":"stdout","time":158.921916781,"data":"K=1 fold 2 seed 1: val loss 0.4557 | epochs 31 | 122s\n"}
+,{"stream_name":"stdout","time":173.672063713,"data":"K=1 fold 3 seed 0: val loss 0.4949 | epochs 25 | 136s\n"}
+,{"stream_name":"stdout","time":194.863803311,"data":"K=1 fold 3 seed 1: val loss 0.4796 | epochs 36 | 157s\n"}
+,{"stream_name":"stdout","time":210.894386022,"data":"K=1 fold 4 seed 0: val loss 0.4391 | epochs 27 | 173s\n"}
+,{"stream_name":"stdout","time":233.91394986,"data":"K=1 fold 4 seed 1: val loss 0.4327 | epochs 39 | 196s\n"}
+,{"stream_name":"stdout","time":290.832575415,"data":"K=1: theory 0.7864 | tuned 0.7867 (shift, kappa)=[-0.025  1.   ] | p logloss 0.5562\n"}
+,{"stream_name":"stdout","time":317.019395799,"data":"K=3 fold 0 seed 0: val loss 0.3721 | epochs 44 | 26s\n"}
+,{"stream_name":"stdout","time":343.10640938,"data":"K=3 fold 0 seed 1: val loss 0.3760 | epochs 44 | 52s\n"}
+,{"stream_name":"stdout","time":368.500584865,"data":"K=3 fold 1 seed 0: val loss 0.3759 | epochs 43 | 78s\n"}
+,{"stream_name":"stdout","time":399.77639121,"data":"K=3 fold 1 seed 1: val loss 0.3726 | epochs 54 | 109s\n"}
+,{"stream_name":"stdout","time":419.264133525,"data":"K=3 fold 2 seed 0: val loss 0.3834 | epochs 33 | 128s\n"}
+,{"stream_name":"stdout","time":444.725680298,"data":"K=3 fold 2 seed 1: val loss 0.3714 | epochs 43 | 154s\n"}
+,{"stream_name":"stdout","time":460.206134744,"data":"K=3 fold 3 seed 0: val loss 0.4052 | epochs 26 | 169s\n"}
+,{"stream_name":"stdout","time":487.866042229,"data":"K=3 fold 3 seed 1: val loss 0.3725 | epochs 47 | 197s\n"}
+,{"stream_name":"stdout","time":509.213798806,"data":"K=3 fold 4 seed 0: val loss 0.3734 | epochs 36 | 218s\n"}
+,{"stream_name":"stdout","time":536.995048782,"data":"K=3 fold 4 seed 1: val loss 0.3616 | epochs 47 | 246s\n"}
+,{"stream_name":"stdout","time":672.815708699,"data":"K=3: theory 0.7901 | tuned 0.7901 (shift, kappa)=[0.05  0.975] | p logloss 0.5563\n"}
+,{"stream_name":"stdout","time":672.884492641,"data":"no GBM OOF attached - NN only (attach the v3/v4 notebook output to blend)\n"}
+,{"stream_name":"stdout","time":672.927247326,"data":"blend weights: {'NN_K1': 0.16, 'NN_K3': 0.84}\n"}
+,{"stream_name":"stdout","time":672.927282767,"data":"reference GBM: v2 0.7916 | v3 0.7917\n"}
+,{"stream_name":"stdout","time":672.927295415,"data":"NN_K1_theory           0.7864  (err ratio 0.2715)\n"}
+,{"stream_name":"stdout","time":672.927337426,"data":"NN_K1_tuned            0.7867  (err ratio 0.2711)\n"}
+,{"stream_name":"stdout","time":672.927345091,"data":"NN_K3_theory           0.7901  (err ratio 0.2657)\n"}
+,{"stream_name":"stdout","time":672.927350701,"data":"NN_K3_tuned            0.7901  (err ratio 0.2656)\n"}
+,{"stream_name":"stdout","time":672.927356121,"data":"NN_K1                  0.7867  (err ratio 0.2711)\n"}
+,{"stream_name":"stdout","time":672.92736152,"data":"NN_K3                  0.7901  (err ratio 0.2656)\n"}
+,{"stream_name":"stdout","time":672.927386526,"data":"blend                  0.7903  (err ratio 0.2654)\n"}
+,{"stream_name":"stdout","time":673.405996793,"data":"USE: blend | OOF NMAE 0.7903 | test zero% 0.476 mean 10400.3\n"}
+,{"stream_name":"stdout","time":673.406024139,"data":"wrote /kaggle/working/preds - nothing submitted\n"}
+,{"stream_name":"stderr","time":683.637183312,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":683.637224587,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":684.154146544,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":684.154176452,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":685.517775343,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":687.181246398,"data":"[NbConvertApp] Writing 387872 bytes to __results__.html\n"}
+]

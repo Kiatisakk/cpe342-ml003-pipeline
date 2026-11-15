@@ -1,0 +1,5 @@
+{'kill_death_ratio': np.float64(0.0), 'headshot_percentage': np.float64(0.117), 'win_rate': np.float64(0.092), 'accuracy_score': np.float64(0.017), 'kill_consistency': np.float64(0.005), 'reaction_time_ms': np.float64(0.0), 'account_age_days': np.float64(0.0), 'level': np.float64(0.0), 'level_progression_speed': np.float64(0.0), 'friend_network_size': np.float64(0.0), 'reports_received': np.float64(0.0), 'aiming_smoothness': np.float64(0.0), 'spray_control_score': np.float64(0.0), 'game_sense_score': np.float64(0.042), 'crosshair_placement': np.float64(0.0)}
+fold 0 6.672931909561157
+fold 1 47.59139060974121
+B natural AUC 0.89381 F2b 0.83853
+B testlike AUC 0.89294 F2b 0.83857

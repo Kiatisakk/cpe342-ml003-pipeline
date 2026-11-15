@@ -2,10 +2,10 @@ Task 2 (player segment, 4 classes) of the CPE342 Kaggle competition, repo cpe342
 
 GOAL: beat the current T2 macro-F1 with new training techniques.
 DATA: cpe342-kaggle-main/02_multiclass_classification/{train,test}.csv, target segment 0..3. Test output ids ANS00001..ANS25889 in test.csv row order.
-BASELINE: histogram Naive Bayes with per-feature Optuna-tuned bins/smoothing: t123/t2_nb/nb.py, pf.py, best_nb_perfeature.json; test preds t123/preds_final/t2_nb.csv (t2_nb_bias.csv adds a macro-F1 class bias, +0.0007). Macro-F1 ~0.755-0.758 (5-fold StratifiedKFold, seeds 42/7/123 as in pf.py); HGB 0.750, XGB 0.7498. FIRST reproduce the NB OOF score with the existing code so comparisons are apples to apples.
+BASELINE: histogram Naive Bayes with per-feature Optuna-tuned bins/smoothing: t2/code/nb.py, pf.py, best_nb_perfeature.json; test preds t2/preds/t2_nb.csv (t2_nb_bias.csv adds a macro-F1 class bias, +0.0007). Macro-F1 ~0.755-0.758 (5-fold StratifiedKFold, seeds 42/7/123 as in pf.py); HGB 0.750, XGB 0.7498. FIRST reproduce the NB OOF score with the existing code so comparisons are apples to apples.
 EDA facts: features are ~conditionally independent within class (NB near Bayes-optimal), latent 2x2 structure (engagement x spending), 16 noise columns, informative categoricals loyalty_tier and engagement_level, NaN marginalised in NB.
 IDEAS (order by judgment, add your own): WANBIA-style weighted NB (multinomial LR on OOF per-feature log-likelihood blocks), stacking NB log-posteriors + GBM probabilities with an LR meta-learner, better per-feature densities (tuned KDE, Gaussian mixtures), exploit the 2x2 latent structure (two binary models combined), missingness-as-signal per class, nested macro-F1-optimal decision rule (class-weight vector), GBM on NB log-likelihood features. Gains < 0.001 are noise.
-FILES TO PRODUCE: t123/research/t2/best_oof_proba.npy (n_train x 4), best_test_proba.npy, t2_best_test.csv (id,pred; pred int 0-3).
+FILES TO PRODUCE: t2/research/best_oof_proba.npy (n_train x 4), best_test_proba.npy, t2_best_test.csv (id,pred; pred int 0-3).
 HARD RULES (course rules, docs/CPE342_canva_instruction_text.txt page 15 - breaking them penalises the team):
 - Train from scratch only: NO pretrained models (no TabPFN, no foundation models, no pretrained embeddings). Neural nets trained from scratch are fine.
 - Never use test.csv for training in any way (no pseudo-labels on test, no fitting imputers/scalers/encoders/unsupervised models on test).
@@ -15,4 +15,4 @@ HARD RULES (course rules, docs/CPE342_canva_instruction_text.txt page 15 - break
 
 WORK LOOP: hypothesis -> experiment -> measure -> keep/discard -> next idea. Stop after ~4 hours of work or 6 consecutive ideas with no real gain. Commit after every kept improvement (small commits), so partial progress survives.
 
-OUTPUT: create branch research/t2 from main, put everything in t123/research/t2/ (scripts runnable from repo root with `python ...`, REPORT.md with a table of EVERY experiment: score, kept/discarded, one-line note, and the final recipe), commit and push the branch. Do not modify files outside t123/research/t2/. Final message: baseline vs best (with nested estimate) and the branch name.
+OUTPUT: create branch research/t2 from main, put everything in t2/research/ (scripts runnable from repo root with `python ...`, REPORT.md with a table of EVERY experiment: score, kept/discarded, one-line note, and the final recipe), commit and push the branch. Do not modify files outside t2/research/. Final message: baseline vs best (with nested estimate) and the branch name.

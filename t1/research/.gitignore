@@ -1,0 +1,4 @@
+out/*.npy
+out/*.db
+__pycache__/
+catboost_info/

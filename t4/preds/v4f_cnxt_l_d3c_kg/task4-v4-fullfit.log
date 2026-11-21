@@ -1,0 +1,33 @@
+[{"stream_name":"stdout","time":24.768584992,"data":"HF_TOKEN loaded from Kaggle Secrets\n"}
+,{"stream_name":"stdout","time":25.072435247,"data":"Tesla T4 | timm 1.0.30 | backbone cnxt_l_d3c {'names': ['convnext_large.dinov3_lvd1689m'], 'size': (224, 416), 'batch': 16, 'accum': 2, 'lr': 0.00015, 'epochs': 18, 'llrd': 0.8, 'dpr': 0.2, 'need_hf': True, 'grad_ckpt': True}\n"}
+,{"stream_name":"stdout","time":28.204931714,"data":"/kaggle/input/datasets/kiatisakkk/task4-image-classification/task4_image_classification (31546, 2) (25889, 2) ['7-11k', 'fiveN', 'freefried', 'pube', 'roblock']\n"}
+,{"stream_name":"stdout","time":92.754261735,"data":"train: (31546, 120, 230, 3) in 65s\n"}
+,{"stream_name":"stdout","time":142.204843103,"data":"test: (25889, 120, 230, 3) in 49s\n"}
+,{"stream_name":"stdout","time":162.657508715,"data":"model: convnext_large.dinov3_lvd1689m 196.2M params\n"}
+,{"stream_name":"stdout","time":558.175709785,"data":"seed 42: peak GPU mem 2.1 GB\n"}
+,{"stream_name":"stdout","time":558.17596439,"data":"seed 42: ~1.7 h for 16 epochs\n"}
+,{"stream_name":"stdout","time":558.175975546,"data":"seed 42 ep 1/16 loss 1.2744 (392s)\n"}
+,{"stream_name":"stdout","time":2031.3384949,"data":"seed 42 ep 2/16 loss 0.6247 (1473s)\n"}
+,{"stream_name":"stdout","time":3484.197480852,"data":"seed 42 ep 3/16 loss 0.3615 (1453s)\n"}
+,{"stream_name":"stdout","time":4931.17009373,"data":"seed 42 ep 4/16 loss 0.3176 (1447s)\n"}
+,{"stream_name":"stdout","time":6371.270088972,"data":"seed 42 ep 5/16 loss 0.2979 (1440s)\n"}
+,{"stream_name":"stdout","time":7800.551237752,"data":"seed 42 ep 6/16 loss 0.288 (1429s)\n"}
+,{"stream_name":"stdout","time":9215.531445949,"data":"seed 42 ep 7/16 loss 0.2745 (1415s)\n"}
+,{"stream_name":"stdout","time":10626.0260714,"data":"seed 42 ep 8/16 loss 0.2627 (1410s)\n"}
+,{"stream_name":"stdout","time":12034.266803529,"data":"seed 42 ep 9/16 loss 0.2575 (1408s)\n"}
+,{"stream_name":"stdout","time":13438.032669986,"data":"seed 42 ep 10/16 loss 0.2527 (1404s)\n"}
+,{"stream_name":"stdout","time":14839.107419044,"data":"seed 42 ep 11/16 loss 0.2458 (1401s)\n"}
+,{"stream_name":"stdout","time":16239.091685004,"data":"seed 42 ep 12/16 loss 0.2412 (1400s)\n"}
+,{"stream_name":"stdout","time":17635.961864691,"data":"seed 42 ep 13/16 loss 0.2393 (1397s)\n"}
+,{"stream_name":"stdout","time":19028.682189993,"data":"seed 42 ep 14/16 loss 0.2362 (1393s)\n"}
+,{"stream_name":"stdout","time":20419.650041173,"data":"seed 42 ep 15/16 loss 0.2347 (1391s)\n"}
+,{"stream_name":"stdout","time":21812.475406718,"data":"seed 42 ep 16/16 loss 0.2336 (1393s)\n"}
+,{"stream_name":"stdout","time":22803.107440284,"data":"== v4f_cnxt_l_d3c_s42 done in 377 min | elapsed 380 min\n"}
+,{"stream_name":"stdout","time":22803.1074789,"data":"wrote preds/ - nothing submitted\n"}
+,{"stream_name":"stderr","time":22812.144254166,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":22812.144286626,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":22812.457520803,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":22812.457547835,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":22813.457432396,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":22814.744267579,"data":"[NbConvertApp] Writing 427137 bytes to __results__.html\n"}
+]

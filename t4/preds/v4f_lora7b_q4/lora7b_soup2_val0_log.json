@@ -1,0 +1,11 @@
+{
+ "name": "lora7b_soup2_val0",
+ "avghead": {
+  "f1": 0.99174,
+  "errors": 41
+ },
+ "refit": {
+  "f1": 0.9937,
+  "errors": 30
+ }
+}

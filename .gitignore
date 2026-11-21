@@ -27,3 +27,5 @@ t*/research/blind_sonnet/*.npy
 t3/preds/seedbag10/
 t3/preds/cbd3_bag/
 work/t2v2/blind/data/
+# LoRA 7B adapter weights (40-80 MB each, copies live on Drive MyDrive/cpe342_t4/lora7b/preds)
+t4/preds/v4f_lora7b*/**/*_weights.pt

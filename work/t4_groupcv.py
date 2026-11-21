@@ -13,7 +13,10 @@ tr = pd.read_csv("data_v1_backup/04_image_classification/train.csv")
 C = sorted(tr["class"].unique()); y = tr["class"].map({c: i for i, c in enumerate(C)}).values; K = len(C)
 SRC = {"radio": ("t4/preds/frozen_b/feats", "radio"), "vithp": ("t4/preds/dinov3_feats/feats", "vit_huge_plus_patch16_dinov3"),
        "pe": ("t4/preds/frozen_b/feats", "pe"), "siglip2": ("t4/preds/frozen_b/feats", "siglip2"),
-       "dinov2g": ("t4/preds/frozen_c/feats", "dinov2g"), "radio3": ("t4/preds/frozen_c/feats", "radio3")}
+       "dinov2g": ("t4/preds/frozen_c/feats", "dinov2g"), "radio3": ("t4/preds/frozen_c/feats", "radio3"),
+       "radio3g": ("t4/preds/frozen_e/feats", "radio3g"), "webssl1b": ("t4/preds/frozen_e/feats", "webssl1b"), "aimv2h": ("t4/preds/frozen_e/feats", "aimv2h"),
+       "vit7b": ("t4/preds/frozen_7b/feats", "vit_7b_patch16_dinov3"),
+       **{f"vit7b_{t}": ("t4/preds/frozen_7b_ms/feats", f"vit7b_{t}") for t in ("s05", "s15", "l50", "l75")}}
 def load(name, view="plain", split="train"):
     d, t = SRC[name]; f = f"{d}/{t}_{split}_{view}.npy"
     if not os.path.exists(f): f = f"t4/preds/frozen_d/feats/{t}_{split}_{view}.npy"     # Kernel D extra views

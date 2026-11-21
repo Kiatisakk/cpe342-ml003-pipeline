@@ -1,0 +1,79 @@
+[{"stream_name":"stdout","time":35.385147013,"data":"no HF_TOKEN (not needed for eva02_b )\n"}
+,{"stream_name":"stdout","time":35.694498275,"data":"Tesla T4 | timm 1.0.30 | backbone eva02_b {'names': ['eva02_base_patch14_448.mim_in22k_ft_in22k_in1k'], 'size': (224, 420), 'batch': 24, 'lr': 7e-05, 'epochs': 16, 'llrd': 0.75, 'dpr': 0.15, 'need_hf': False, 'grad_ckpt': True}\n"}
+,{"stream_name":"stdout","time":39.145163251,"data":"/kaggle/input/datasets/kiatisakkk/task4-image-classification/task4_image_classification (31546, 2) (25889, 2) ['7-11k', 'fiveN', 'freefried', 'pube', 'roblock']\n"}
+,{"stream_name":"stdout","time":71.977603869,"data":"train: (31546, 120, 230, 3) in 33s\n"}
+,{"stream_name":"stdout","time":98.108415675,"data":"test: (25889, 120, 230, 3) in 26s\n"}
+,{"stream_name":"stderr","time":106.284029869,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":115.813072974,"data":"model: eva02_base_patch14_448.mim_in22k_ft_in22k_in1k 85.9M params\n"}
+,{"stream_name":"stdout","time":117.488120588,"data":"fold 0: GPU mem after model 0.3 GB\n"}
+,{"stream_name":"stdout","time":332.318892086,"data":"fold 0: peak GPU mem 1.1 GB\n"}
+,{"stream_name":"stdout","time":355.212597771,"data":"fold 0 ep 1/16 loss 1.0099 holdout(EMA) nll 1.1340 macroF1 0.7688 best_ep 1 (238s)\n"}
+,{"stream_name":"stdout","time":1181.067653479,"data":"fold 0 ep 2/16 loss 0.5404 holdout(EMA) nll 0.6401 macroF1 0.8678 best_ep 2 (826s)\n"}
+,{"stream_name":"stdout","time":2001.76491089,"data":"fold 0 ep 3/16 loss 0.3241 holdout(EMA) nll 0.2694 macroF1 0.9471 best_ep 3 (821s)\n"}
+,{"stream_name":"stdout","time":2818.91193894,"data":"fold 0 ep 4/16 loss 0.2824 holdout(EMA) nll 0.1341 macroF1 0.9702 best_ep 4 (817s)\n"}
+,{"stream_name":"stdout","time":3632.802488095,"data":"fold 0 ep 5/16 loss 0.2721 holdout(EMA) nll 0.1047 macroF1 0.9792 best_ep 5 (814s)\n"}
+,{"stream_name":"stdout","time":4440.278950383,"data":"fold 0 ep 6/16 loss 0.2602 holdout(EMA) nll 0.0983 macroF1 0.9825 best_ep 6 (807s)\n"}
+,{"stream_name":"stdout","time":5246.380453631,"data":"fold 0 ep 7/16 loss 0.2543 holdout(EMA) nll 0.0949 macroF1 0.9822 best_ep 7 (806s)\n"}
+,{"stream_name":"stdout","time":6053.233531835,"data":"fold 0 ep 8/16 loss 0.2470 holdout(EMA) nll 0.0898 macroF1 0.9836 best_ep 8 (807s)\n"}
+,{"stream_name":"stdout","time":6858.204034536,"data":"fold 0 ep 9/16 loss 0.2412 holdout(EMA) nll 0.0879 macroF1 0.9854 best_ep 9 (805s)\n"}
+,{"stream_name":"stdout","time":7662.951791789,"data":"fold 0 ep 10/16 loss 0.2406 holdout(EMA) nll 0.0871 macroF1 0.9848 best_ep 10 (805s)\n"}
+,{"stream_name":"stdout","time":8468.205041378,"data":"fold 0 ep 11/16 loss 0.2415 holdout(EMA) nll 0.0851 macroF1 0.9860 best_ep 11 (805s)\n"}
+,{"stream_name":"stdout","time":9272.276566812,"data":"fold 0 ep 12/16 loss 0.2336 holdout(EMA) nll 0.0839 macroF1 0.9860 best_ep 12 (804s)\n"}
+,{"stream_name":"stdout","time":10076.263843967,"data":"fold 0 ep 13/16 loss 0.2322 holdout(EMA) nll 0.0827 macroF1 0.9871 best_ep 13 (804s)\n"}
+,{"stream_name":"stdout","time":10881.334225773,"data":"fold 0 ep 14/16 loss 0.2341 holdout(EMA) nll 0.0813 macroF1 0.9871 best_ep 14 (805s)\n"}
+,{"stream_name":"stdout","time":11685.53758205,"data":"fold 0 ep 15/16 loss 0.2305 holdout(EMA) nll 0.0810 macroF1 0.9872 best_ep 15 (804s)\n"}
+,{"stream_name":"stdout","time":12487.915518461,"data":"fold 0 ep 16/16 loss 0.2297 holdout(EMA) nll 0.0813 macroF1 0.9872 best_ep 15 (802s)\n"}
+,{"stream_name":"stdout","time":13741.252398635,"data":"== fold 0: {'hist': [(1, 1.134, 0.7688), (2, 0.6401, 0.8678), (3, 0.2694, 0.9471), (4, 0.1341, 0.9702), (5, 0.1047, 0.9792), (6, 0.0983, 0.9825), (7, 0.0949, 0.9822), (8, 0.0898, 0.9836), (9, 0.0879, 0.9854), (10, 0.0871, 0.9848), (11, 0.0851, 0.986), (12, 0.0839, 0.986), (13, 0.0827, 0.9871), (14, 0.0813, 0.9871), (15, 0.081, 0.9872), (16, 0.0813, 0.9872), ('best_ep', 15)], 'plain': 0.9889, 'hflip': 0.9885, 'up': 0.9896, 'tta_default': 0.9894, 'minutes': 227.1} | elapsed 228 min\n"}
+,{"stream_name":"stdout","time":13742.865023986,"data":"fold 1: GPU mem after model 0.4 GB\n"}
+,{"stream_name":"stdout","time":13952.296607315,"data":"fold 1: peak GPU mem 5.5 GB\n"}
+,{"stream_name":"stdout","time":13974.556179391,"data":"fold 1 ep 1/16 loss 1.0259 holdout(EMA) nll 1.1415 macroF1 0.7697 best_ep 1 (232s)\n"}
+,{"stream_name":"stdout","time":14799.626160925,"data":"fold 1 ep 2/16 loss 0.5271 holdout(EMA) nll 0.6306 macroF1 0.8574 best_ep 2 (825s)\n"}
+,{"stream_name":"stdout","time":15620.961281931,"data":"fold 1 ep 3/16 loss 0.3280 holdout(EMA) nll 0.2749 macroF1 0.9463 best_ep 3 (821s)\n"}
+,{"stream_name":"stdout","time":16440.268139562,"data":"fold 1 ep 4/16 loss 0.2835 holdout(EMA) nll 0.1346 macroF1 0.9755 best_ep 4 (819s)\n"}
+,{"stream_name":"stdout","time":17252.76165035,"data":"fold 1 ep 5/16 loss 0.2667 holdout(EMA) nll 0.0992 macroF1 0.9836 best_ep 5 (812s)\n"}
+,{"stream_name":"stdout","time":18059.256780621,"data":"fold 1 ep 6/16 loss 0.2544 holdout(EMA) nll 0.0893 macroF1 0.9849 best_ep 6 (806s)\n"}
+,{"stream_name":"stdout","time":18865.281332335,"data":"fold 1 ep 7/16 loss 0.2514 holdout(EMA) nll 0.0824 macroF1 0.9878 best_ep 7 (806s)\n"}
+,{"stream_name":"stdout","time":19670.740371611,"data":"fold 1 ep 8/16 loss 0.2502 holdout(EMA) nll 0.0777 macroF1 0.9885 best_ep 8 (805s)\n"}
+,{"stream_name":"stdout","time":20475.728139867,"data":"fold 1 ep 9/16 loss 0.2398 holdout(EMA) nll 0.0795 macroF1 0.9888 best_ep 8 (805s)\n"}
+,{"stream_name":"stdout","time":21279.865863558,"data":"fold 1 ep 10/16 loss 0.2399 holdout(EMA) nll 0.0772 macroF1 0.9885 best_ep 10 (804s)\n"}
+,{"stream_name":"stdout","time":22085.2492414,"data":"fold 1 ep 11/16 loss 0.2351 holdout(EMA) nll 0.0759 macroF1 0.9881 best_ep 11 (805s)\n"}
+,{"stream_name":"stdout","time":22889.845089484,"data":"fold 1 ep 12/16 loss 0.2339 holdout(EMA) nll 0.0746 macroF1 0.9889 best_ep 12 (805s)\n"}
+,{"stream_name":"stdout","time":23691.700693082,"data":"fold 1 ep 13/16 loss 0.2329 holdout(EMA) nll 0.0734 macroF1 0.9889 best_ep 13 (802s)\n"}
+,{"stream_name":"stdout","time":24491.894491406,"data":"fold 1 ep 14/16 loss 0.2329 holdout(EMA) nll 0.0714 macroF1 0.9886 best_ep 14 (800s)\n"}
+,{"stream_name":"stdout","time":25295.079071023,"data":"fold 1 ep 15/16 loss 0.2297 holdout(EMA) nll 0.0695 macroF1 0.9901 best_ep 15 (803s)\n"}
+,{"stream_name":"stdout","time":26097.891699032,"data":"fold 1 ep 16/16 loss 0.2307 holdout(EMA) nll 0.0694 macroF1 0.9895 best_ep 16 (803s)\n"}
+,{"stream_name":"stdout","time":27348.631176516,"data":"== fold 1: {'hist': [(1, 1.1415, 0.7697), (2, 0.6306, 0.8574), (3, 0.2749, 0.9463), (4, 0.1346, 0.9755), (5, 0.0992, 0.9836), (6, 0.0893, 0.9849), (7, 0.0824, 0.9878), (8, 0.0777, 0.9885), (9, 0.0795, 0.9888), (10, 0.0772, 0.9885), (11, 0.0759, 0.9881), (12, 0.0746, 0.9889), (13, 0.0734, 0.9889), (14, 0.0714, 0.9886), (15, 0.0695, 0.9901), (16, 0.0694, 0.9895), ('best_ep', 16)], 'plain': 0.9881, 'hflip': 0.9882, 'up': 0.9881, 'tta_default': 0.9884, 'minutes': 226.8} | elapsed 455 min\n"}
+,{"stream_name":"stdout","time":27348.63204954,"data":"time guard: 7.6 h used, skipping folds from 2 (re-run with T4_FOLDS=...)\n"}
+,{"stream_name":"stdout","time":27348.635125363,"data":"\n"}
+,{"stream_name":"stdout","time":27348.635153131,"data":"OOF rows available: 21031/31546\n"}
+,{"stream_name":"stdout","time":27348.640706081,"data":"  OOF macroF1 view plain : 0.9885\n"}
+,{"stream_name":"stdout","time":27348.645735476,"data":"  OOF macroF1 view hflip : 0.9883\n"}
+,{"stream_name":"stdout","time":27348.650694938,"data":"  OOF macroF1 view up    : 0.9889\n"}
+,{"stream_name":"stdout","time":27348.655652359,"data":"  OOF macroF1 TTA ['plain', 'hflip']: 0.9889   (v3_5f: 0.9889)\n"}
+,{"stream_name":"stdout","time":27348.668751057,"data":"              precision    recall  f1-score   support\n"}
+,{"stream_name":"stdout","time":27348.668790033,"data":"\n"}
+,{"stream_name":"stdout","time":27348.668795514,"data":"       7-11k     0.9934    0.9944    0.9939      8286\n"}
+,{"stream_name":"stdout","time":27348.668800335,"data":"       fiveN     0.9888    0.9901    0.9895      2938\n"}
+,{"stream_name":"stdout","time":27348.668804572,"data":"   freefried     0.9930    0.9885    0.9907      3730\n"}
+,{"stream_name":"stdout","time":27348.66880904,"data":"        pube     0.9864    0.9884    0.9874      3951\n"}
+,{"stream_name":"stdout","time":27348.668812694,"data":"     roblock     0.9840    0.9821    0.9831      2126\n"}
+,{"stream_name":"stdout","time":27348.668816505,"data":"\n"}
+,{"stream_name":"stdout","time":27348.668819992,"data":"    accuracy                         0.9904     21031\n"}
+,{"stream_name":"stdout","time":27348.668823877,"data":"   macro avg     0.9891    0.9887    0.9889     21031\n"}
+,{"stream_name":"stdout","time":27348.668827665,"data":"weighted avg     0.9904    0.9904    0.9904     21031\n"}
+,{"stream_name":"stdout","time":27348.668831467,"data":"\n"}
+,{"stream_name":"stdout","time":27348.695829797,"data":"           7-11k  fiveN  freefried  pube  roblock\n"}
+,{"stream_name":"stdout","time":27348.695882742,"data":"7-11k       8240      9          9    13       15\n"}
+,{"stream_name":"stdout","time":27348.695889796,"data":"fiveN         12   2909          3     6        8\n"}
+,{"stream_name":"stdout","time":27348.695893662,"data":"freefried     11      6       3687    25        1\n"}
+,{"stream_name":"stdout","time":27348.695898151,"data":"pube          11     14         11  3905       10\n"}
+,{"stream_name":"stdout","time":27348.695915082,"data":"roblock       21      4          3    10     2088\n"}
+,{"stream_name":"stdout","time":27348.695986936,"data":"only 2/3 test folds present - run the missing folds (T4_FOLDS=...) then re-run this cell\n"}
+,{"stream_name":"stdout","time":27348.696089016,"data":"wrote preds/ - nothing submitted\n"}
+,{"stream_name":"stderr","time":27362.289609034,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":27362.289677371,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":27362.757617342,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":27362.757697869,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":27363.959648346,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":27365.651731139,"data":"[NbConvertApp] Writing 395044 bytes to __results__.html\n"}
+]

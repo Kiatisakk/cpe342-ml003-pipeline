@@ -67,6 +67,9 @@ EXPS = {
     "radio3_lda":       dict(names=["radio3"], head="lda"),
     "vithp_7views":     dict(names=["vithp"], views=("plain", "hflip", "dark", "sat", "dark2", "sat2", "darksat")),
     "radio_4views":     dict(names=["radio"], views=("plain", "hflip", "dark", "sat")),
+    "radio3g":          dict(names=["radio3g"]),
+    "webssl1b":         dict(names=["webssl1b"]),
+    "aimv2h":           dict(names=["aimv2h"]),
     "radio_7views":     dict(names=["radio"], views=("plain", "hflip", "dark", "sat", "dark2", "sat2", "darksat")),
 }
 if __name__ == "__main__":

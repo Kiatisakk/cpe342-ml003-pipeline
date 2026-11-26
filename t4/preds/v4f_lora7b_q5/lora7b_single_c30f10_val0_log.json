@@ -1,0 +1,21 @@
+{
+ "name": "lora7b_single_c30f10_val0",
+ "parts": [
+  [
+   "c30f10r16e3",
+   10
+  ]
+ ],
+ "avghead": {
+  "f1": 0.99172,
+  "errors": 40
+ },
+ "refit": {
+  "f1": 0.99287,
+  "errors": 34
+ },
+ "refit2v": {
+  "f1": 0.99265,
+  "errors": 35
+ }
+}

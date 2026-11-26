@@ -1,0 +1,25 @@
+{
+ "name": "lora7b_soup2b_val0",
+ "parts": [
+  [
+   "l75",
+   20
+  ],
+  [
+   "c30f10r16e3",
+   10
+  ]
+ ],
+ "avghead": {
+  "f1": 0.99174,
+  "errors": 41
+ },
+ "refit": {
+  "f1": 0.9937,
+  "errors": 30
+ },
+ "refit2v": {
+  "f1": 0.99403,
+  "errors": 28
+ }
+}

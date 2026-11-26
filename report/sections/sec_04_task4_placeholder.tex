@@ -1,0 +1,27 @@
+\clearpage
+\subsection{Task 4: การจำแนกชื่อเกมจากภาพหน้าจอ (Game Title Detection) — [\textit{สงวนพื้นที่ไว้ชั่วคราว}]}
+\label{subsec:task4}
+
+\begin{warningbox}[สถานะของ Task 4: สงวนพื้นที่ไว้ตามข้อตกลง (Reserved Placeholder)]
+ส่วนนี้ถูกสงวนไว้โดยเจตนาและ\textbf{ยังไม่ได้นำผลการทดลองหรือคะแนนของ Task 4 มารายงานในเอกสารฉบับนี้} เนื่องจากเกณฑ์การให้คะแนนและการตรวจวัดผลของ Task 4 ยังอยู่ระหว่างการปรับปรุงและยังไม่นิ่ง (\TFourStatus)
+
+เมื่อเกณฑ์การให้คะแนนของ Task 4 นิ่งสมบูรณ์แล้ว สามารถนำเนื้อหาฉบับสมบูรณ์มาเสียบแทนที่ไฟล์ \feat{report/sections/sec\_04\_task4\_placeholder.tex} ได้ทันทีโดยไม่กระทบโครงสร้าง สารบัญ หรือเลขหน้าของภารกิจอื่น
+\end{warningbox}
+
+\subsubsection*{โครงสร้างมาตรฐานสำหรับเสียบเนื้อหา Task 4 ในภายหลัง (Drop-In Schema)}
+เพื่อให้สอดคล้องกับโครงสร้างเชิงวิศวกรรมของ Task 1, Task 2, Task 3 และ Task 5 (และครบทั้ง 7 หัวข้อตามเกณฑ์รายวิชา CPE 342) เนื้อหาที่จะนำมาแทนที่ไฟล์นี้ควรประกอบด้วยหัวข้อย่อยตามลำดับดังต่อไปนี้:
+\begin{enumerate}
+  \item \textbf{บริบททางธุรกิจและกลไกของ Metric:} โจทย์การจำแนกภาพหน้าจอเกม 5 เกม (\feat{7-11K}, \feat{fiveN}, \feat{freefried}, \feat{pube}, \feat{roblock}) และเหตุผลที่ Macro $F_1$ ให้ความสำคัญกับทุกคลาสเท่าเทียมกัน
+  \item \textbf{ข้อค้นพบจาก EDA และความต่างระหว่าง Train กับ Test:} ลักษณะความละเอียดภาพ การกระจุกตัวของฉากซ้ำ (near-duplicate scenes) และการเลือก Validation Strategy ที่สะท้อน Test Set อย่างซื่อสัตย์
+  \item \textbf{การเตรียมข้อมูลและ Augmentation:} การจัดการขนาดภาพ กติกาเรื่องข้อมูลที่อนุญาตและไม่อนุญาตตามคำชี้แจงของ TA
+  \item \textbf{การออกแบบโมเดลและเหตุผลเชิงวิศวกรรม:} สถาปัตยกรรมที่เลือกใช้ กลยุทธ์การ Fine-tune / Frozen Features / Ensembling และเหตุผลที่เลือกใช้เหนือทางเลือกอื่น
+  \item \textbf{กลยุทธ์การวัดผล ลำดับการทดลอง และผลลัพธ์สุดท้าย:} ตารางเปรียบเทียบผล Validation และคะแนนจริงบนเกณฑ์ที่นิ่งแล้ว
+  \item \textbf{การวิเคราะห์พฤติกรรมโมเดล การทดลองที่ไม่ได้ผล และข้อจำกัด:} สรุปแนวทางที่ลองแล้วไม่ผ่านหรือไม่สอดคล้องกับกติกาอย่างตรงไปตรงมา
+  \item \textbf{การตีความเชิงโดเมนและผลกระทบทางธุรกิจ:} การนำไปใช้งานจริงกับระบบคัดแยกตั๋วซัพพอร์ต (Support Routing) และการตรวจสอบแคมเปญรางวัลของ Karena Thailand
+\end{enumerate}
+
+% Drop-in note:
+% To activate Task 4 later:
+% 1. Create report/sections/sec_04_task4.tex following the 7-part structure above.
+% 2. Replace \input{sections/sec_04_task4_placeholder} in report/main.tex (or overwrite this file).
+% 3. Update the Task 4 row in sec_00_frontmatter.tex and sec_08_appendix.tex, and re-run python report/build_report.py.

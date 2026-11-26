@@ -1,0 +1,21 @@
+{
+ "name": "lora7b_single_l75_val0",
+ "parts": [
+  [
+   "l75",
+   20
+  ]
+ ],
+ "avghead": {
+  "f1": 0.99146,
+  "errors": 41
+ },
+ "refit": {
+  "f1": 0.99228,
+  "errors": 36
+ },
+ "refit2v": {
+  "f1": 0.9925,
+  "errors": 35
+ }
+}

@@ -1,0 +1,168 @@
+% !TEX program = xelatex
+% Preamble for CPE342 Technical Report (Team ML003)
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{thai}
+\setotherlanguage{english}
+
+% Thai Typography (TH Sarabun New verified installed; scale 1.32 aligns visually with 12pt)
+\newfontfamily\thaifont[Script=Thai,Scale=1.32]{TH Sarabun New}
+\newfontfamily\thaifontsf[Script=Thai,Scale=1.32]{Leelawadee UI}
+\newfontfamily\thaifonttt[Script=Thai,Scale=1.22]{TH Sarabun New}
+\newfontfamily\englishfont[Scale=1.32]{TH Sarabun New}
+\newfontfamily\englishfontsf[Scale=1.32]{Leelawadee UI}
+\newfontfamily\englishfonttt[Scale=0.88]{Ubuntu Mono}
+\setmainfont[Script=Thai,Scale=1.32]{TH Sarabun New}
+\setsansfont[Script=Thai,Scale=1.32]{Leelawadee UI}
+\setmonofont[Scale=0.88]{Ubuntu Mono}
+
+\XeTeXlinebreaklocale "th"
+\XeTeXlinebreakskip = 0pt plus 1pt
+\emergencystretch=2.5em
+\sloppy
+
+% Geometry & Headers
+\usepackage[a4paper,top=2.2cm,bottom=2.2cm,left=2.2cm,right=2.2cm,headheight=20pt]{geometry}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\setstretch{1.15}
+
+% Math, Graphics, Tables
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
+\usepackage{hyperref}
+
+% Color Palette (Muted Engineering Navy / Teal / Slate / Amber)
+\definecolor{NavyPrimary}{HTML}{1B365D}
+\definecolor{SlateSec}{HTML}{334E68}
+\definecolor{TealAccent}{HTML}{0D9488}
+\definecolor{TealLight}{HTML}{F0FDFA}
+\definecolor{NavyLight}{HTML}{F1F5F9}
+\definecolor{AmberWarn}{HTML}{B45309}
+\definecolor{AmberLight}{HTML}{FFFBEB}
+\definecolor{BorderGray}{HTML}{CBD5E1}
+\definecolor{TextDark}{HTML}{1E293B}
+\definecolor{TodoBg}{HTML}{FEF3C7}
+\definecolor{TodoFg}{HTML}{92400E}
+
+\color{TextDark}
+
+% Hyperref setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=NavyPrimary,
+    citecolor=TealAccent,
+    urlcolor=SlateSec,
+    pdftitle={CPE342 Machine Learning Technical Report - Team ML003},
+    pdfauthor={Team ML003},
+    bookmarksnumbered=true
+}
+
+% Thai Document Labels
+\renewcommand{\contentsname}{สารบัญ}
+\renewcommand{\listfigurename}{สารบัญรูปภาพ}
+\renewcommand{\listtablename}{สารบัญตาราง}
+\renewcommand{\figurename}{รูปที่}
+\renewcommand{\tablename}{ตารางที่}
+
+% Section Title Styling (with \raggedright so wrapped Thai titles never over-stretch spaces)
+\usepackage{titlesec}
+\titleformat{\section}
+  {\raggedright\Large\bfseries\color{NavyPrimary}}
+  {\thesection}{0.8em}{}[\vspace{2pt}{\color{NavyPrimary}\titlerule[0.8pt]}]
+\titleformat{\subsection}
+  {\raggedright\large\bfseries\color{SlateSec}}
+  {\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}
+  {\raggedright\normalsize\bfseries\color{TealAccent}}
+  {\thesubsubsection}{0.6em}{}
+
+% Header / Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{SlateSec} CPE 342 Machine Learning — Karena Player Intelligence System}
+\fancyhead[R]{\small\color{SlateSec} ทีม ML003}
+\fancyfoot[L]{\small\color{SlateSec} รายงานทางเทคนิค (Technical Report)}
+\fancyfoot[R]{\small\color{SlateSec} หน้า \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Caption & List Spacing
+\captionsetup{font=small,labelfont={bf,color=NavyPrimary},justification=raggedright,singlelinecheck=false,skip=6pt}
+\setlist[itemize]{leftmargin=1.6em,itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.8em,itemsep=2pt,topsep=4pt}
+
+% Engineering Macros
+% Robust breakable monospace identifier macro: safe inside captions & headings
+\DeclareRobustCommand{\feat}[1]{%
+  \begingroup
+  \renewcommand{\_}{\textunderscore\allowbreak}%
+  \textenglish{\texttt{#1}}%
+  \endgroup
+}
+
+% Highlighted TODO placeholder badge for team-supplied cover/collaboration details
+\newcommand{\todo}[1]{%
+  \colorbox{TodoBg}{\textcolor{TodoFg}{\textbf{[TODO: #1]}}}%
+}
+
+% Parameterized Task 4 status macro
+\newcommand{\TFourStatus}{สงวนไว้ — รอเกณฑ์การให้คะแนนที่นิ่ง (Excluded Pending Stable Scoring Criteria)}
+
+% Custom Engineering Callout Boxes (breakable across pages)
+\newtcolorbox{insightbox}[1][ข้อค้นพบเชิงลึกจากการวิเคราะห์ข้อมูล (Key Engineering Insight)]{
+  enhanced,
+  breakable,
+  colback=TealLight,
+  colframe=TealAccent,
+  coltitle=white,
+  fonttitle=\bfseries,
+  title={#1},
+  boxrule=0.8pt,
+  leftrule=3.5pt,
+  arc=2pt,
+  top=6pt,bottom=6pt,left=8pt,right=8pt,
+  before skip=8pt, after skip=8pt
+}
+
+\newtcolorbox{decisionbox}[1][เหตุผลเชิงวิศวกรรมในการตัดสินใจ (Engineering Decision Rationale)]{
+  enhanced,
+  breakable,
+  colback=NavyLight,
+  colframe=NavyPrimary,
+  coltitle=white,
+  fonttitle=\bfseries,
+  title={#1},
+  boxrule=0.8pt,
+  leftrule=3.5pt,
+  arc=2pt,
+  top=6pt,bottom=6pt,left=8pt,right=8pt,
+  before skip=8pt, after skip=8pt
+}
+
+\newtcolorbox{warningbox}[1][ความโปร่งใสทางวิศวกรรมและความสอดคล้องกับกติกา (Compliance \& Caveat)]{
+  enhanced,
+  breakable,
+  colback=AmberLight,
+  colframe=AmberWarn,
+  coltitle=white,
+  fonttitle=\bfseries,
+  title={#1},
+  boxrule=0.8pt,
+  leftrule=3.5pt,
+  arc=2pt,
+  top=6pt,bottom=6pt,left=8pt,right=8pt,
+  before skip=8pt, after skip=8pt
+}

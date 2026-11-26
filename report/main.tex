@@ -1,0 +1,30 @@
+% !TEX program = xelatex
+\documentclass[a4paper,12pt]{article}
+\input{preamble}
+
+\begin{document}
+
+% Frontmatter, Cover Page, Executive Summary & Cross-Task Engineering Overview
+\input{sections/sec_00_frontmatter}
+
+% Section 2: Methodology by Task (Brief Requirement §1)
+\clearpage
+\section{ระเบียบวิธีวิจัย การทดลอง และผลลัพธ์รายภารกิจ (Methodology by Task)}
+\label{sec:methodology}
+
+\input{sections/sec_01_task1}
+\input{sections/sec_02_task2}
+\input{sections/sec_03_task3}
+\input{sections/sec_04_task4_placeholder}
+\input{sections/sec_05_task5}
+
+% Section 3: Team Collaboration (Brief Requirement §2)
+\input{sections/sec_06_collaboration}
+
+% Section 4: Conclusion & Future Improvements (Brief Requirement §3)
+\input{sections/sec_07_conclusion}
+
+% Appendix: Reproducibility Map & Verification Ledger
+\input{sections/sec_08_appendix}
+
+\end{document}

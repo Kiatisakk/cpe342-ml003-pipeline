@@ -1,0 +1,82 @@
+\clearpage
+\appendix
+\section{ภาคผนวก: แผนที่โค้ดการทดลองและการทำซ้ำผลลัพธ์ (Reproducibility Map)}
+\label{sec:appendix}
+
+\subsection{แผนที่สคริปต์หลัก ไฟล์คำทำนาย และบันทึกการวิจัยรายภารกิจ}
+\label{subsec:repro_map}
+
+เพื่อให้ผู้ตรวจสอบและทีมวิศวกรสามารถทำซ้ำ (Reproduce) ผลลัพธ์ของทุกภารกิจภายใต้ชุดข้อมูลฉบับปรับปรุง (12 พ.ย.) และกติกา Test-Free Inference (16 พ.ย.) ได้อย่างครบถ้วน ตารางที่~\ref{tab:repro_map} จึงรวบรวมความเชื่อมโยงตั้งแต่สคริปต์ประมวลผลหลัก ไฟล์ผลทำนาย (Prediction Artifact) บันทึกการวิจัย และตัวเลขทวนสอบสำหรับ Task 1, Task 2, Task 3 และ Task 5 (โดยคง Task 4 ไว้ตามสถานะสงวนพื้นที่)
+
+\begin{table}[htbp]
+  \centering
+  \caption{แผนที่การทำซ้ำผลลัพธ์ (Reproducibility Map) รายภารกิจของทีม ML003}
+  \label{tab:repro_map}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{1.4cm} >{\raggedright\arraybackslash}p{3.9cm} >{\raggedright\arraybackslash}p{3.6cm} >{\raggedright\arraybackslash}p{2.6cm} X @{}}
+    \toprule
+    \textbf{ภารกิจ} & \textbf{สคริปต์หลัก (Primary Script)} & \textbf{ไฟล์ผลลัพธ์ (Artifact)} & \textbf{บันทึกการวิจัย} & \textbf{ตัวเลขทวนสอบหลัก (OOF / Est.)} \\
+    \midrule
+    \textbf{Task 1} & \feat{t1/code/t1\_clean\_fixedthr.py} \newline (ผสาน \feat{t1/research/final\_v2.py}, \feat{t1/research/blind\_sonnet/}, \feat{t1/code/task1\_gbm\_pipeline.py}) & \feat{t1/preds/clean\_fixedthr/t1\_clean.csv} & \feat{t1/research/REPORT.md} & OOF Bin-$F_2 = 0.84007$ \newline OOF ROC-AUC $= 0.89499$ \newline (Fixed $\text{thr} = 0.3769$) \\
+    \midrule
+    \textbf{Task 2} & \feat{work/t2v2/make\_t2v2.py} \newline (ใช้สูตร \feat{t2/research/e14\_llselect.py}, \feat{e06\_emnb.py}, \feat{work/t2v2/blind/}) & \feat{t2/preds/v2data/t2v2\_blend\_affine.csv} & \feat{t2/research/REPORT.md} & v2 OOF Macro-$F_1 = 0.75826$ \newline (EM-NB $0.75766$, LL $0.5975$) \\
+    \midrule
+    \textbf{Task 3} & \feat{t3/kaggle/task3-seedbag10/task3\_seedbag10.py} \newline (ใช้ \feat{t3/research/common.py}, \feat{exp\_lgb\_hurdle.py}, \feat{exp\_cbq.py}, \feat{avg\_q.py}) & \feat{t3/preds/seedbag10\_final/bag\_q10p10\_test.npy} \newline (\feat{t3/preds/seedbag10/repo/t3/research/oof/}) & \feat{t3/research/REPORT.md} & 10$\times$10 OOF NMAE $= 0.79537$ \newline (Fold Mean $0.79542 \pm 0.00760$) \\
+    \midrule
+    \textbf{Task 4} & \textit{\TFourStatus} & \textit{สงวนพื้นที่ไว้ (หัวข้อย่อย~\ref{subsec:task4})} & \textit{สงวนพื้นที่ไว้} & \textit{\TFourStatus} \\
+    \midrule
+    \textbf{Task 5} & \feat{t5/research/t5\_pipeline.py} และ \feat{work/t5v2/box\_analysis\_v2.py} & \feat{t5/preds/v2data/t5v2\_union\_box\_lsnan.csv} & \feat{t5/research/REPORT.md} & Est.\ $F_3 \approx 0.99681$ \newline (Flagged $2{,}104 / 8.13\%$, Clean $\max |r|=0.0263$) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+นอกจากสคริปต์รายภารกิจข้างต้น การตรวจสอบความเป็นอิสระข้ามภารกิจ การแกะรอย DGP เชิงลึก และการวิเคราะห์ Error Budget ทั้งหมดสามารถทำซ้ำได้จากชุดสคริปต์ตรวจสอบแบบอ่านอย่างเดียวใน \feat{work/insight/} (ได้แก่ \feat{a01\_crosstask.py}, \feat{a02\_structure.py}, \feat{b01..b03} สำหรับ Task 1, \feat{d01..d02} สำหรับ Task 2, \feat{c01..c09} สำหรับ Task 3 และ \feat{e01..e07} สำหรับ Task 5 โดยมีสรุปผลใน \feat{work/insight/INSIGHTS.md})
+
+\subsection{สรุปสถิติคอลัมน์ในไฟล์ส่งงานอ้างอิง (\texorpdfstring{\protect\feat{sub\_v85a\_soup\_trainprior.csv}}{sub\_v85a\_soup\_trainprior.csv})}
+\label{subsec:submission_summary}
+
+ไฟล์ส่งงานอ้างอิงฉบับสุดท้าย \feat{submissions/FINAL/sub\_v85a\_soup\_trainprior.csv} มีขนาดทั้งสิ้น $25{,}889$ แถว และ $6$ คอลัมน์ (\feat{id}, \feat{task1}, \feat{task2}, \feat{task3}, \feat{task4}, \feat{task5}) การทวนสอบด้วยสคริปต์ \feat{report/scripts/gen\_facts\_ledger.py} ยืนยันความตรงกันแบบ 100\% ระหว่างคอลัมน์ในไฟล์ส่งงานกับไฟล์ผลทำนายมาตรฐานของ Task 1, Task 2, Task 3 และ Task 5 ดังสรุปในตารางที่~\ref{tab:submission_summary}
+
+\begin{table}[htbp]
+  \centering
+  \caption{สรุปค่าสถิติที่ทวนสอบแล้วของแต่ละคอลัมน์ใน \protect\feat{submissions/FINAL/sub\_v85a\_soup\_trainprior.csv} ($N = 25{,}889$)}
+  \label{tab:submission_summary}
+  \footnotesize
+  \setlength{\tabcolsep}{5pt}
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{1.8cm} >{\raggedright\arraybackslash}p{2.5cm} X >{\raggedright\arraybackslash}p{4.3cm} @{}}
+    \toprule
+    \textbf{คอลัมน์} & \textbf{ชนิดข้อมูล} & \textbf{สถิติการกระจายตัวที่ทวนสอบแล้ว} & \textbf{ไฟล์ต้นทางที่ตรวจยืนยันตรงกัน} \\
+    \midrule
+    \feat{task1} & ไบนารี $\{0, 1\}$ & ทำนายบวก \textbf{15,359 แถว} (\textbf{59.33\%}); ลบ 10,530 แถว (40.67\%) & \feat{t1/preds/clean\_fixedthr/t1\_clean.csv} (ตรงกันทุกแถว) \\
+    \feat{task2} & จำนวนเต็ม $\{0,1,2,3\}$ & คลาส 0: \textbf{10,576} (40.85\%); คลาส 1: \textbf{6,578} (25.41\%); \newline คลาส 2: \textbf{5,020} (19.39\%); คลาส 3: \textbf{3,715} (14.35\%) & \feat{t2/preds/v2data/t2v2\_blend\_affine.csv} (ตรงกันทุกแถว) \\
+    \feat{task3} & ทศนิยม $\ge 0$ (THB) & อัตราทำนายศูนย์ \textbf{50.39\%}; ค่าเฉลี่ย \textbf{10,429.55 THB}; \newline มัธยฐาน 0.00 THB; p99 133,945.49 THB; สูงสุด 300,000.00 THB & \feat{t3/preds/seedbag10\_final/bag\_q10p10\_test.npy} (ตรงกันภายในค่าปัดเศษ $0.006$) \\
+    \feat{task4} & \textit{สงวนไว้} & \textit{\TFourStatus} & \textit{ไม่รวมในการรายงานฉบับนี้} \\
+    \feat{task5} & ไบนารี $\{0, 1\}$ & แจ้งเตือนผิดปกติ \textbf{2,104 แถว} (\textbf{8.13\%}); ปกติ 23,785 แถว (91.87\%) & \feat{t5/preds/v2data/t5v2\_union\_box\_lsnan.csv} (ตรงกันทุกแถว) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{รายการตรวจสอบความถูกต้องอัตโนมัติของรายงาน (Verification Ledger Checklist)}
+\label{subsec:verification_checklist}
+
+ตัวเลข ข้อกล่าวอ้างทางสถิติ และความสมบูรณ์ของการจัดเรียงเอกสาร PDF ในรายงานฉบับนี้ถูกควบคุมด้วยระบบทวนสอบอัตโนมัติแบบอ่านอย่างเดียวภายในโฟลเดอร์ \feat{report/} เพื่อให้มั่นใจว่าปราศจากตัวเลขคลาดเคลื่อน ข้อมูลเก่าก่อนวันที่ 12 พฤศจิกายน หรือการปนเปื้อนผลลัพธ์ของ Task 4 ดังสรุปรายการตรวจสอบในตารางที่~\ref{tab:verification_checklist}
+
+\begin{table}[htbp]
+  \centering
+  \caption{รายการตรวจสอบความถูกต้องเชิงตัวเลข ขอบเขตเอกสาร และคุณภาพการคอมไพล์อัตโนมัติ}
+  \label{tab:verification_checklist}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{4.6cm} >{\raggedright\arraybackslash}p{3.9cm} X @{}}
+    \toprule
+    \textbf{กลไกการทวนสอบ} & \textbf{คำสั่งอ้างอิง} & \textbf{เงื่อนไขการผ่าน (Acceptance Gate)} \\
+    \midrule
+    1. สร้างและทวนสอบคลังข้อเท็จจริงกลาง (\feat{report/scripts/gen\_facts\_ledger.py}) & \feat{python report/scripts/gen\_facts\_ledger.py} & คำนวณ OOF/Test ของ Tasks 1, 2, 3, 5 ใหม่จากไฟล์ข้อมูลจริงและอาร์เรย์ OOF/Test, ตรวจ \texttt{assert} เทียบ \feat{sub\_v85a\_soup\_trainprior.csv}, ตรวจ Cross-Task Overlap และ ID AUC $\approx 0.500$, บันทึกผลลง \feat{report/facts\_ledger.json} โดยไม่ยุ่งเกี่ยวกับ \feat{t4/} \\
+    \midrule
+    2. คอมไพล์ XeLaTeX และตรวจ Log (\feat{report/build\_report.py}) & \feat{python report/build\_report.py --audit --render-qa} & คอมไพล์ \feat{report/main.tex} แบบหลายรอบด้วย \feat{xelatex}, ต้องพบ Error $= 0$, Undefined References $= 0$, Missing Font Characters $= 0$, Missing Figures $= 0$ และตรวจ Overfull \texttt{\textbackslash hbox} $> 12\text{pt}$ \\
+    \midrule
+    3. ตรวจ Anchor Numbers และ Task 4 Exclusion Guard & ทำงานอัตโนมัติใน \feat{build\_report.py} (\feat{audit\_numbers\_and\_scope}) & ตรวจสอบค่าตัวเลขหลักจาก \feat{facts\_ledger.json} ในบทที่ 1--5 และบังคับห้ามมีคำหรือคะแนนผลลัพธ์ของ Task 4 ใน \feat{sec\_04\_task4\_placeholder.tex} ตลอดจนแปลงทุกหน้าเป็น PNG ใน \feat{report/qa/page\_XX.png} เพื่อตรวจด้วยสายตา \\
+    \bottomrule
+  \end{tabularx}
+\end{table}

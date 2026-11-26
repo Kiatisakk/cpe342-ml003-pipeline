@@ -1,0 +1,60 @@
+\clearpage
+\section{การทำงานร่วมกันของทีม (Team Collaboration)}
+\label{sec:collaboration}
+
+\subsection{บทบาทและความรับผิดชอบของสมาชิกทีม (Member Roles \& Responsibilities)}
+\label{subsec:team_roles}
+
+การดำเนินโครงการที่มีภารกิจย่อยต่างประเภทกันถึง 5 รูปแบบ (Binary Classification, Multi-Class Classification, Zero-Inflated Regression, Image Classification และ Unsupervised Anomaly Detection) ภายใต้กรอบเวลาจำกัดและโควต้าการส่งผลบน Kaggle เพียง 6 ครั้งต่อวัน จำเป็นต้องอาศัยการแบ่งความรับผิดชอบที่ชัดเจนควบคู่กับมาตรฐานการตรวจสอบข้ามกลุ่ม ตารางที่~\ref{tab:team_roles} แสดงโครงสร้างการแบ่งหน้าที่ของสมาชิกทีม ML003 ทั้ง 5 คน (โดยคงช่องสำหรับกรอกชื่อ รหัสนักศึกษา และสัดส่วนความรับผิดชอบที่ยืนยันแล้วของสมาชิกแต่ละคนก่อนส่งมอบรายงานฉบับจริง)
+
+\begin{table}[htbp]
+  \centering
+  \caption{โครงสร้างบทบาทและความรับผิดชอบของสมาชิกทีม ML003 ทั้ง 5 คน}
+  \label{tab:team_roles}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\textwidth}{@{} >{\centering\arraybackslash}p{0.8cm} >{\raggedright\arraybackslash}p{5.4cm} X @{}}
+    \toprule
+    \textbf{ลำดับ} & \textbf{สมาชิกทีม (ชื่อ-นามสกุล / รหัสนักศึกษา)} & \textbf{ภารกิจหลักและส่วนงานที่รับผิดชอบ} \\
+    \midrule
+    1 & \todo{สมาชิกคนที่ 1 — ชื่อ-นามสกุล}\newline\todo{รหัสนักศึกษา} & \todo{ระบุบทบาทและสัดส่วนงาน}\newline \textit{แนวทางอ้างอิง:} รับผิดชอบหลัก Task 1 (Anti-Cheat Pre-Filter) การพัฒนา \feat{fe\_v2}, MCAR 4x Masking และระบบ Test-Free ECDF (\feat{t1\_clean\_fixedthr.py}) \\
+    \midrule
+    2 & \todo{สมาชิกคนที่ 2 — ชื่อ-นามสกุล}\newline\todo{รหัสนักศึกษา} & \todo{ระบุบทบาทและสัดส่วนงาน}\newline \textit{แนวทางอ้างอิง:} รับผิดชอบหลัก Task 2 (Player Segment Classification) ระบบ Histogram EM-NB, กฎ Fixed-Point Affine $F_1$ และการปรับสู่ชุดข้อมูล v2 (\feat{make\_t2v2.py}) \\
+    \midrule
+    3 & \todo{สมาชิกคนที่ 3 — ชื่อ-นามสกุล}\newline\todo{รหัสนักศึกษา} & \todo{ระบุบทบาทและสัดส่วนงาน}\newline \textit{แนวทางอ้างอิง:} รับผิดชอบหลัก Task 3 (Monthly Spending Regression) แบบจำลอง Hurdle + Unit-Slope Offset CatBoost MultiQuantile และระบบ 10$\times$10 Seed Bagging \\
+    \midrule
+    4 & \todo{สมาชิกคนที่ 4 — ชื่อ-นามสกุล}\newline\todo{รหัสนักศึกษา} & \todo{ระบุบทบาทและสัดส่วนงาน}\newline \textit{แนวทางอ้างอิง:} รับผิดชอบหลัก Task 4 (\TFourStatus) และการตรวจสอบความสอดคล้องเชิงสถาปัตยกรรมของระบบรวม \\
+    \midrule
+    5 & \todo{สมาชิกคนที่ 5 — ชื่อ-นามสกุล}\newline\todo{รหัสนักศึกษา} & \todo{ระบุบทบาทและสัดส่วนงาน}\newline \textit{แนวทางอ้างอิง:} รับผิดชอบหลัก Task 5 (Account Security Monitoring) วงจร Residual Discovery Loop การทวนสอบข้ามภารกิจ การประกอบ Submission กลาง และการจัดทำรายงานทางเทคนิค \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{แนวปฏิบัติทางวิศวกรรมและบทเรียนจากการทำงานเป็นทีม (Key Takeaways from Teamwork)}
+\label{subsec:team_takeaways}
+
+จากการทำงานร่วมกันตลอดรอบการพัฒนา ตั้งแต่การสำรวจข้อมูลชุดแรก (v1) การปรับตัวรับข้อมูลชุดใหม่ (v2, 12 พ.ย.) จนถึงการทวนสอบความสอดคล้องตามกติกา Test-Free (16 พ.ย.) ทีม ML003 ได้สรุปแนวปฏิบัติสำคัญที่ทำให้การทำงานเป็นทีมมีประสิทธิภาพและปราศจากข้อผิดพลาดสะสมไว้ 4 ประการ ดังนี้
+
+\begin{enumerate}
+  \item \textbf{การแยก Workspace และ Branch ตามภารกิจควบคู่กับสัญญาไฟล์ส่งออกที่ชัดเจน (Task Isolation \& Shared Contracts):}
+  โค้ดวิจัยและผลลัพธ์ของแต่ละภารกิจถูกแยกเก็บเป็นสัดส่วนในโฟลเดอร์เฉพาะ (\feat{t1/}, \feat{t2/}, \feat{t3/}, \feat{t5/} และสาขาวิจัย \feat{research/t1..t5}) พร้อมกำหนด ``สัญญาข้อมูลส่งออก'' (Output Contract) ที่แน่นอนเป็นไฟล์ CSV/NumPy มาตรฐาน (เช่น \feat{t1/preds/clean\_fixedthr/t1\_clean.csv}, \feat{t2/preds/v2data/t2v2\_blend\_affine.csv}, \feat{t3/preds/seedbag10\_final/}, \feat{t5/preds/v2data/t5v2\_union\_box\_lsnan.csv}) ก่อนส่งต่อให้สคริปต์ประกอบไฟล์ส่งงานกลาง (\feat{submissions/tools/build\_clean.py} และ \feat{build\_v25.py}) การแยกส่วนเช่นนี้ช่วยให้สมาชิกแต่ละคนสามารถรื้อโครงสร้างหรือปรับปรุงวิธีทำนายภายในภารกิจของตนได้เต็มที่โดยไม่ทำให้ Pipeline ของเพื่อนร่วมทีมล่ม
+
+  \item \textbf{การวิจัยแบบ Blind Re-Derivation เพื่อสร้างความหลากหลายของตระกูลโมเดล (Independent Blind Modeling Streams):}
+  ความผิดพลาดที่พบบ่อยในทีมแข่งขัน ML คือการให้สมาชิกหลายคนปรับจูนไฮเปอร์พารามิเตอร์ของโมเดลตระกูลเดียวกัน (เช่น LightGBM) ซึ่งให้ผลลัพธ์ที่สหสัมพันธ์กันสูงและเสียเวลา ทีมจึงตั้งสายงานวิจัยอิสระแบบ ``Blind Re-Derivation'' (\feat{blind\_sonnet/} ใน Task 1, Task 2, Task 3, Task 5 และ \feat{work/t2v2/blind/}) ที่ไม่ยึดติดกับสถาปัตยกรรมหลัก แนวทางนี้เองที่ค้นพบองค์ประกอบต่างสายพันธุ์ซึ่งช่วยเสริมเสถียรภาพได้จริงเมื่อนำมา Blend ได้แก่ \feat{stack\_lr} ($20\%$ ใน Task 1 Clean Blend) และ \feat{logreg\_spline\_A} ($8\%$) + \feat{mlp\_torch\_A} ($5\%$) ใน Task 2 Blend
+
+  \item \textbf{วินัยในการคัดกรองด้วย Nested CV และการใช้โควต้า Kaggle ด้วย Isolated LB Probes:}
+  ภายใต้ข้อจำกัดการส่งงานเพียง 6 ครั้งต่อวัน (รีเซ็ต 07:00 น. ICT) ทีมกำหนดกติกาภายในว่า \emph{ห้ามส่งการทดลองที่ยังไม่ผ่าน Nested/Paired CV หรือการตรวจสอบความแปรปรวนข้าม Seed} ส่งผลให้แนวคิดที่ดูดีในตอนแรกแต่โอเวอร์ฟิตหรือไม่มีผลจริงถูกคัดออกตั้งแต่ในเครื่อง (เช่น Nested Optuna ใน Task 2 ที่ลดลงจาก $0.7557$ เหลือ $0.7544$, กฎ \feat{is\_premium\_member = (vip >= 3)} ใน Task 3 ที่แม้ลดความคลาดเคลื่อนย่อย $4\%$ แต่ลด OOF NMAE จริงลง $-0.00007$ และการปรับ Optuna รอบสองใน Task 1) เมื่อถึงเวลาใช้โควต้าบน Kaggle ทีมจะส่ง \textbf{Isolated LB Probes} ที่เปลี่ยนตัวแปรเพียงภารกิจเดียวต่อการส่ง 1 ครั้ง เพื่อยืนยันสมมติฐานอย่างแม่นยำ เช่น:
+  \begin{itemize}
+    \item \feat{sub\_v10d} $\to$ \feat{probe\_v10e}: ทดสอบเปลี่ยนจุดตัด Task 1 จาก Macro-$F_2$ ($41\%$) เป็น Binary-$F_2$ ($63\%$) เพียงจุดเดียว ได้กำไร $\Delta \text{LB} = +0.01276$ ($0.66614 \to 0.67890$)
+    \item \feat{sub\_v16b} $\to$ \feat{sub\_v18a}: ทดสอบเพิ่ม 3-Model Blend + กฎ Affine ของ Task 2 เพียงภารกิจเดียว ได้กำไร $\Delta \text{LB} = +0.00034$ ($0.71965 \to 0.71999$)
+    \item \feat{probe\_v10e} $\to$ \feat{probe\_v10g}: ตั้งค่า Task 3 เป็นศูนย์ทั้งหมดเพื่อตรวจความสอดคล้องสูตร NMAE ได้ $\Delta \text{LB} = -0.05899$ ตรงกับทฤษฎี $-0.05900$ ถึงทศนิยมตำแหน่งที่ 4
+    \item \feat{sub\_v87e} (Task 5 ทดสอบเพิ่ม 11 แถวเป็น 2,115 แถว): คะแนนลดลง $\Delta \text{LB} = -0.00010$ ยืนยันให้ยึดชุดมาตรฐาน 2,104 แถวไว้ดังเดิม
+  \end{itemize}
+
+  \item \textbf{ความพร้อมรับมือการเปลี่ยนแปลงข้อมูลและจริยธรรมวิศวกรรม (Agile Adaptation to 12 Nov Re-Release \& 16 Nov Rules):}
+  การที่ทีมแยกวิจัยสัญญาณพฤติกรรมที่แท้จริงออกจากรหัส \feat{player\_id} มาตั้งแต่ต้น ทำให้เมื่อชุดข้อมูล v2 ออกในวันที่ 12 พฤศจิกายนเพื่อกำจัด ID Leak ทีมสามารถรันซ้ำและยืนยันเสถียรภาพได้ภายในวันเดียว นอกจากนี้ หลังคำชี้แจงกติกาวันที่ 16 พฤศจิกายน สมาชิกทั้งทีมได้ร่วมกันตรวจสอบโค้ดย้อนหลัง (Audit) และยอมถอดเทคนิคที่อาจก้ำกึ่งหรือพึ่งพาสถิติชุดทดสอบ (เช่น Test-Rank Quantile Cut ใน \feat{sub\_v20a}) เพื่อเปลี่ยนสู่ระบบ Clean Train-Only เต็มรูปแบบ แม้จะทำให้สัดส่วนทำนายบวกใน Task 1 ขยับตามข้อมูลจริงเป็น $59.33\%$ ก็ตาม
+\end{enumerate}
+
+\begin{insightbox}[บทเรียนสำคัญด้านการทำงานเป็นทีม: ความเป็นอิสระของมุมมองช่วยลดความเสี่ยงเชิงระบบ]
+การแบ่งทีมทำงานแบบยึด ``สัญญาข้อมูลกลาง'' ควบคู่กับการทำ Blind Re-Derivation และการตรวจรับผลด้วย Paired/Nested CV เปลี่ยนการทำงานจากการแข่งขันกันจูนโมเดลเดียวไปเป็นการพิสูจน์สมมติฐานทางวิทยาศาสตร์ร่วมกัน ทำให้ทีมไม่หลงทางกับผลรั่วไหลของ \feat{player\_id} ในช่วงต้น และสามารถถ่ายโอนงานข้ามสมาชิกได้อย่างราบรื่นตลอดโครงการ
+\end{insightbox}

@@ -1,0 +1,148 @@
+\begin{titlepage}
+\centering
+\vspace*{1.6cm}
+{\Large\bfseries มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าธนบุรี (KMUTT)\par}
+\vspace{0.25cm}
+{\large คณะวิศวกรรมศาสตร์ · ภาควิชาวิศวกรรมคอมพิวเตอร์ · รายวิชา CPE 342 Machine Learning\par}
+\vspace{1.6cm}
+{\Huge\bfseries\color{NavyPrimary} รายงานทางเทคนิค (Technical Report)\par}
+\vspace{0.45cm}
+{\LARGE\bfseries โครงการ Karena Player Intelligence System\par}
+\vspace{0.25cm}
+{\large ระบบวิศวกรรมข้อมูลและแบบจำลองปัญญาประดิษฐ์สำหรับพยากรณ์และเข้าใจพฤติกรรมผู้เล่น\\
+(ขอบเขตฉบับสมบูรณ์: Tasks 1, 2, 3 และ 5)\par}
+\vspace{1.4cm}
+
+\begin{tcolorbox}[colback=NavyLight,colframe=NavyPrimary,width=0.92\textwidth,arc=3pt,boxrule=0.8pt]
+\centering
+{\Large\bfseries ทีม ML003}\\[8pt]
+\todo{ระบุรายชื่อ รหัสนักศึกษา และบทบาทของสมาชิกทีมทั้ง 5 คน}\\[6pt]
+กำหนดส่งรายงานฉบับสมบูรณ์: \todo{ยืนยันกำหนดส่ง: 28 พ.ย. 2026 หรือ 30 พ.ย. 2026}
+\end{tcolorbox}
+
+\vspace{1.2cm}
+\begin{tcolorbox}[colback=AmberLight,colframe=AmberWarn,width=0.92\textwidth,arc=2pt,boxrule=0.6pt,leftrule=3pt]
+\small\raggedright
+\textbf{หมายเหตุขอบเขตเอกสาร (Document Scope Notice):} รายงานทางเทคนิคฉบับนี้จัดทำขึ้นเพื่อนำเสนอระเบียบวิธีวิจัย การวิเคราะห์กระบวนการสร้างข้อมูล (Data-Generating Process) มาตรฐานความสอดคล้องกับกติกา และผลลัพธ์ฉบับสมบูรณ์ของ \textbf{Task 1, Task 2, Task 3 และ Task 5} ภายใต้ชุดข้อมูลหลังการปรับปรุงเมื่อวันที่ 12 พฤศจิกายน 2026 และข้อกำหนด Test-Free Inference เมื่อวันที่ 16 พฤศจิกายน 2026 สำหรับ \textbf{Task 4 (Game Title Detection)} ได้สงวนพื้นที่ไว้ตามข้อตกลงในหัวข้อย่อย~\ref{subsec:task4} (\textit{\TFourStatus}) และไม่ได้นำคะแนนหรือแบบจำลองของ Task 4 มารวมในเอกสารฉบับนี้
+\end{tcolorbox}
+
+\vfill
+{\small ไฟล์ส่งงานอ้างอิงฉบับสุดท้าย: \feat{submissions/FINAL/sub\_v85a\_soup\_trainprior.csv} ($N = 25{,}889$ แถว)\par}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+\listoffigures
+\listoftables
+\clearpage
+
+\section{บทสรุปผู้บริหารและภาพรวมเชิงวิศวกรรม (Executive Summary)}
+\label{sec:exec_summary}
+
+\subsection{ภาพรวมภารกิจและผลลัพธ์หลัก (System Overview \& Master Results)}
+\label{subsec:sys_overview}
+
+โครงการ \textbf{Karena Player Intelligence System} ในรายวิชา CPE 342 Machine Learning จำลองโจทย์วิศวกรรมข้อมูลของบริษัท \textbf{Karena Thailand} ผู้ให้บริการแพลตฟอร์มเกมออนไลน์หลายแนว (ได้แก่ PUBE Mobile, Free Fried, FiveN, Roblock และ 7-11 Knights) ที่ต้องการยกระดับระบบวิเคราะห์ผู้เล่นเชิงองค์รวมเพื่อมุ่งสู่เป้าหมาย \textbf{Player Lifetime Value (LTV) Prediction System} โดยประกอบด้วยภารกิจย่อย 5 ด้านที่ตอบโจทย์ธุรกิจแตกต่างกัน ได้แก่ การคัดกรองผู้เล่นโกง (Task 1), การจำแนกกลุ่มพฤติกรรมผู้เล่น (Task 2), การพยากรณ์ยอดใช้จ่าย 30 วันข้างหน้า (Task 3), การจำแนกชื่อเกมจากภาพหน้าจอ (Task 4; สงวนพื้นที่ไว้ในฉบับนี้) และการเฝ้าระวังความผิดปกติทางความปลอดภัยบัญชีแบบไม่มีผู้สอน (Task 5)
+
+ตามกรอบการประเมินผลของรายวิชา เกณฑ์คะแนนรวมบน Kaggle คำนวณจากค่าเฉลี่ยถ่วงน้ำหนักเท่ากันทั้ง 5 ภารกิจ (น้ำหนักภารกิจละ $0.20$ ในช่วง $[0, 1]$) โดยมีจุดอ้างอิงมาตรฐานสองระดับ ได้แก่ \textbf{Ground Baseline $= 0.68$} (สร้างจากแบบจำลองพื้นฐานในชั้นเรียน เช่น Logistic Regression, Random Forest, CNN และ Isolation Forest) และ \textbf{Challenge Baseline $= 0.75$} (คัดเลือกแบบจำลองและเทคนิคตามแนวทางคำแนะนำในโจทย์) อย่างไรก็ตาม จากการที่เกณฑ์ประเมินของ Task 4 ยังไม่นิ่ง รายงานฉบับนี้จึงยึดหลักความซื่อสัตย์ทางวิศวกรรมโดยรายงานผลลัพธ์เฉพาะ Tasks 1, 2, 3 และ 5 อย่างละเอียดครบถ้วนบนตัวชี้วัดจริงของแต่ละภารกิจ
+
+ปรัชญาหลักที่ทีม ML003 ยึดถือตลอดการพัฒนาคือ \textbf{``Reverse-Engineering DGP $\to$ Metric-Optimal Decision $\to$ Leak-Free Validation''} แทนการลองปรับจูนโมเดลแบบสุ่ม ทีมงานเริ่มจากการแกะรอยโครงสร้างกระบวนการสร้างข้อมูล (Data-Generating Process: DGP) ของแต่ละภารกิจ จนค้นพบคุณสมบัติเฉพาะตัวที่กำหนดการเลือกตระกูลโมเดลอย่างแม่นยำ จากนั้นจึงพิสูจน์กฎการตัดสินใจที่สอดคล้องกับตัวชี้วัดเฉพาะของภารกิจ (Binary-$F_2$, Macro-$F_1$, NMAE และ $F_3$) และทวนสอบด้วย Nested Cross-Validation รวมถึงการทดสอบแบบแยกตัวแปรบน Public Leaderboard (Isolated LB Probes) ผลลัพธ์หลักของทั้ง 4 ภารกิจที่สมบูรณ์แล้วสามารถแตะระดับเพดานเชิงทฤษฎีของชุดข้อมูลได้ทั้งหมด ดังสรุปในตารางที่~\ref{tab:master_results}
+
+\begin{table}[htbp]
+  \centering
+  \caption{สรุปภาพรวมสถาปัตยกรรมและผลลัพธ์หลักรายภารกิจของทีม ML003 (ฉบับข้อมูล v2 และ Test-Free Inference)}
+  \label{tab:master_results}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}p{1.6cm} X >{\raggedright\arraybackslash}p{3.4cm} >{\raggedright\arraybackslash}p{3.2cm} @{}}
+    \toprule
+    \textbf{ภารกิจ} & \textbf{ตัวชี้วัด} & \textbf{สถาปัตยกรรมและกฎตัดสินใจสุดท้าย} & \textbf{คะแนน OOF / ประมาณการ} & \textbf{สรุปผลลัพธ์ Test (\feat{sub\_v85a}, $N=25{,}889$)} \\
+    \midrule
+    \textbf{Task 1} (หัวข้อ~\ref{subsec:task1}) & Binary-$F_2$ & \feat{t1\_clean\_fixedthr.py}: Clean OOF ECDF Blend (0.70 LGBM \feat{fe\_v2}+MCAR 4x + 0.20 \feat{stack\_lr} + 0.10 3-GBM) + จุดตัดคงที่ $\text{thr}=0.3769$ & OOF Bin-$F_2 = \mathbf{0.84007}$ \newline OOF ROC-AUC $= \mathbf{0.89499}$ \newline (Nested 3-seed: $0.83911$) & ทำนายบวก \textbf{15,359 แถว} (\textbf{59.33\%}) ลดจาก 62.40\% บน OOF ตามธรรมชาติของ Test Missingness Shift \\
+    \midrule
+    \textbf{Task 2} (หัวข้อ~\ref{subsec:task2}) & Macro-$F_1$ & \feat{make\_t2v2.py}: Leak-Free Blend (0.87 Histogram EM-NB + 0.08 Spline LR + 0.05 PyTorch MLP) + กฎ Fixed-Point Affine $F_1$ & v2 OOF Macro-$F_1 = \mathbf{0.75826}$ \newline (EM-NB: $0.75766$, Log-Loss: $0.5975$) & 0: 10,576 (40.85\%) \newline 1: 6,578 (25.41\%) \newline 2: 5,020 (19.39\%) \newline 3: 3,715 (14.35\%) \\
+    \midrule
+    \textbf{Task 3} (หัวข้อ~\ref{subsec:task3}) & NMAE Score & \feat{task3\_seedbag10.py} (\feat{bag\_q10p10}): Hurdle (10-seed LGBM $P(y>0)$ AUC $0.7844$ + 10-seed CatBoost \feat{d4} MultiQuantile บน Offset $\ln(y/\text{prev})$) + Hurdle Median $q=1-1/(2p)$ & 10$\times$10 OOF NMAE $= \mathbf{0.79537}$ \newline (Fold Mean $0.79542 \pm 0.00760$) & ศูนย์ \textbf{50.39\%} \newline เฉลี่ย \textbf{10,429.55 THB} \newline (p99: 133,945.49, Max: 300,000.00 THB) \\
+    \midrule
+    \textbf{Task 4} (หัวข้อ~\ref{subsec:task4}) & Macro-$F_1$ & \textit{\TFourStatus} & \textit{\TFourStatus} & \textit{สงวนพื้นที่ตามข้อตกลง} \\
+    \midrule
+    \textbf{Task 5} (หัวข้อ~\ref{subsec:task5}) & $F_3$ & \feat{t5\_pipeline.py} + \feat{box\_analysis\_v2.py}: 4-Stage Union (A: Shock 827 + B: 1-D Gaps 981 + C: 3-D Box 244 + D: NaN-NB 52; 0 overlaps) & Est.\ $F_3 \approx \mathbf{0.99681}$ \newline (Clean residual $\max |r| = 0.0263$) & แจ้งเตือน \textbf{2,104 แถว} (\textbf{8.13\%}) ในชุดข้อมูล v2 (ไร้ \feat{player\_id} leak, ID AUC $= 0.4995$) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\subsection{การตรวจสอบความเชื่อมโยงข้ามภารกิจ (Cross-Task Independence Audit)}
+\label{subsec:cross_task_audit}
+
+เนื่องจากโครงเรื่องของโครงการระบุให้ทั้ง 5 ภารกิจป้อนข้อมูลเข้าสู่ระบบ LTV เดียวกัน และจากการสำรวจเบื้องต้นพบว่าชุดข้อมูลตารางทั้ง 4 ภารกิจใช้ช่วงรหัสผู้เล่น \feat{player\_id} ชุดเดียวกัน (\feat{P000000} ถึง \feat{P129999}) โดยมีผู้เล่นซ้ำกันระหว่างชุดฝึกสอนประมาณ 80\% ของแต่ละชุด ทีมงานจึงตั้งสมมติฐานสำคัญว่า ``การเชื่อมตาราง (Cross-Task Join) ด้วย \feat{player\_id} อาจช่วยดึงตัวแปรเป้าหมายหรือคุณลักษณะจากภารกิจหนึ่งมาเสริมความแม่นยำให้อีกภารกิจหนึ่งได้หรือไม่'' (เช่น ใช้ \feat{segment} หรือ \feat{spending\_30d} จาก Task 2 และ Task 3 มาช่วยทำนายการโกงใน Task 1 หรือใช้ \feat{segment} ของ Task 3 มาช่วย Task 2)
+
+ทีมงานจึงดำเนินการตรวจสอบทางสถิติอย่างเป็นระบบผ่านสคริปต์ \feat{work/insight/a01\_crosstask.py} และบันทึกผลลัพธ์ลงในคลังข้อมูลทวนสอบ (\feat{report/facts\_ledger.json}) ผลปรากฏชัดแจ้งว่าสมมติฐานดังกล่าว\textbf{ไม่เป็นจริง} ดังหลักฐานเชิงปริมาณในตารางที่~\ref{tab:cross_task_audit}
+
+\begin{table}[htbp]
+  \centering
+  \caption{ผลการตรวจสอบความเป็นอิสระข้ามภารกิจผ่านรหัส \protect\feat{player\_id} (\protect\feat{work/insight/a01\_crosstask.py})}
+  \label{tab:cross_task_audit}
+  \footnotesize
+  \setlength{\tabcolsep}{5pt}
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{5.4cm} r X @{}}
+    \toprule
+    \textbf{รายการตรวจสอบข้ามภารกิจ} & \textbf{ค่าที่วัดได้} & \textbf{การตีความทางสถิติ} \\
+    \midrule
+    จำนวน \feat{player\_id} ซ้ำกันในชุดฝึก (T1 $\cap$ T2) & 83,188 แถว & คิดเป็น 79.99\% จาก 104,000 แถว \\
+    จำนวน \feat{player\_id} ซ้ำกันในชุดฝึก (T2 $\cap$ T3) & 83,212 แถว & คิดเป็น 80.01\% จาก 104,000 แถว \\
+    จำนวน \feat{player\_id} ซ้ำกันในชุดฝึก (T1 $\cap$ T3) & 83,251 แถว & คิดเป็น 80.05\% จาก 104,000 แถว \\
+    \midrule
+    ความสอดคล้องของ \feat{segment} ระหว่าง T2 กับ T3 (ID เดียวกัน) & \textbf{28.32\%} & เทียบเท่าโอกาสบังเอิญของ 4 คลาสที่ไม่สมดุล \\
+    อัตราการโกงใน T1 จำแนกตาม T2 \feat{segment = 0} (Casual) & 35.30\% & ใกล้เคียงค่าเฉลี่ยรวม 34.93\% อย่างไม่มีนัยสำคัญ \\
+    อัตราการโกงใน T1 จำแนกตาม T2 \feat{segment = 1} (Grinder) & 34.72\% & คงที่ข้ามกลุ่ม (ไม่แยกความเสี่ยงการโกง) \\
+    อัตราการโกงใน T1 จำแนกตาม T2 \feat{segment = 2} (Social) & 34.24\% & คงที่ข้ามกลุ่ม \\
+    อัตราการโกงใน T1 จำแนกตาม T2 \feat{segment = 3} (Whale) & 35.06\% & คงที่ข้ามกลุ่ม \\
+    \midrule
+    สหสัมพันธ์ของ \feat{account\_age\_days} (T1 เทียบ T2, ID เดียวกัน) & \textbf{0.0045} & ไม่มีสหสัมพันธ์เชิงเส้น (สร้างแยกอิสระ) \\
+    สหสัมพันธ์ของ \feat{friend\_count} (T2 เทียบ T3, ID เดียวกัน) & \textbf{0.0002} & ไม่มีสหสัมพันธ์เชิงเส้น (สร้างแยกอิสระ) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{decisionbox}[ข้อสรุปเชิงสถาปัตยกรรม: การแยก Pipeline อิสระเฉพาะทางเหนือกว่าการเชื่อมตารางข้ามภารกิจ]
+แม้ชุดข้อมูลตารางจะใช้ช่วงรหัส \feat{player\_id} ซ้อนทับกันถึง 83,188--83,251 แถว แต่ค่าสหสัมพันธ์ของฟีเจอร์ชื่อเดียวกันบนผู้เล่น ID เดียวกันมีค่าใกล้ศูนย์อย่างสมบูรณ์ ($r = 0.0045$ สำหรับ \feat{account\_age\_days} และ $r = 0.0002$ สำหรับ \feat{friend\_count}) ค่า \feat{segment} ของผู้เล่น ID เดียวกันระหว่าง Task 2 กับ Task 3 ตรงกันเพียง 28.32\% และอัตราผู้โกงใน Task 1 มีค่าแบนราบในช่วง 34.24\%--35.30\% ในทุกกลุ่มของ Task 2 (สอดคล้องกับการทดลองในตารางที่~\ref{tab:t2_failed_experiments} ที่พบว่าการนำ \feat{segment} จาก Task 3 มาเสริม Task 2 ไม่ผ่านการคัดกรอง) หลักฐานนี้พิสูจน์ว่า\textbf{แต่ละภารกิจถูกสร้างขึ้นเป็นอิสระต่อกัน} การเชื่อมตารางข้ามภารกิจมีแต่จะเพิ่มสัญญาณรบกวนและความเสี่ยงของการรั่วไหล ทีม ML003 จึงตัดสินใจออกแบบ Pipeline อิสระที่ปรับแต่งเฉพาะตาม DGP ของแต่ละภารกิจ แล้วจึงผสานผลลัพธ์เข้าด้วยกันในระดับกรอบการตัดสินใจทางธุรกิจ
+\end{decisionbox}
+
+\subsection{วิวัฒนาการของข้อมูล (12 พ.ย.) และการปฏิบัติตามกติกาการแข่งขัน (16 พ.ย.)}
+\label{subsec:evolution_compliance}
+
+ตลอดระยะเวลาการแข่งขันมีจุดเปลี่ยนสำคัญเชิงกติกาและข้อมูลสองเหตุการณ์หลัก ซึ่งส่งผลต่อการตรวจสอบความถูกต้องและการปรับปรุงโค้ดของทีม ML003 อย่างมีนัยสำคัญ:
+
+\textbf{1. การเผยแพร่ชุดข้อมูลฉบับปรับปรุง (12 พฤศจิกายน 2026 -- v2 Re-Release):}
+ในชุดข้อมูล v1 เดิม ตัวสร้างข้อมูลของ Task 2 และ Task 5 มีการเรียงลำดับความสัมพันธ์แฝงในรหัส \feat{player\_id} (ใน Task 2 ข้อมูลถูกจัดเรียงตามบล็อกคลาสทำให้กฎบล็อก ID ทำ OOF Macro-$F_1$ ได้ถึง $0.9677$ โดยส่วนที่ขาดจาก $1.0000$ คือการสลับป้ายกำกับ 3\%; ส่วน Task 5 บัญชีผิดปกติ 2,070 แถวถูกจัดวางในบล็อก \feat{player\_id} $\ge 23819$) อย่างไรก็ตาม \textbf{สายการส่งงานที่สะอาดของทีม ML003 (\feat{sub\_v16b}, \feat{sub\_v18a}, \feat{sub\_v20a}, \feat{sub\_v24b}) ไม่เคยนำ \feat{player\_id} มาใช้เป็นตัวแปรทำนายเลย} เมื่อผู้จัดแข่งขันออกชุดข้อมูล v2 ในวันที่ 12 พฤศจิกายน โดยสับเปลี่ยนรหัส \feat{player\_id} ใหม่ทั้งหมด โมเดลที่พึ่งพาสัญญาณพฤติกรรมของทีมจึงถ่ายโอนสู่ข้อมูลชุดใหม่ได้ทันที และผลตรวจสอบบนชุด v2 ยืนยันว่าช่องโหว่ ID ถูกกำจัดอย่างสิ้นเชิง ได้แก่ ค่า One-vs-Rest ROC-AUC ของ \feat{player\_id} เทียบกับ \feat{segment} ใน Task 2 ทั้ง 4 คลาสเท่ากับ \textbf{0.4987, 0.5001, 0.5014 และ 0.5004} ($\approx 0.500$) และค่า ROC-AUC ของ \feat{player\_id} เทียบกับผลแจ้งเตือน Task 5 เท่ากับ \textbf{0.4995} (เช่นเดียวกับ Task 1 ที่ ID-only AUC $= 0.4995$ และ Task 3 ที่ Spearman $|\rho| = 0.004$)
+
+\textbf{2. คำชี้แจงกติกา Test-Free Inference โดย TA (16 พฤศจิกายน 2026):}
+กติการายวิชาห้ามนำชุดทดสอบมาใช้เพื่อวัตถุประสงค์การฝึกสอนหรือประมาณค่าพารามิเตอร์ (ห้ามใช้ AutoML อย่าง AutoGluon/PyCaret และสำหรับ Tasks 1, 2, 3, 5 ต้องฝึกโมเดลจากศูนย์โดยใช้เฉพาะ Train/Val Sets) ต่อมาในวันที่ 16 พฤศจิกายน TA ได้ชี้แจงหลักเกณฑ์เพิ่มเติมว่า \textbf{ทุกพารามิเตอร์ที่ใช้ในการทำนายต้องคำนวณได้โดยไม่ต้องพึ่งพาชุดทดสอบ} ทีม ML003 จึงทวนสอบและปรับแก้โค้ดทุกส่วนอย่างโปร่งใส ดังแสดงในตารางที่~\ref{tab:compliance_matrix}
+
+\begin{table}[htbp]
+  \centering
+  \caption{เมทริกซ์ความสอดคล้องตามกติกาการแข่งขัน (16 พ.ย. 2026): แนวทางที่ใช้งานจริงเทียบกับแนวทางที่คัดออกอย่างโปร่งใส}
+  \label{tab:compliance_matrix}
+  \footnotesize
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\textwidth}{@{} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{4.3cm} >{\raggedright\arraybackslash}p{1.8cm} X @{}}
+    \toprule
+    \textbf{วิธี / เทคนิค} & \textbf{ภารกิจและไฟล์อ้างอิง} & \textbf{สถานะ} & \textbf{เหตุผลเชิงกติกาและหลักฐานการทวนสอบ} \\
+    \midrule
+    Train-Only OOF ECDF + Fixed Threshold & Task 1 (\feat{t1/code/t1\_clean\_fixedthr.py}) & \textbf{ใช้งานจริง (Compliant)} & แปลงคะแนนทดสอบเทียบ ECDF ของ OOF ที่แช่แข็งไว้ และตัดที่ค่าคงที่ $\text{thr}=0.3769$ ไม่เปรียบเทียบข้ามแถวทดสอบ (Test pos $59.33\%$) \\
+    Train-Only Bayesian Zone Priors & Task 1 (\feat{fe\_v2}, \feat{final\_v2.py}) & \textbf{ใช้งานจริง (Compliant)} & ค่า $\text{prior}(\text{age})$ และ $\text{prior}(\text{level})$ ประมาณจากชุดฝึก 104,000 แถวเท่านั้น ไม่แตะข้อมูลทดสอบ \\
+    Train-Only XGB Segment Imputer & Task 3 (\feat{t3/research/common.py}) & \textbf{ใช้งานจริง (Compliant)} & ฝึกตัวเติมค่า \feat{segment} จาก 98,065 แถวฝึกที่ทราบกลุ่ม (Holdout Acc $0.9286$) โดยไม่ใช้เป้าหมาย \feat{spending\_30d} และไม่ใช้ชุดทดสอบ \\
+    v2 Leak-Free Blend \& Affine Rule & Task 2 (\feat{work/t2v2/make\_t2v2.py}) & \textbf{ใช้งานจริง (Compliant)} & ใช้เฉพาะ 28 ฟีเจอร์พฤติกรรม (ไม่ใช้ \feat{player\_id}), \feat{nanquantile} บนชุดฝึก, EM และจุดตรึง Affine จาก OOF เท่านั้น \\
+    Unsupervised 4-Stage Detector (No Label) & Task 5 (\feat{t5\_pipeline.py}, \feat{box\_analysis\_v2.py}) & \textbf{ใช้งานจริง (Compliant)} & ตามนิยามโจทย์ Unsupervised ไม่มี Training Set; ทำงานจากฟีเจอร์เชิงพฤติกรรมล้วน ปราศจาก \feat{player\_id} ($\text{AUC}=0.4995$) \\
+    \midrule
+    v1 \feat{player\_id} Block Rules & Task 2 (\feat{e10\_idblock.py}: $0.9677$) / Task 5 v1 & \textbf{คัดออก (Ineligible)} & อาศัยการเรียงบล็อกของรหัสสังเคราะห์ใน v1 ไม่เคยบรรจุในสายส่งงานสะอาด และถูกกำจัดในชุด v2 (12 พ.ย.) \\
+    Test-Rank Quantile Cut ($60\%$ Test) & Task 1 (\feat{sub\_v20a}) & \textbf{คัดออก (Dropped)} & การจัดอันดับแถวทดสอบเทียบกันเองเข้าข่าย Test-Batch Coupling จึงแทนที่ด้วย \feat{t1\_clean\_fixedthr.py} \\
+    Pseudo-Labeling Tests & Task 1 (\feat{v22a/b}: $0.76307$/$0.76309$ vs $0.76315$, \feat{exp11}) & \textbf{คัดออก (Ineligible)} & กติกาห้ามใช้ชุดทดสอบฝึกโมเดล และแม้บนแถวไม่มีป้ายกำกับในชุดฝึก ($13{,}184$ แถว) ก็ให้ผลลบ ($-0.0006$ F2m) \\
+    Test-Shift Mask Augmentation & Task 1 (\feat{round9\_sonnet}) & \textbf{คัดออก (Dropped)} & การปรับอัตราปิดบังตามค่าสูญหายของชุดทดสอบขัดกับหลัก Test-Free และได้ผลระดับ noise ($+0.00049$ บน fold 0--1) \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+\begin{warningbox}[ความซื่อสัตย์ด้านผลลัพธ์และข้อจำกัดของ Test-Free Thresholding]
+การเปลี่ยน Task 1 จากการตัดอันดับบนชุดทดสอบ (\feat{sub\_v20a}) มาสู่ \feat{t1\_clean\_fixedthr.py} ยอมรับการเปลี่ยนแปลงของอัตราทำนายบวกบนชุดทดสอบจาก $62.40\%$ (บน OOF) ลงมาเป็น $59.33\%$ ($15{,}359$ แถว) อย่างสุจริต ซึ่งเป็นผลโดยตรงจากการที่ชุดทดสอบมีข้อมูลสูญหายน้อยกว่าชุดฝึก ($2.48$ เทียบกับ $3.71$ คอลัมน์/แถว) ทำให้แบบจำลองแยกแยะผู้เล่นบริสุทธิ์ได้เด็ดขาดขึ้นโดยไม่พึ่งพาสถิติของชุดทดสอบแม้แต่ตัวเลขเดียว
+\end{warningbox}
